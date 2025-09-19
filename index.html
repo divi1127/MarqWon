@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Marqwon — Crafting Experiences</title>
+
+    <!-- Prevent theme "flash" -->
+    <script>
+      const saved = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (saved === "dark" || (!saved && prefersDark)) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+  </head>
+   <body class="bg-white text-black dark:bg-black dark:text-white transition-colors duration-500">
+  <div id="root"></div>
+</body>
+
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
