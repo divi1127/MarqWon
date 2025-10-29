@@ -100,7 +100,7 @@ export default function WelcomeIntro({ onFinish }) {
             onClick={handleExplore}
             className="mt-6 px-6 py-2 rounded-lg bg-gradient-to-r from-[#0a0a3d] to-[#1E90FF] text-white font-medium shadow-lg hover:scale-105 transition-transform"
           >
-            🚀 Explore Marqwon
+            Explore MarqWon
           </button>
         </motion.div>
       )}

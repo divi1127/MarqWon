@@ -3,20 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Marqwon — Crafting Experiences</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+    <title>MarqWon.com</title>
+    <link rel="icon" href="/marqwon.png" />
+
 
     <!-- Prevent theme "flash" -->
     <script>
-      const saved = localStorage.getItem("theme");
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      if (saved === "dark" || (!saved && prefersDark)) {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
+      // const saved = localStorage.getItem("theme");
+      // const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      // if (saved === "dark" || (!saved && prefersDark)) {
+      //   document.documentElement.classList.add("dark");
+      // } else {
+      //   document.documentElement.classList.remove("dark");
+      // }
     </script>
   </head>
-   <body class="bg-white text-black dark:bg-black dark:text-white transition-colors duration-500">
+   <!-- <body class="bg-white text-black dark:bg-black dark:text-white transition-colors duration-500"> -->
   <div id="root"></div>
 </body>
 

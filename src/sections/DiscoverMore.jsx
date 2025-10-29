@@ -1,152 +1,278 @@
-// DiscoverMore.jsx
 import React from "react";
-import Marq from "../assets/marq.png";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import {
+  Star,
+  Award,
+  Users,
+  TrendingUp,
+  Target,
+  Heart,
+  ArrowRight,
+} from "lucide-react";
 
-const DiscoverMore = () => {
+const Discover = () => {
+  const achievements = [
+    { icon: Award, title: "150+ Projects", description: "Successfully delivered" },
+    { icon: Users, title: "80+ Clients", description: "Satisfied customers" },
+    { icon: TrendingUp, title: "5+ Years", description: "Industry experience" },
+    { icon: Target, title: "99.9%", description: "Client satisfaction" },
+  ];
+
+  const testimonials = [
+    {
+      name: "Dr. Rajesh Kumar",
+      role: "Hospital Administrator",
+      company: "HealthCare Plus",
+      content:
+        "MarqWon developed our telemedicine platform that has transformed how we deliver care. Their expertise in healthcare IT is outstanding.",
+      rating: 5,
+    },
+    {
+      name: "Priya Sharma",
+      role: "CEO",
+      company: "EduTech Solutions",
+      content:
+        "The learning management system built by MarqWon exceeded our expectations. Student engagement has increased by 60% since launch.",
+      rating: 5,
+    },
+    {
+      name: "Arun Patel",
+      role: "CTO",
+      company: "RetailMart",
+      content:
+        "Our e-commerce platform handles 10,000+ daily transactions seamlessly. MarqWon's technical prowess and support are unmatched.",
+      rating: 5,
+    },
+  ];
+
+  const whyDifferent = [
+    {
+      icon: Heart,
+      title: "Client-First Approach",
+      description:
+        "Your success is our priority. We go beyond code to understand your business goals and deliver solutions that drive real results.",
+    },
+    {
+      icon: TrendingUp,
+      title: "Cutting-Edge Technology",
+      description:
+        "We stay ahead of the curve, leveraging the latest technologies and best practices to build future-proof solutions.",
+    },
+    {
+      icon: Users,
+      title: "Dedicated Team",
+      description:
+        "A passionate team of experts committed to excellence in every project, from initial consultation to ongoing support.",
+    },
+  ];
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white relative overflow-hidden">
-      {/* Horizon subtle glow */}
-      <div
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-screen h-[40vh] rounded-full blur-3xl opacity-30 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.05) 40%, rgba(255,255,255,0) 80%)",
-        }}
+    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+      {/* Animated Background Glow */}
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ repeat: Infinity, duration: 120, ease: "linear" }}
+        className="absolute -top-96 -left-96 w-[800px] h-[800px] bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-blue-500/20 rounded-full blur-3xl"
+      />
+      <motion.div
+        animate={{ rotate: -360 }}
+        transition={{ repeat: Infinity, duration: 140, ease: "linear" }}
+        className="absolute -bottom-96 -right-96 w-[800px] h-[800px] bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-full blur-3xl"
       />
 
-      {/* Card */}
-      <div
-        className="relative z-10 w-full max-w-md 
-        bg-black/5 backdrop-blur-xl 
-        rounded-2xl shadow-2xl border border-black/10 
-        px-6 py-6 flex flex-col items-center top-16"
-      >
-        {/* Logo with Animation */}
-        <div className="absolute -top-12 left-1/2 -translate-x-1/2 flex flex-col items-center">
-          <div className="bg-gradient-to-br from-gray-200 to-gray-400 rounded-full p-3 shadow-lg">
-            <img
-              src={Marq}
-              alt="My Profile"
-              className="w-14 h-14 rounded-full object-cover animate-float"
-            />
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 px-4 relative z-10 text-center">
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent"
+        >
+          Discover MarqWon
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.3 }}
+          className="text-xl text-gray-300 max-w-2xl mx-auto"
+        >
+          Where innovation meets excellence — Your trusted partner in digital transformation
+        </motion.p>
+      </section>
+
+      {/* Achievements */}
+      <section className="py-20 container mx-auto px-4 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {achievements.map((item, i) => {
+            const Icon = item.icon;
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="p-8 text-center rounded-2xl bg-black/50 backdrop-blur-md border border-gray-800 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all"
+              >
+                <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg">
+                  <Icon className="w-8 h-8" />
+                </div>
+                <h3 className="text-3xl font-bold mb-2">{item.title}</h3>
+                <p className="text-gray-300">{item.description}</p>
+              </motion.div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Why We're Different */}
+      <section className="py-20 bg-black/20 relative z-10">
+        <div className="container mx-auto px-4 text-center">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-4xl md:text-5xl font-bold mb-4"
+          >
+            Why MarqWon is Different
+          </motion.h2>
+          <p className="text-xl text-gray-300 mb-16">
+            We don't just build software — we build partnerships that drive success
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {whyDifferent.map((item, i) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="p-8 rounded-2xl bg-black/50 backdrop-blur-md border border-gray-800 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all"
+                >
+                  <div className="w-14 h-14 mx-auto mb-6 flex items-center justify-center rounded-xl bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-md">
+                    <Icon className="w-7 h-7" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
+                  <p className="text-gray-300">{item.description}</p>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
+      </section>
 
-        {/* Title */}
-        <h2 className="mt-6 text-gray-900 text-2xl font-semibold text-center">
-          Welcome to MarqWom<span className="ml-1">✨</span>
-        </h2>
-        <p className="text-gray-600 text-sm text-center mt-2 mb-6">
-          Credentials are only used to authenticate in ProtoHub. All saved data
-          will be stored in your database.
+      {/* Testimonials */}
+      <section className="py-20 container mx-auto px-4 relative z-10">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          className="text-4xl md:text-5xl font-bold mb-4 text-center"
+        >
+          What Our Clients Say
+        </motion.h2>
+        <p className="text-xl text-gray-300 text-center mb-16">
+          Real feedback from real partners
         </p>
 
-        {/* Form */}
-        <form className="w-full flex flex-col gap-4 justify-center">
-          <div className="flex gap-2">
-            <input
-              type="text"
-              placeholder="Emily"
-              className="flex-1 px-2 py-2 rounded-md text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400"
-              style={{
-                background: "rgba(250,250,250,0.8)",
-                border: "1px solid rgba(0,0,0,0.1)",
-              }}
-            />
-            <input
-              type="text"
-              placeholder="Jhonson"
-              className="flex-1 px-2 py-2 rounded-md text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400"
-              style={{
-                background: "rgba(250,250,250,0.8)",
-                border: "1px solid rgba(0,0,0,0.1)",
-              }}
-            />
-          </div>
-
-          <input
-            type="email"
-            placeholder="emily@gmail.com"
-            className="px-4 py-2 rounded-md text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400"
-            style={{
-              background: "rgba(250,250,250,0.8)",
-              border: "1px solid rgba(0,0,0,0.1)",
-            }}
-          />
-
-          <input
-            type="password"
-            placeholder="********"
-            className="px-4 py-2 rounded-md text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400"
-            style={{
-              background: "rgba(250,250,250,0.8)",
-              border: "1px solid rgba(0,0,0,0.1)",
-            }}
-          />
-
-          <select
-            className="px-4 py-2 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-400"
-            style={{
-              background: "rgba(250,250,250,0.8)",
-              border: "1px solid rgba(0,0,0,0.1)",
-            }}
-          >
-            <option>United States</option>
-            <option>Canada</option>
-            <option>United Kingdom</option>
-          </select>
-
-          <label className="flex items-center text-xs text-gray-600 mt-1">
-            <input type="checkbox" className="mr-2 accent-gray-600" />
-            I agree to the Terms of service and Privacy policies of ProtoHub
-            Corporation
-          </label>
-
-          <button
-            type="submit"
-            className="mt-2 text-white font-semibold py-2 rounded-md shadow-lg transition"
-            style={{
-              background: "linear-gradient(90deg, #4f46e5, #3b82f6)", // Indigo → Blue gradient
-            }}
-          >
-            SIGN UP
-          </button>
-        </form>
-
-        {/* Social Icons */}
-        <div className="flex justify-center gap-6 mt-6">
-          <img
-            src="https://img.icons8.com/color/48/google-logo.png"
-            alt="Google"
-            className="w-6 h-6 cursor-pointer"
-          />
-          <img
-            src="https://img.icons8.com/color/48/facebook-new.png"
-            alt="Facebook"
-            className="w-6 h-6 cursor-pointer"
-          />
-          <img
-            src="https://img.icons8.com/ios-filled/50/000000/mac-os.png"
-            alt="Apple"
-            className="w-6 h-6 cursor-pointer"
-          />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {testimonials.map((t, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="p-8 rounded-2xl bg-black/50 backdrop-blur-md border border-gray-800 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all"
+            >
+              <div className="flex mb-4 justify-center">
+                {[...Array(t.rating)].map((_, j) => (
+                  <Star key={j} className="w-5 h-5 fill-purple-400 text-purple-400" />
+                ))}
+              </div>
+              <p className="italic text-gray-300 mb-6">"{t.content}"</p>
+              <p className="font-semibold">{t.name}</p>
+              <p className="text-sm text-gray-400">{t.role}</p>
+              <p className="text-sm text-purple-400">{t.company}</p>
+            </motion.div>
+          ))}
         </div>
-      </div>
+      </section>
 
-      {/* Animations */}
-      <style>
-        {`
-          .animate-float {
-            animation: float 3s ease-in-out infinite;
-          }
-          @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-12px) rotate(3deg); }
-          }
-        `}
-      </style>
+      {/* Technologies */}
+      <section className="py-20 bg-black/20 relative z-10">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            Technologies We Master
+          </h2>
+          <p className="text-xl text-gray-300 mb-16">
+            Building with the best tools in the industry
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+            {[
+              "React",
+              "Node.js",
+              "Python",
+              "AWS",
+              "MongoDB",
+              "TensorFlow",
+              "Flutter",
+              "Docker",
+              "PostgreSQL",
+              "Kubernetes",
+              "React Native",
+              "Angular",
+            ].map((tech, i) => (
+              <motion.div
+                key={tech}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+                className="p-6 rounded-xl bg-black/50 backdrop-blur-md border border-gray-800 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:scale-105 transition-all"
+              >
+                <p className="font-semibold text-purple-400">{tech}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 relative z-10">
+        <div className="container mx-auto px-4 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="p-12 md:p-16 rounded-3xl bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Ready to Transform Your Business?
+            </h2>
+            <p className="text-xl mb-8">
+              Join 80+ satisfied clients who trust MarqWon for their digital
+              transformation journey
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/enquiries">
+                <button className="px-6 py-3 bg-white text-black font-semibold rounded-lg hover:bg-white/90 flex items-center justify-center gap-2">
+                  Start Your Project <ArrowRight className="w-5 h-5" />
+                </button>
+              </Link>
+              <Link to="/services">
+                <button className="px-6 py-3 border border-white text-white font-semibold rounded-lg hover:bg-white/10">
+                  Explore Services
+                </button>
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
 };
 
-export default DiscoverMore;
+export default Discover;

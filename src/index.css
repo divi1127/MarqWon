@@ -1,0 +1,13 @@
+@layer utilities {
+  .carousel-3d > div {
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+
+  .carousel-3d > div:nth-child(odd) {
+    transform: scale(0.95) rotateY(3deg);
+  }
+
+  .carousel-3d > div:nth-child(even) {
+    transform: scale(1.05);
+  }
+}

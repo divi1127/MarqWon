@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
-import ThemeToggle from "./components/ThemeToggle.jsx";
 import Hero from "./components/Hero.jsx";
 import WhoWeAre from "./sections/WhoWeAre.jsx";
 import WhatWeDo from "./sections/WhatWeDo.jsx";
@@ -9,47 +8,38 @@ import Services from "./sections/Services.jsx";
 import Products from "./sections/Products.jsx";
 import Careers from "./sections/Careers.jsx";
 import DiscoverMore from "./sections/DiscoverMore.jsx";
-
-
-// 🆕 Welcome Intro
-import WelcomeIntro from "./components/WelcomeIntro.jsx";
+import Enquiries from "./sections/Enquiries.jsx";
+import Admin from "./sections/Admin.jsx";
+import Footer from "./sections/footer.jsx";
 
 export default function App() {
   const [overlap, setOverlap] = useState(false);
-  const [showIntro, setShowIntro] = useState(true);
-
-  useEffect(() => {
-    // Hide intro after 4s
-    const timer = setTimeout(() => setShowIntro(false), 4000);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <Router>
-      <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-500">
-        {showIntro ? (
-          <WelcomeIntro />
-        ) : (
-          <>
-            <Navbar overlap={overlap} />
-            <main>
-              <Routes>
-                {/* Home Page */}
-                <Route path="/" element={<Hero />} />
+      {/* ✅ Use flex column layout to push footer to bottom */}
+      <div className="flex flex-col min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-500">
+        
+        {/* Navbar always visible */}
+        <Navbar overlap={overlap} />
+        
+        {/* Main content fills space between header and footer */}
+        <main className="flex-1">
+          <Routes>
+            <Route path="/" element={<Hero />} />
+            <Route path="/who-we-are" element={<WhoWeAre />} />
+            <Route path="/what-we-do" element={<WhatWeDo />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/discover-me" element={<DiscoverMore />} />
+            <Route path="/enquiries" element={<Enquiries />} />
+            <Route path="/admin" element={<Admin />} />
+          </Routes>
+        </main>
 
-                {/* Separate Pages */}
-                <Route path="/who-we-are" element={<WhoWeAre />} />
-                <Route path="/what-we-do" element={<WhatWeDo />} />
-                <Route path="/services" element={<Services />} />
-                <Route path="/products" element={<Products />} />
-                <Route path="/careers" element={<Careers />} />
-                <Route path="/discover-me" element={<DiscoverMore />} />
-                
-              </Routes>
-            </main>
-            <ThemeToggle />
-          </>
-        )}
+        {/* ✅ Footer always visible on all pages */}
+        <Footer />
       </div>
     </Router>
   );
