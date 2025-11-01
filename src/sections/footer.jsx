@@ -4,52 +4,46 @@ import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="relative bg-gradient-to-b from-gray-900 via-black to-gray-950 text-white overflow-hidden py-14 sm:py-16 px-5 sm:px-8 lg:px-16 mt-20">
-      {/* 🌟 Animated glow lines background */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(8)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-[2px] h-24 sm:h-32 bg-gradient-to-b from-purple-500 via-pink-400 to-blue-400 opacity-30"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: ["0%", "100%", "0%"],
-              opacity: [0.3, 0.9, 0.3],
-            }}
-            transition={{
-              duration: 6 + i,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 0.5,
-            }}
-          />
-        ))}
-      </div>
+    <>
+    <hr/>
+    <footer className="relative bg-black text-gray-300 py-20 px-6 sm:px-10 lg:px-20 overflow-hidden">
+      {/* 🌫 Background Text (MARQWON) */}
+      <motion.h1
+        className="absolute bottom-[5rem] left-0 w-full text-center text-[8rem] sm:text-[11rem] lg:text-[13rem] font-extrabold tracking-tight select-none pointer-events-none bg-gradient-to-t from-gray-800 via-gray-700/70 to-gray-900/30 bg-clip-text text-transparent"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 0.25 }}
+        transition={{ duration: 1 }}
+        style={{
+          fontFamily: "Poppins, sans-serif",
+          letterSpacing: "-0.03em",
+          lineHeight: "0.9",
+        }}
+      >
+        MARQWON
+      </motion.h1>
 
-      {/* 🔹 Main Content */}
-      <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 sm:gap-14 text-center sm:text-left">
-        {/* 🟣 Logo + tagline */}
-        <div className="flex flex-col items-center sm:items-start">
+      {/* 🔹 Main Footer Content */}
+      <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 text-center sm:text-left mb-35">
+        {/* 🧠 Brand Section */}
+        <div>
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-purple-400 via-pink-500 to-blue-500 bg-clip-text text-transparent"
+            transition={{ duration: 0.7 }}
+            className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-white via-gray-200 to-gray-400 text-transparent bg-clip-text"
           >
-            MarqWon
+            Marq<span className="text-gray-400">Won</span>
           </motion.h2>
-          <p className="mt-3 text-gray-400 text-sm sm:text-base max-w-xs mx-auto sm:mx-0 leading-relaxed">
-            Powering tomorrow’s innovations with smarter technology and boundless creativity.
+          <p className="mt-3 text-gray-400 text-sm sm:text-base leading-relaxed">
+            Crafting digital experiences that move businesses forward with
+            innovation and purpose.
           </p>
         </div>
 
-        {/* 🔗 Quick links */}
-        <div className="flex flex-col items-center sm:items-start">
-          <h3 className="font-semibold text-lg mb-3 text-purple-400">Quick Links</h3>
-          <ul className="space-y-2 text-gray-300">
+        {/* 🔗 Quick Links */}
+        <div>
+          <h3 className="font-semibold text-lg text-white mb-4">Quick Links</h3>
+          <ul className="space-y-2">
             {[
               { name: "Who we are", to: "/who-we-are" },
               { name: "What we do", to: "/what-we-do" },
@@ -65,7 +59,7 @@ export default function Footer() {
               >
                 <Link
                   to={item.to}
-                  className="hover:text-white text-sm sm:text-base transition-colors duration-200"
+                  className="hover:text-white transition-colors duration-200"
                 >
                   {item.name}
                 </Link>
@@ -74,90 +68,63 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* 🌐 Social + animation */}
-        <div className="flex flex-col items-center sm:items-end gap-4">
-          <h3 className="font-semibold text-lg text-purple-400">Stay Connected</h3>
+        {/* 💼 Company Info */}
+        <div>
+          <h3 className="font-semibold text-lg text-white mb-4">Company</h3>
+          <ul className="space-y-2">
+            <li>MarqWon Dynamic Pvt. Ltd.</li>
+            <li>Madurai, India</li>
+            <li>
+              <a href="mailto:info@marqwon.com" className="hover:text-white">
+                info@marqwon.com
+              </a>
+            </li>
+            <li>+91 63849 42259</li>
+          </ul>
+        </div>
 
-          <div className="flex flex-wrap justify-center sm:justify-end gap-4">
-            {/* Facebook */}
-            <motion.a
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 sm:p-3 rounded-full border border-white/20 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 transition-all duration-300"
-              whileHover={{ scale: 1.15, rotate: 5 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Facebook size={18} className="sm:w-5 sm:h-5" />
-            </motion.a>
-
-            {/* Twitter */}
-            <motion.a
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 sm:p-3 rounded-full border border-white/20 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 transition-all duration-300"
-              whileHover={{ scale: 1.15, rotate: 5 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Twitter size={18} className="sm:w-5 sm:h-5" />
-            </motion.a>
-
-            {/* Instagram */}
-            <motion.a
-              href="https://www.instagram.com/marqwon.mw?igsh=a2RucnBkdDI4Njdt"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 sm:p-3 rounded-full border border-white/20 hover:bg-gradient-to-r hover:from-pink-500 hover:to-orange-400 transition-all duration-300"
-              whileHover={{ scale: 1.15, rotate: 5 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Instagram size={18} className="sm:w-5 sm:h-5" />
-            </motion.a>
-
-            {/* LinkedIn */}
-            <motion.a
-              href="https://www.linkedin.com/company/marq-won/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 sm:p-3 rounded-full border border-white/20 hover:bg-gradient-to-r hover:from-blue-600 hover:to-blue-400 transition-all duration-300"
-              whileHover={{ scale: 1.15, rotate: 5 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Linkedin size={18} className="sm:w-5 sm:h-5" />
-            </motion.a>
+        {/* 🌐 Social Media */}
+        <div className="flex flex-col items-center sm:items-end">
+          <h3 className="font-semibold text-lg text-white mb-4">
+            Connect With Us
+          </h3>
+          <div className="flex gap-4">
+            {[
+              { Icon: Facebook, href: "#" },
+              // { Icon: Twitter, href: "#" },
+              {
+                Icon: Instagram,
+                href: "https://www.instagram.com/marqwon.mw?igsh=a2RucnBkdDI4Njdt",
+              },
+              {
+                Icon: Linkedin,
+                href: "https://www.linkedin.com/company/marq-won/",
+              },
+            ].map(({ Icon, href }, i) => (
+              <motion.a
+                key={i}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.15 }}
+                className="p-2 rounded-full border border-gray-700 hover:border-white transition-all duration-300"
+              >
+                <Icon size={18} className="text-gray-400 hover:text-white" />
+              </motion.a>
+            ))}
           </div>
-
-          {/* 🌠 Animated tagline */}
-          <motion.p
-            className="mt-3 text-xs sm:text-sm text-gray-400 italic"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0.6, 1, 0.6] }}
-            transition={{ duration: 3, repeat: Infinity }}
-          >
+          <p className="mt-5 text-xs sm:text-sm text-gray-500 italic">
             “Innovation never sleeps.”
-          </motion.p>
+          </p>
         </div>
       </div>
 
-      {/* 🔸 Divider line */}
-      <div className="relative z-10 border-t border-white/10 mt-10 pt-6 text-center text-gray-500 text-xs sm:text-sm">
+      {/* 🧾 Copyright */}
+      {/* 🧾 Copyright — moved to absolute bottom */}
+      <div className="absolute bottom-3 left-0 w-full text-center text-gray-600 text-xs sm:text-sm z-20">
         © {new Date().getFullYear()} MarqWon Dynamic Pvt. Ltd. All rights reserved.
       </div>
-
-      {/* ✨ Bottom glowing border */}
-      <motion.div
-        className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500"
-        animate={{
-          backgroundPosition: ["0% 0%", "100% 0%"],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-        style={{ backgroundSize: "200% 100%" }}
-      />
     </footer>
+    </>
   );
 }
