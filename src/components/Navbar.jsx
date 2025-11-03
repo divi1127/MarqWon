@@ -69,7 +69,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
-  const blackTextPages = ["/who-we-are", "/services", "/careers"];
+  const blackTextPages = ["/who-we-are", "/services", "/careers", "/enquire"];
   const whiteLogoPages = ["/", "/products", "/what-we-do", "/discover-me"];
 
   const isBlackTextPage = blackTextPages.includes(location.pathname);

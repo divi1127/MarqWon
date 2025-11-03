@@ -2,32 +2,31 @@ import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 
 const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 40, scale: 0.95 },
   visible: (i = 1) => ({
     opacity: 1,
     y: 0,
+    scale: 1,
     transition: { delay: i * 0.15, duration: 0.8, ease: "easeOut" },
   }),
 };
 
 export default function WhoWeAre() {
   return (
-    <div className="min-h-screen bg-white text-gray-900 relative overflow-hidden">
-      {/* Background Gradient Accent */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.15 }}
-          transition={{ duration: 1.5 }}
-          className="absolute -top-40 -right-40 w-[700px] h-[700px] rounded-full bg-gradient-to-br from-indigo-400 via-pink-300 to-purple-400 blur-3xl"
-        ></motion.div>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.15 }}
-          transition={{ duration: 1.8 }}
-          className="absolute -bottom-40 -left-40 w-[700px] h-[700px] rounded-full bg-gradient-to-tl from-pink-300 via-indigo-300 to-purple-300 blur-3xl"
-        ></motion.div>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-100 to-gray-900 text-gray-900 relative overflow-hidden">
+      {/* Animated floating gradient blobs (black/white tones) */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.2, scale: 1.1 }}
+        transition={{ duration: 2, repeat: Infinity, repeatType: "mirror" }}
+        className="absolute top-[-200px] right-[-200px] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-gray-200 to-gray-400 blur-3xl"
+      />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.25, scale: 1.05 }}
+        transition={{ duration: 2.5, repeat: Infinity, repeatType: "mirror" }}
+        className="absolute bottom-[-250px] left-[-200px] w-[700px] h-[700px] rounded-full bg-gradient-to-tl from-gray-700 to-gray-900 blur-3xl"
+      />
 
       {/* Hero Section */}
       <section className="relative z-10 text-center py-28 px-6">
@@ -35,33 +34,36 @@ export default function WhoWeAre() {
           initial="hidden"
           whileInView="visible"
           variants={fadeInUp}
-          className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-transparent bg-clip-text"
+          className="text-5xl md:text-6xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-700 to-gray-500"
         >
-          "The Future Belongs to Those Who Build It."
+          “The Future Belongs to Those Who Build It.”
         </motion.h1>
-        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+        <motion.p
+          initial="hidden"
+          whileInView="visible"
+          custom={1}
+          variants={fadeInUp}
+          className="text-gray-600 text-lg max-w-2xl mx-auto"
+        >
           Redefining innovation through scalable, future-ready tech solutions.
-        </p>
+        </motion.p>
       </section>
 
-      {/* Mission / Vision / Values as Cards */}
+      {/* Mission / Vision / Values */}
       <section className="relative z-10 container mx-auto px-6 py-16">
         <div className="grid md:grid-cols-3 gap-10">
           {[
             {
               title: "MISSION",
-              text: "We help businesses thrive with custom software, AI automation, cloud, and cybersecurity services — redefining innovation through future-ready solutions.",
-              color: "from-indigo-500 to-purple-500",
+              text: "We help businesses thrive with AI, cloud, and security — redefining innovation through technology.",
             },
             {
               title: "VISION",
-              text: "Empowering businesses to achieve more with less. We envision a future where intelligent technology drives efficiency, growth, and transformation.",
-              color: "from-pink-500 to-indigo-500",
+              text: "A world where intelligent systems empower businesses to achieve more with less effort.",
             },
             {
               title: "VALUES",
-              text: "Innovation. Agility. Impact. We think boldly, adapt quickly, and solve real-world problems with precision and integrity.",
-              color: "from-purple-500 to-pink-500",
+              text: "Integrity. Innovation. Impact. We solve complex problems with clarity and speed.",
             },
           ].map((item, i) => (
             <motion.div
@@ -70,26 +72,22 @@ export default function WhoWeAre() {
               whileInView="visible"
               custom={i}
               variants={fadeInUp}
-              className="rounded-3xl bg-white shadow-lg border border-gray-200 p-10 text-center hover:shadow-2xl hover:-translate-y-2 transition-all"
+              className="rounded-3xl bg-gradient-to-br from-gray-50 to-gray-200 shadow-xl border border-gray-300 p-10 text-center hover:shadow-2xl hover:-translate-y-2 transition-all"
             >
-              <div
-                className={`mx-auto w-16 h-16 rounded-full bg-gradient-to-br ${item.color} flex items-center justify-center text-white mb-6`}
-              >
+              <div className="mx-auto w-16 h-16 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center text-white mb-6">
                 <CheckCircle className="w-7 h-7" />
               </div>
-              <h2
-                className={`text-2xl font-semibold mb-3 bg-gradient-to-r ${item.color} text-transparent bg-clip-text`}
-              >
+              <h2 className="text-2xl font-semibold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600">
                 {item.title}
               </h2>
-              <p className="text-gray-600 leading-relaxed">{item.text}</p>
+              <p className="text-gray-700 leading-relaxed">{item.text}</p>
             </motion.div>
           ))}
         </div>
       </section>
 
       {/* Trust and Responsibility */}
-      <section className="relative z-10 bg-gray-50 border-y border-gray-200 py-20 px-6">
+      <section className="relative z-10 bg-gradient-to-r from-gray-100 to-gray-200 py-20 px-6 border-y border-gray-300">
         <div className="container mx-auto grid md:grid-cols-2 gap-12 items-center">
           <motion.div
             initial="hidden"
@@ -97,13 +95,12 @@ export default function WhoWeAre() {
             variants={fadeInUp}
             className="space-y-4"
           >
-            <h3 className="text-3xl font-semibold bg-gradient-to-r from-indigo-500 to-pink-500 text-transparent bg-clip-text">
+            <h3 className="text-3xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600">
               Creating Positive Change
             </h3>
-            <p className="text-gray-600 leading-relaxed">
-              We strive to make a meaningful impact globally by leading
-              responsibly and supporting our employees, clients, and
-              communities.
+            <p className="text-gray-700 leading-relaxed">
+              We drive responsible innovation to make a real impact on our
+              clients, people, and communities.
             </p>
           </motion.div>
 
@@ -114,25 +111,24 @@ export default function WhoWeAre() {
             variants={fadeInUp}
             className="space-y-4"
           >
-            <h3 className="text-3xl font-semibold bg-gradient-to-r from-pink-500 to-purple-500 text-transparent bg-clip-text">
+            <h3 className="text-3xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-500">
               Digital Trust & Data Privacy
             </h3>
-            <p className="text-gray-600 leading-relaxed">
-              We implement stringent cybersecurity protocols and adhere to
-              global data protection regulations to safeguard digital rights and
-              ensure transparency.
+            <p className="text-gray-700 leading-relaxed">
+              Security isn’t optional — it’s integral. We ensure transparency,
+              compliance, and digital trust in every layer.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Expertise Grid */}
+      {/* Expertise */}
       <section className="relative z-10 container mx-auto px-6 py-24">
         <motion.h2
           initial="hidden"
           whileInView="visible"
           variants={fadeInUp}
-          className="text-4xl font-semibold text-center mb-12 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-transparent bg-clip-text"
+          className="text-4xl font-semibold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-700 to-gray-500"
         >
           Our Expertise
         </motion.h2>
@@ -142,11 +138,9 @@ export default function WhoWeAre() {
             "Cybersecurity Solutions",
             "Digital Transformation",
             "Business Strategy",
-            "Infrastructure Modernization",
+            "Cloud Integration",
             "AI & Data Analytics",
             "Customer Experience",
-            "Cloud Integration",
-            "Enterprise Solutions",
           ].map((service, i) => (
             <motion.div
               key={service}
@@ -154,13 +148,13 @@ export default function WhoWeAre() {
               whileInView="visible"
               custom={i}
               variants={fadeInUp}
-              className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all"
+              className="bg-gradient-to-br from-white to-gray-100 border border-gray-300 rounded-2xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all"
             >
-              <h3 className="text-xl font-semibold mb-2 bg-gradient-to-r from-indigo-500 to-pink-500 text-transparent bg-clip-text">
+              <h3 className="text-xl font-semibold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600">
                 {service}
               </h3>
-              <p className="text-gray-600 text-sm">
-                Innovative, secure, and scalable solutions crafted to drive
+              <p className="text-gray-700 text-sm">
+                Innovative, secure, and scalable solutions designed to drive
                 business success.
               </p>
             </motion.div>
@@ -168,43 +162,43 @@ export default function WhoWeAre() {
         </div>
       </section>
 
-      {/* Recognition & Testimonials */}
-      <section className="relative z-10 py-20 bg-gray-50 border-t border-gray-200">
+      {/* Recognition / Testimonials */}
+      <section className="relative z-10 py-20 bg-gradient-to-b from-gray-100 to-gray-200 border-t border-gray-300">
         <div className="container mx-auto px-6 text-center space-y-10">
           <motion.h2
             initial="hidden"
             whileInView="visible"
             variants={fadeInUp}
-            className="text-4xl font-semibold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-transparent bg-clip-text"
+            className="text-4xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-700 to-gray-500"
           >
             Recognized for the Value We Create
           </motion.h2>
-          <p className="text-gray-600 max-w-3xl mx-auto">
-            Awarded “2025 Tech Innovator of the Year” for excellence in enterprise
-            AI integration and digital product design.
+          <p className="text-gray-700 max-w-3xl mx-auto">
+            Awarded “2025 Tech Innovator of the Year” for excellence in AI
+            integration and design excellence.
           </p>
 
           <div className="grid md:grid-cols-2 gap-10 pt-10">
             {[
               {
                 quote:
-                  "“We partnered with MarqWon to modernize our retail infrastructure. Sales increased 35% year-over-year.”",
-                author: "Global Retail Giant",
+                  "“We partnered with MarqWon to modernize our systems — our efficiency skyrocketed 35%.”",
+                author: "Global Retail Partner",
               },
               {
                 quote:
-                  "“MarqWon sets the bar high for innovation and client success.”",
-                author: "Senior Executive, Fortune 500",
+                  "“MarqWon sets the standard for innovation and execution.”",
+                author: "Fortune 500 Executive",
               },
               {
                 quote:
-                  "“MarqWon helped bring our connected device to market in half the time.”",
-                author: "Director, Healthcare Systems Group",
+                  "“Their expertise helped us launch faster and scale smarter.”",
+                author: "Director, Healthcare Systems",
               },
               {
                 quote:
-                  "“A true partner who brings strategy and execution together flawlessly.”",
-                author: "Strategic Partner, SaaS Provider",
+                  "“A strategic partner who brings clarity and precision.”",
+                author: "SaaS Partner",
               },
             ].map((t, i) => (
               <motion.div
@@ -213,17 +207,15 @@ export default function WhoWeAre() {
                 whileInView="visible"
                 custom={i}
                 variants={fadeInUp}
-                className="bg-white border border-gray-200 rounded-3xl p-8 shadow-md hover:shadow-xl transition-all"
+                className="bg-white border border-gray-300 rounded-3xl p-8 shadow-md hover:shadow-xl transition-all"
               >
-                <p className="text-gray-700 italic mb-4">{t.quote}</p>
+                <p className="text-gray-800 italic mb-4">{t.quote}</p>
                 <p className="text-sm text-gray-500">— {t.author}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
-
-      
     </div>
   );
 }

@@ -12,7 +12,7 @@ const fadeInUp = {
 };
 
 const Products = () => {
-   const products = [
+  const products = [
     {
       title: "DeepLearner",
       status: "Live",
@@ -27,17 +27,14 @@ const Products = () => {
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
-      {/* Corner Gradient Glows */}
+      {/* Gradient Background Glows (unchanged) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Top-right glow */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.4 }}
           transition={{ duration: 1.5 }}
           className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-gradient-to-l from-purple-500/30 via-pink-500/30 to-blue-500/30 blur-3xl"
         ></motion.div>
-
-        {/* Bottom-left glow */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.35 }}
@@ -55,7 +52,7 @@ const Products = () => {
           custom={0}
           variants={fadeInUp}
         >
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.05)]">
             Our Products
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
@@ -76,7 +73,7 @@ const Products = () => {
               viewport={{ once: true }}
               custom={index + 1}
               variants={fadeInUp}
-              className="bg-gray-900/40 backdrop-blur-lg border border-gray-700 hover:shadow-[0_0_40px_rgba(255,255,255,0.15)] rounded-3xl p-10 transition-all duration-500"
+              className="bg-gray-900/60 backdrop-blur-md border border-gray-700 hover:shadow-[0_0_35px_rgba(255,255,255,0.08)] rounded-3xl p-10 transition-all duration-500"
             >
               {/* Status + Title */}
               <div className="flex justify-between items-start mb-6">
@@ -84,13 +81,13 @@ const Products = () => {
                   <div
                     className={`inline-block px-3 py-1 text-xs font-semibold rounded-full mb-3 ${
                       product.status === "Live"
-                        ? "bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 text-black"
+                        ? "bg-white text-black"
                         : "bg-gray-700 text-gray-300"
                     }`}
                   >
                     {product.status}
                   </div>
-                  <h3 className="text-3xl font-semibold mb-2 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 text-transparent bg-clip-text">
+                  <h3 className="text-3xl font-semibold mb-2 text-white">
                     {product.title}
                   </h3>
                   <p className="text-sm text-gray-400">{product.category}</p>
@@ -110,7 +107,7 @@ const Products = () => {
                 <ul className="grid grid-cols-2 gap-2 text-gray-300 text-sm">
                   {product.features.map((f) => (
                     <li key={f} className="flex items-center gap-2">
-                      <span className="text-purple-400">•</span> {f}
+                      <span className="text-gray-400">•</span> {f}
                     </li>
                   ))}
                 </ul>
@@ -125,7 +122,7 @@ const Products = () => {
                   {product.tech.map((t) => (
                     <span
                       key={t}
-                      className="px-2 py-1 border border-gray-700 rounded-md text-xs text-gray-300"
+                      className="px-2 py-1 border border-gray-700 rounded-md text-xs text-gray-200 bg-gray-800"
                     >
                       {t}
                     </span>
@@ -138,7 +135,7 @@ const Products = () => {
                 href={product.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 text-black font-semibold py-3 rounded-lg hover:shadow-[0_0_25px_rgba(255,255,255,0.25)] transition-all"
+                className="w-full flex items-center justify-center gap-2 bg-white text-black font-semibold py-3 rounded-lg hover:bg-gray-200 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-all"
               >
                 Visit Live Site
                 <ExternalLink className="w-4 h-4" />
@@ -157,9 +154,9 @@ const Products = () => {
             viewport={{ once: true }}
             custom={0}
             variants={fadeInUp}
-            className="bg-gray-900/40 backdrop-blur-lg border border-gray-700 rounded-3xl p-12 text-center hover:shadow-[0_0_50px_rgba(255,255,255,0.15)] transition-all"
+            className="bg-gray-900/60 backdrop-blur-md border border-gray-700 rounded-3xl p-12 text-center hover:shadow-[0_0_40px_rgba(255,255,255,0.08)] transition-all"
           >
-            <h2 className="text-4xl font-semibold mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 text-transparent bg-clip-text">
+            <h2 className="text-4xl font-semibold mb-4 text-white">
               Need a Custom Solution?
             </h2>
             <p className="text-gray-300 mb-8 max-w-2xl mx-auto">

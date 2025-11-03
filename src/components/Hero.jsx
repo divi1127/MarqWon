@@ -1,149 +1,124 @@
-import React, { useEffect, useLayoutEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Home from "../sections/Home.jsx";
+import { Link } from "react-router-dom";
 
-gsap.registerPlugin(ScrollTrigger);
+function MetallicPaint({ params = {} }) {
+  const canvasRef = useRef(null);
 
-export default function HeroScrollZigzag() {
-  const containerRef = useRef(null);
-  const messageRefs = useRef([]);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
 
-  // ✅ useLayoutEffect ensures DOM is ready before GSAP runs
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      // Timeline + ScrollTrigger setup
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "+=500%",
-          scrub: true,
-          pin: containerRef.current,
-          pinSpacing: true,
-        },
-      });
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
 
-      messageRefs.current.forEach((msg, i) => {
-        if (!msg) return;
-        const isEven = i % 2 === 0;
+    // 🎨 Metallic black-white-gray palette
+    const colors = ["#ffffff", "#d9d9d9", "#999999", "#666666", "#000000"];
 
-        tl.fromTo(
-          msg,
-          {
-            opacity: 0,
-            y: 60,
-            x: isEven ? -40 : 40,
-            filter: "blur(10px)",
-            scale: 0.9,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            x: 0,
-            filter: "blur(0px)",
-            scale: 1,
-            duration: 1.2,
-            ease: "power2.out",
-          },
-          i * 1.2
-        ).to(
-          msg,
-          {
-            opacity: 0.3,
-            scale: 0.95,
-            duration: 0.8,
-            ease: "power1.inOut",
-          },
-          i * 1.2 + 0.8
-        );
-      });
-    }, containerRef);
+    function draw(time) {
+      ctx.clearRect(0, 0, width, height);
+      const t = time * 0.001;
 
-    // ✅ Cleanup safely (kills everything GSAP created)
-    return () => {
-      ctx.revert(); // removes all animations created in this context
-      ScrollTrigger.getAll().forEach((t) => t.kill());
+      for (let i = 0; i < 25; i++) {
+        const x = Math.sin(t + i) * width * 0.5 + width / 2;
+        const y = Math.cos(t * 1.3 + i * 2) * height * 0.5 + height / 2;
+        const r = 60 + Math.sin(t * 0.8 + i) * 50;
+        const gradient = ctx.createRadialGradient(x, y, 0, x, y, r);
+        gradient.addColorStop(0, colors[i % colors.length]);
+        gradient.addColorStop(1, "transparent");
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    requestAnimationFrame(draw);
+
+    const handleResize = () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
     };
-  }, []);
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, [params]);
 
   return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full"
+      style={{ background: "black" }}
+    />
+  );
+}
+
+export default function HeroMarqWon() {
+  return (
     <>
-    <div ref={containerRef}>
-      <section className="relative min-h-screen w-full flex items-center justify-between bg-gradient-to-b from-black via-[#0a0a0a] to-black text-white px-12 overflow-hidden">
-        {/* ✨ Background Glow */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.06),transparent_70%)] pointer-events-none"></div>
+    <section className="relative min-h-screen flex flex-col items-center justify-center text-center text-white overflow-hidden">
+      {/* Animated metallic background */}
+      <MetallicPaint />
 
-        {/* 🧩 Left Section */}
-        <div className="w-[45%] flex flex-col justify-center z-20 text-left ml-[9vw]">
-          <motion.h1
-            className="font-extrabold leading-tight text-[3.8vw] sm:text-[3.3vw] mb-6"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            Powering Tomorrow’s
-            <br />
-            <span className="text-gray-400">Innovations with</span>
-            <br />
-            Smarter Technology
-          </motion.h1>
+      {/* Subtle radial light overlay */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.12),transparent_70%)] pointer-events-none"></div>
 
-          <motion.p
-            className="text-gray-400 text-lg mb-10 max-w-lg leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 1 }}
-          >
-            We build next-gen digital experiences using modern, scalable, and
-            secure technologies — empowering brands to innovate faster, operate
-            smarter, and connect deeply with their audiences.
-          </motion.p>
+      {/* Content */}
+      <div className="relative z-10 px-8 max-w-4xl">
+        <motion.h1
+          className="text-5xl md:text-7xl font-extrabold leading-tight mb-4 text-white"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <span className="text-gray-100">Innovation That</span>{" "}
+          <span className="text-gray-400">Works</span>
+        </motion.h1>
 
-          <div className="flex justify-start">
-            <button className="px-6 py-3 rounded-full bg-white text-black font-semibold hover:scale-105 transition-all">
-              Explore Our Services
-            </button>
-          </div>
-        </div>
+        <motion.h2
+          className="text-3xl md:text-4xl text-gray-300 font-semibold mb-6"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 1 }}
+        >
+          Efficiency That Scales
+        </motion.h2>
 
-        {/* 💬 Right Section */}
-        <div className="relative w-[50%] h-[600px] flex items-center justify-center z-10">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="relative w-[440px] h-[520px] rounded-3xl bg-white/5 border border-white/10 backdrop-blur-2xl shadow-[0_0_40px_rgba(255,255,255,0.15)] p-6 flex flex-col justify-center overflow-hidden">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.05),transparent_80%)] blur-3xl"></div>
+        <motion.p
+          className="text-gray-400 text-lg md:text-xl mb-10 leading-relaxed max-w-2xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 1 }}
+        >
+          At <span className="text-white font-semibold">MarqWon Dynamic Pvt. Ltd.</span>, 
+          we blend design precision with technological innovation. 
+          From <span className="text-gray-200 font-medium">AI-driven platforms</span> 
+          and <span className="text-gray-200 font-medium">SEO-optimized development</span> 
+          to <span className="text-gray-200 font-medium">cloud transformation</span>, 
+          we craft IT solutions that define tomorrow’s digital excellence.
+        </motion.p>
 
-              <div className="relative flex flex-col space-y-6 z-10">
-                {[
-                  "Leo edited & committed code",
-                  "2 secrets detected → secrets removed",
-                  "Leo pushed code",
-                  "Build completed successfully",
-                  "Deployment triggered → Production",
-                ].map((text, i) => (
-                  <div
-                    key={i}
-                    ref={(el) => (messageRefs.current[i] = el)}
-                    className={`flex items-center gap-3 p-4 rounded-2xl bg-white/[0.07] border border-white/10 backdrop-blur-md shadow-[0_0_20px_rgba(255,255,255,0.05)] transition-all duration-500 ${
-                      i % 2 === 0 ? "ml-4" : "mr-4"
-                    }`}
-                  >
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-600 to-gray-400 flex items-center justify-center text-sm font-semibold text-white shadow-[0_0_10px_rgba(255,255,255,0.2)]">
-                      L
-                    </div>
-                    <p className="text-gray-300 text-sm whitespace-nowrap">
-                      {text}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-    <Home/>
-    </>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.8, duration: 0.8 }}
+        >
+           <Link
+    to="/services"
+    className="px-8 py-3 rounded-full bg-white text-black font-semibold hover:bg-gray-300 hover:scale-105 transition-all duration-300 shadow-lg inline-block"
+  >
+    View Our Services
+  </Link>
+        </motion.div>
+      </div>
+
+     
+    </section>
+    <Home />
+
+</>
   );
 }
