@@ -12,6 +12,7 @@ import Enquiries from "./sections/Enquiries.jsx";
 import Admin from "./sections/Admin.jsx";
 import Footer from "./sections/footer.jsx";
 
+
 export default function App() {
   const [overlap, setOverlap] = useState(false);
 
@@ -35,7 +36,12 @@ export default function App() {
             <Route path="/discover-me" element={<DiscoverMore />} />
             <Route path="/enquiries" element={<Enquiries />} />
             <Route path="/admin" element={<Admin />} />
+            
+    
+        
           </Routes>
+
+
         </main>
 
         {/* ✅ Footer always visible on all pages */}
