@@ -1,0 +1,23 @@
+/* SHIMMER ONLY ON TEXT */
+.shimmer-text {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #d4d4d4 20%,
+    #ffffff 40%,
+    #e6e6e6 60%,
+    #ffffff 80%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: shimmerSlide 2s linear infinite;
+  background-size: 200% auto;
+}
+
+@keyframes shimmerSlide {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}

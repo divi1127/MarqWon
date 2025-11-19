@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import WhoWeAre from "./sections/WhoWeAre.jsx";
-import WhatWeDo from "./sections/WhatWeDo.jsx";
+// import WhatWeDo from "./sections/WhatWeDo.jsx";
 import Services from "./sections/Services.jsx";
 import Products from "./sections/Products.jsx";
 import Careers from "./sections/Careers.jsx";
@@ -11,6 +11,7 @@ import DiscoverMore from "./sections/DiscoverMore.jsx";
 import Enquiries from "./sections/Enquiries.jsx";
 import Admin from "./sections/Admin.jsx";
 import Footer from "./sections/footer.jsx";
+import WebsiteDevelopment from "./services/WebsiteDevelopment.jsx";
 
 
 export default function App() {
@@ -29,13 +30,36 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Hero />} />
             <Route path="/who-we-are" element={<WhoWeAre />} />
-            <Route path="/what-we-do" element={<WhatWeDo />} />
+            {/* <Route path="/what-we-do" element={<WhatWeDo />} /> */}
             <Route path="/services" element={<Services />} />
             <Route path="/products" element={<Products />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/discover-me" element={<DiscoverMore />} />
             <Route path="/enquiries" element={<Enquiries />} />
             <Route path="/admin" element={<Admin />} />
+
+
+
+            {/* === Individual Service Pages === */}
+            <Route path="/services/website-development" element={<WebsiteDevelopment />} />
+
+
+
+
+
+
+
+
+
+             {/* Optional: 404 fallback */}
+          <Route
+            path="*"
+            element={
+              <div className="flex items-center justify-center h-screen text-gray-400">
+                <h2 className="text-3xl">404 | Page Not Found</h2>
+              </div>
+            }
+          />
             
     
         

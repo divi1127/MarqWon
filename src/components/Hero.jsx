@@ -1,144 +1,59 @@
-import React, { useLayoutEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Home from "../sections/Home.jsx";
-import bgVideo from "../assets/video.mp4"; // 🎥 Your video file
+import React from "react";
+import Home from "../sections/Home";
+import TrustedBy from "./TrustedBy";
+import Homecontent from "../components/Homecontent.jsx";
 
-gsap.registerPlugin(ScrollTrigger);
-
-export default function HeroScrollZigzag() {
-  const containerRef = useRef(null);
-  const messagesRef = useRef([]);
-
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const sections = messagesRef.current;
-      const total = sections.length;
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: `+=${total * 120}%`,
-          scrub: true,
-          pin: containerRef.current,
-          anticipatePin: 1,
-        },
-      });
-
-      gsap.set(sections[0], { opacity: 1, y: 0 });
-
-      sections.forEach((msg, i) => {
-        if (i === 0) return;
-        gsap.set(msg, { opacity: 0, y: 80 });
-
-        tl.to(sections[i - 1], {
-          opacity: 0,
-          y: -60,
-          duration: 0.8,
-          ease: "power2.inOut",
-        })
-          .to(
-            msg,
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.8,
-              ease: "power2.out",
-            },
-            "<"
-          );
-      });
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
-
+// NOTE: Ensure 'inter' or a similar clean sans-serif font is configured in your Tailwind/CSS
+export default function Hero() {
   return (
-    <>
-      <div ref={containerRef} className="relative">
-        <section
-          className="relative min-h-screen w-full flex items-center justify-between text-white px-12 overflow-hidden"
-        >
-          {/* 🎥 Background Video */}
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover"
+    <section className="relative w-full min-h-[80vh] bg-white text-black flex flex-col items-center justify-center pt-28 pb-40 px-6">
+      
+      <div className="max-w-4xl text-center">
+
+        {/* HEADLINE: Kept your finalized headline */}
+        {/* Note: I removed the non-standard 'mt-15' from h1 */}
+        <h1 className="text-5xl md:text-7xl lg:text-[76px] font-semibold tracking-tighter leading-none text-[#1D1D1D] font-sans mt-10">
+          Accelerate Your Growth,
+          <br />
+          Define The Future
+        </h1>
+
+        {/* SUBTEXT: Kept your finalized subtext */}
+      <p className="mt-8 text-xl md:text-2xl text-[#4A4A4A] font-light leading-relaxed max-w-2xl mx-auto font-sans">
+ Intelligent, scalable solutions that help you grow faster and work smarter.
+</p>
+
+        {/* BUTTONS */}
+        <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+          
+          {/* Primary Button: Text and href updated to Explore Services */}
+          <a
+            href="/services" 
+            className="px-8 py-4 rounded-full bg-black text-white text-lg font-medium hover:bg-gray-800 transition shadow-lg"
           >
-            <source src={bgVideo} type="video/mp4" />
-          </video>
+            Explore Services
+          </a>
 
-          {/* 🌑 Overlay (dark gradient color layer) */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/90 to-black/90"></div>
-
-          {/* ✨ Optional subtle glow pattern */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_100%_90%,rgba(255,255,255,0.05),transparent_80%)]"></div>
-
-          {/* Left Content */}
-          <div className="w-[45%] flex flex-col justify-center z-20 text-left ml-[9vw]">
-            <motion.h1
-              className="font-extrabold leading-tight text-[4.2vw] sm:text-[3.6vw] mb-6"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1 }}
-            >
-              Empowering Digital Growth <br />
-              <span className="text-gray-300">with Scalable IT Solutions</span>
-            </motion.h1>
-
-            <motion.p
-              className="text-gray-300 text-lg mb-10 max-w-lg leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 1 }}
-            >
-              From custom software to enterprise automation, we help businesses
-              accelerate innovation through AI-driven technology, seamless
-              integrations, and next-gen digital experiences designed to grow
-              visibility and impact.
-            </motion.p>
-
-            <div className="flex justify-start">
-              <button className="px-8 py-3 rounded-full bg-white text-black font-semibold hover:scale-105 transition-all shadow-lg">
-                Discover Our Approach
-              </button>
-            </div>
-          </div>
-
-          {/* Right Side — Animated messages */}
-          <div className="relative w-[50%] flex items-center justify-center z-10">
-            <div className="relative w-[420px] h-[200px] flex items-center justify-center">
-              {[
-                "🚀 Trusted by global brands for innovative IT engineering",
-                "🤖 AI model trained — ready for deployment",
-                "⚙️ New sprint initiated → feature scaling",
-                "🔐 Security audit passed successfully",
-                "⚡ Smart caching enabled → latency ↓ 42%",
-                "🟢 Production update live → v3.2.0",
-              ].map((text, i) => (
-                <div
-                  key={i}
-                  ref={(el) => (messagesRef.current[i] = el)}
-                  className="absolute inset-0 flex flex-col items-center justify-center rounded-2xl text-white text-center px-8 py-6 border border-white/10 backdrop-blur-lg bg-white/[0.05] shadow-[0_0_30px_rgba(255,255,255,0.08)]"
-                >
-                  <div className="w-12 h-12 mb-3 rounded-full bg-gradient-to-br from-gray-600 to-gray-300 flex items-center justify-center font-bold text-black">
-                    M
-                  </div>
-                  <p className="text-lg leading-snug drop-shadow-[0_0_6px_rgba(255,255,255,0.3)]">
-                    {text}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+          {/* Secondary Button: Text and href updated to Explore Products. 
+              Underline logic is now simplified to only show on hover. */}
+          <a
+            href="/products"
+            // The class 'pb-1 border-b border-white' ensures no initial underline.
+            // 'hover:border-black' adds the underline only on hover.
+            className="text-lg text-black font-medium pb-1 border-b border-white hover:border-black transition duration-300"
+          >
+            Explore Products
+          </a>
+        </div>
       </div>
 
+<TrustedBy />
+      
       <Home />
-    </>
+      <Homecontent />
+
+      
+     
+    </section>
   );
 }
