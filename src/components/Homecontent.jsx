@@ -111,6 +111,47 @@ export default function ServicesSection() {
 
       </section>
 
+      {/* INDUSTRIES SECTION */}
+{/* <section className="w-[95%] mx-auto my-32 font-['Helvetica Neue']"> */}
+
+  {/* Title */}
+  {/* <h2 className="text-4xl md:text-5xl font-bold text-center text-black mb-14 fade-item opacity-0 translate-y-6">
+    Industries We Support
+  </h2> */}
+
+  {/* Horizontal Scroll Wrapper */}
+  {/* <div
+    className="flex gap-8 overflow-x-auto scrollbar-hide py-4 px-2 fade-item opacity-0 translate-y-6"
+    style={{ scrollBehavior: "smooth" }}
+  >
+
+    {[
+      "Finance",
+      "Healthcare",
+      "E-Commerce",
+      "Real Estate",
+      "Education",
+      "Travel & Hospitality",
+      "Manufacturing"
+    ].map((name, i) => (
+      <div
+        key={i}
+        className="min-w-[260px] h-[300px] bg-gray-100 rounded-2xl flex flex-col items-center justify-center
+                   text-center shadow-md transition-all duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
+        style={{ transitionDelay: `${i * 120}ms` }} */}
+      {/* > */}
+        {/* Placeholder image box */}
+        {/* <div className="w-40 h-40 bg-gray-300 rounded-xl mb-4"></div> */}
+
+        {/* Title */}
+        {/* <p className="text-xl font-semibold text-gray-800">{name}</p>
+      </div>
+    ))}
+
+  </div>
+</section> */}
+
+
     </section>
   );
 }
