@@ -1,12 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
-import "./styles/tailwind.css";   // Tailwind base
+
+import "./styles/tailwind.css";
 import "./index.css";
-      // Global CSS (scroll animations, custom styles)
+
+import { HeadProvider } from "react-head";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <App />
+    <HeadProvider>
+      <App />
+    </HeadProvider>
   </React.StrictMode>
 );

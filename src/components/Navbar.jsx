@@ -19,7 +19,7 @@ export default function Navbar() {
     { label: "Who we are", href: "/who-we-are" },
     { label: "Services", href: "/services" },
     { label: "Products", href: "/products" },
-    { label: "Company", href: "/company" },
+    { label: "Career", href: "/careers" },
   ];
 
   return (
@@ -76,7 +76,7 @@ export default function Navbar() {
 
           {/* RIGHT — Desktop CTA */}
           <Link
-            to="/request-call"
+            to="/enquiries"
             className="hidden lg:inline-block relative text-white font-medium px-6 py-2 rounded-full bg-black transition duration-300 hover:scale-[1.04]"
           >
             <span className="absolute inset-0 -z-10 rounded-full blur-xl opacity-80 bg-[radial-gradient(circle_at_bottom_left,_rgba(255,120,80,0.6),_rgba(255,0,90,0.5),_rgba(120,80,255,0.4))]"></span>
@@ -120,13 +120,14 @@ export default function Navbar() {
               ))}
 
               {/* MOBILE CTA */}
-              <Link
-                to="/request-call"
-                onClick={() => setMobileOpen(false)}
-                className="mt-2 text-center bg-black text-white py-2 rounded-full"
-              >
-                Request a Call
-              </Link>
+             <Link
+  to="/enquiries"
+  onClick={() => setMobileOpen(false)}
+  className="mt-2 text-center bg-black text-white py-2 rounded-full"
+>
+  Request a Call
+</Link>
+
             </ul>
           </motion.div>
         )}

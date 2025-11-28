@@ -1,221 +1,502 @@
-import { motion } from "framer-motion";
-import { CheckCircle } from "lucide-react";
+// WhoWeAre.jsx — Glassmorphism MVV Section
+import React, { useRef, useState, useEffect } from "react";
+import { Title, Meta } from "react-head";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Link } from "react-router-dom";
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 40, scale: 0.95 },
-  visible: (i = 1) => ({
+/* ---------- ANIMATION VARIANTS ---------- */
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
     opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { delay: i * 0.15, duration: 0.8, ease: "easeOut" },
-  }),
+    transition: {
+      staggerChildren: 0.3,
+      delayChildren: 0.2,
+    },
+  },
 };
 
-export default function WhoWeAre() {
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1.0] },
+  },
+};
+
+/* ---------- PARALLAX SECTION ---------- */
+function ScrollParallax({ bg, height = "100vh", overlayOpacity = 0.6, children, textColor = "text-white" }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+
+  const bgY = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["50px", "-50px"]);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-gray-100 to-gray-900 text-gray-900 relative overflow-hidden">
-      {/* Animated floating gradient blobs (black/white tones) */}
+    <section
+      ref={ref}
+      className={`relative w-full overflow-hidden flex items-center justify-center isolate ${textColor}`}
+      style={{ height }}
+    >
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.2, scale: 1.1 }}
-        transition={{ duration: 2, repeat: Infinity, repeatType: "mirror" }}
-        className="absolute top-[-200px] right-[-200px] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-gray-200 to-gray-400 blur-3xl"
-      />
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.25, scale: 1.05 }}
-        transition={{ duration: 2.5, repeat: Infinity, repeatType: "mirror" }}
-        className="absolute bottom-[-250px] left-[-200px] w-[700px] h-[700px] rounded-full bg-gradient-to-tl from-gray-700 to-gray-900 blur-3xl"
+        aria-hidden
+        style={{
+          backgroundImage: `url(${bg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center center",
+          y: bgY,
+        }}
+        className="absolute w-full h-[125%] -top-[12.5%] left-0 z-0 pointer-events-none grayscale-[30%]"
       />
 
-      {/* Hero Section */}
-      <section className="relative z-10 text-center py-28 px-6">
-        <motion.h1
-          initial="hidden"
-          whileInView="visible"
-          variants={fadeInUp}
-          className="text-5xl md:text-6xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-700 to-gray-500"
-        >
-          “The Future Belongs to Those Who Build It.”
-        </motion.h1>
-        <motion.p
-          initial="hidden"
-          whileInView="visible"
-          custom={1}
-          variants={fadeInUp}
-          className="text-gray-600 text-lg max-w-2xl mx-auto"
-        >
-          Redefining innovation through scalable, future-ready tech solutions.
-        </motion.p>
-      </section>
+      <div className="absolute inset-0 bg-black z-1" style={{ opacity: overlayOpacity }} />
 
-      {/* Mission / Vision / Values */}
-      <section className="relative z-10 container mx-auto px-6 py-16">
-        <div className="grid md:grid-cols-3 gap-10">
-          {[
-            {
-              title: "MISSION",
-              text: "We help businesses thrive with AI, cloud, and security — redefining innovation through technology.",
-            },
-            {
-              title: "VISION",
-              text: "A world where intelligent systems empower businesses to achieve more with less effort.",
-            },
-            {
-              title: "VALUES",
-              text: "Integrity. Innovation. Impact. We solve complex problems with clarity and speed.",
-            },
-          ].map((item, i) => (
-            <motion.div
-              key={item.title}
-              initial="hidden"
-              whileInView="visible"
-              custom={i}
-              variants={fadeInUp}
-              className="rounded-3xl bg-gradient-to-br from-gray-50 to-gray-200 shadow-xl border border-gray-300 p-10 text-center hover:shadow-2xl hover:-translate-y-2 transition-all"
+      <motion.div style={{ y: contentY }} className="relative z-10 w-full max-w-7xl px-6">
+        {children}
+      </motion.div>
+    </section>
+  );
+}
+
+/* ---------- GLASS MORPHISM MVV CARD ---------- */
+function MVVCard({ title, text }) {
+  return (
+    <motion.div
+      variants={itemVariants}
+      whileHover={{
+        scale: 1.06,
+        backdropFilter: "blur(20px)",
+        transition: { duration: 0.3 }
+      }}
+      className="
+        relative p-8 
+        bg-white/10 
+        backdrop-blur-xl 
+        rounded-3xl 
+        border border-white/20 
+        shadow-[0_8px_32px_rgba(0,0,0,0.1)]
+        group text-left flex flex-col h-full
+        transition-all duration-300
+      "
+    >
+      <div className="relative z-10 flex flex-col h-full">
+        <h4 className="text-2xl font-bold tracking-tight mb-4 text-black drop-shadow-lg">
+          {title}
+        </h4>
+
+        <p className="text-base text-black/90 leading-relaxed font-light flex-grow">
+          {text}
+        </p>
+      </div>
+
+      <div
+        className="
+        absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100
+        transition-opacity duration-300
+        bg-gradient-to-br from-white/10 to-white/5
+      "
+      ></div>
+    </motion.div>
+  );
+}
+
+/* ---------- MAIN PAGE ---------- */
+export default function WhoWeAre() {
+  const heroMainImage = "https://i.pinimg.com/736x/4e/cc/1f/4ecc1f16e661104ae4432b4e60695b48.jpg";
+  const ctaImage = "https://i.pinimg.com/1200x/ef/c8/78/efc87887230039968639d32aead40c17.jpg";
+
+  /* ---------- FIXED: HOOKS MUST BE INSIDE COMPONENT ---------- */
+  const scrollRef = useRef(null);
+  const [progress, setProgress] = useState(0);
+
+  const industries = [
+    { name: "Technology", img: "https://images.unsplash.com/photo-1518770660439-4636190af475" },
+    { name: "Financial Services", img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab" },
+    { name: "Healthcare", img: "https://images.unsplash.com/photo-1581091215367-59ab6b4b21b3" },
+    { name: "Manufacturing", img: "https://images.unsplash.com/photo-1549921296-3cce903855cd" },
+
+    // NEW INDUSTRIES
+    { name: "E-Commerce", img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0" },
+    { name: "Real Estate", img: "https://images.unsplash.com/photo-1523217582562-09d0def993a6" },
+    { name: "Education", img: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f" },
+    { name: "Travel & Hospitality", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e" },
+    { name: "Logistics & Transportation", img: "https://images.unsplash.com/photo-1506619216599-9d16d0903dfd" },
+    { name: "Retail", img: "https://images.unsplash.com/photo-1506617420156-8e4536971650" },
+    { name: "Energy & Utilities", img: "https://images.unsplash.com/photo-1509395176047-4a66953fd231" },
+  ];
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const updateProgress = () => {
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      setProgress((el.scrollLeft / maxScroll) * 100);
+    };
+
+    el.addEventListener("scroll", updateProgress);
+    return () => el.removeEventListener("scroll", updateProgress);
+  }, []);
+
+  /* ------------------- RETURN UI ------------------- */
+  return (
+    <div className="w-full text-black font-poppins overflow-x-hidden bg-white">
+      <Title>MarqWon Dynamics – Redefining Innovation</Title>
+      <Meta name="description" content="MarqWon Dynamics helps businesses thrive with custom software." />
+
+      {/* ================= HERO SECTION ================= */}
+      <section className="relative w-full pt-28 pb-20 px-6 max-w-7xl mx-auto flex items-center min-h-[70vh] bg-white mb-20">
+        <div className="flex flex-col md:flex-row items-center justify-between w-full">
+          
+          {/* LEFT COLUMN */}
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="md:w-6/12 lg:w-5/12 text-left pr-8"
+          >
+            <motion.h1 
+              variants={itemVariants}
+              className="text-5xl md:text-6xl font-extrabold mb-6 tracking-tighter leading-tight text-gray-900 font-inter"
             >
-              <div className="mx-auto w-16 h-16 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center text-white mb-6">
-                <CheckCircle className="w-7 h-7" />
-              </div>
-              <h2 className="text-2xl font-semibold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600">
-                {item.title}
-              </h2>
-              <p className="text-gray-700 leading-relaxed">{item.text}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* Trust and Responsibility */}
-      <section className="relative z-10 bg-gradient-to-r from-gray-100 to-gray-200 py-20 px-6 border-y border-gray-300">
-        <div className="container mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            variants={fadeInUp}
-            className="space-y-4"
-          >
-            <h3 className="text-3xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600">
-              Creating Positive Change
-            </h3>
-            <p className="text-gray-700 leading-relaxed">
-              We drive responsible innovation to make a real impact on our
-              clients, people, and communities.
-            </p>
+              The Future Belongs to Those Who Build It.
+            </motion.h1>
+            
+            <motion.p variants={itemVariants} className="text-lg font-light text-gray-600 leading-relaxed mb-8">
+              MarqWon Dynamics is an innovative software firm focused on building
+              custom software, AI automation, cloud systems, mobile apps, and next-gen digital solutions.
+            </motion.p>
           </motion.div>
 
+          {/* RIGHT COLUMN IMAGE */}
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            custom={1}
-            variants={fadeInUp}
-            className="space-y-4"
+            initial={{ opacity: 0, scale: 0.9 }} 
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="relative md:w-6/12 lg:w-7/12 mt-12 md:mt-0 flex justify-center items-center h-[550px]"
           >
-            <h3 className="text-3xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-500">
-              Digital Trust & Data Privacy
-            </h3>
-            <p className="text-gray-700 leading-relaxed">
-              Security isn’t optional — it’s integral. We ensure transparency,
-              compliance, and digital trust in every layer.
-            </p>
+            <div className="absolute w-full h-full p-4 ml-30 mt-20">
+              <img
+                src={heroMainImage}
+                alt="Team collaboration"
+                className="w-full h-full object-cover rounded-lg shadow-2xl absolute top-0 left-0"
+                style={{ clipPath: "polygon(0% 0%, 100% 0%, 100% 85%, 0% 100%)" }}
+              />
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Expertise */}
-      <section className="relative z-10 container mx-auto px-6 py-24">
+      {/* ================= MVV GLASS CARDS ================= */}
+      <section
+        className="
+          relative w-[95%] mx-auto my-20
+          bg-gradient-to-br from-indigo-100 via-orange-100 to-orange-100
+          rounded-3xl shadow-xl overflow-hidden font-['Inter'] p-0
+          py-24 md:py-32
+        "
+      >
         <motion.h2
-          initial="hidden"
-          whileInView="visible"
-          variants={fadeInUp}
-          className="text-4xl font-semibold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-700 to-gray-500"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center text-4xl font-extrabold text-gray-900 mb-12"
         >
-          Our Expertise
+          Our Core Principles
         </motion.h2>
 
-        <div className="grid md:grid-cols-3 gap-10">
-          {[
-            "Cybersecurity Solutions",
-            "Digital Transformation",
-            "Business Strategy",
-            "Cloud Integration",
-            "AI & Data Analytics",
-            "Customer Experience",
-          ].map((service, i) => (
-            <motion.div
-              key={service}
-              initial="hidden"
-              whileInView="visible"
-              custom={i}
-              variants={fadeInUp}
-              className="bg-gradient-to-br from-white to-gray-100 border border-gray-300 rounded-2xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all"
-            >
-              <h3 className="text-xl font-semibold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600">
-                {service}
-              </h3>
-              <p className="text-gray-700 text-sm">
-                Innovative, secure, and scalable solutions designed to drive
-                business success.
-              </p>
-            </motion.div>
-          ))}
-        </div>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto px-6"
+        >
+          <MVVCard
+            title="MISSION"
+            text="Redefining innovation through scalable, future-ready tech solutions. We help businesses thrive with custom software, AI automation, cloud, and security services."
+          />
+
+          <MVVCard
+            title="VISION"
+            text="Empowering organizations to achieve more with intelligent technology that drives efficiency, transformation, and growth."
+          />
+
+          <MVVCard
+            title="VALUES"
+            text="Innovation, integrity, and agility. We think boldly, move fast, and solve real-world challenges with precision."
+          />
+        </motion.div>
       </section>
 
-      {/* Recognition / Testimonials */}
-      <section className="relative z-10 py-20 bg-gradient-to-b from-gray-100 to-gray-200 border-t border-gray-300">
-        <div className="container mx-auto px-6 text-center space-y-10">
-          <motion.h2
-            initial="hidden"
-            whileInView="visible"
-            variants={fadeInUp}
-            className="text-4xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-700 to-gray-500"
-          >
-            Recognized for the Value We Create
-          </motion.h2>
-          <p className="text-gray-700 max-w-3xl mx-auto">
-            Awarded “2025 Tech Innovator of the Year” for excellence in AI
-            integration and design excellence.
-          </p>
+    
 
-          <div className="grid md:grid-cols-2 gap-10 pt-10">
-            {[
-              {
-                quote:
-                  "“We partnered with MarqWon to modernize our systems — our efficiency skyrocketed 35%.”",
-                author: "Global Retail Partner",
-              },
-              {
-                quote:
-                  "“MarqWon sets the standard for innovation and execution.”",
-                author: "Fortune 500 Executive",
-              },
-              {
-                quote:
-                  "“Their expertise helped us launch faster and scale smarter.”",
-                author: "Director, Healthcare Systems",
-              },
-              {
-                quote:
-                  "“A strategic partner who brings clarity and precision.”",
-                author: "SaaS Partner",
-              },
-            ].map((t, i) => (
-              <motion.div
-                key={i}
-                initial="hidden"
-                whileInView="visible"
-                custom={i}
-                variants={fadeInUp}
-                className="bg-white border border-gray-300 rounded-3xl p-8 shadow-md hover:shadow-xl transition-all"
-              >
-                <p className="text-gray-800 italic mb-4">{t.quote}</p>
-                <p className="text-sm text-gray-500">— {t.author}</p>
-              </motion.div>
-            ))}
+  {/* -------- STORY CONTENT -------- */}
+{/* ================= OUR STORY SECTION (IMAGE LEFT + CONTENT RIGHT) ================= */}
+<section className="w-[95%] mx-auto my-32 bg-white rounded-3xl shadow-xl p-6 md:p-14">
+
+  {/* TITLE */}
+  <motion.h2
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.8 }}
+    viewport={{ once: true }}
+    className="text-center text-4xl md:text-5xl font-extrabold text-black mb-14"
+  >
+    Our Story
+  </motion.h2>
+
+  {/* MAIN CONTENT ROW */}
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+    {/* LEFT SIDE IMAGE */}
+    <motion.div
+      initial={{ opacity: 0, x: -40 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
+      className="w-full"
+    >
+      <img
+        src="https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg"
+        alt="Our Story - MarqWon Dynamics"
+        className="w-full h-[380px] object-cover rounded-3xl shadow-lg"
+      />
+    </motion.div>
+
+    {/* RIGHT SIDE CONTENT */}
+    <motion.div
+      initial={{ opacity: 0, x: 40 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
+      className="text-gray-700 text-lg leading-relaxed"
+    >
+      <p className="mb-6">
+        At MarqWon, we believe innovation knows no boundaries. Our journey began in 
+        <span className="font-semibold text-black"> Madurai</span> — a city celebrated for its heritage, culture, and intellectual spirit.
+      </p>
+
+      <p className="mb-6">
+        From this strong foundation, we’ve grown into a nationwide technology partner, working with 
+        startups, enterprises, innovators, and communities across India.
+      </p>
+
+      <p className="mb-6">
+        Today, our presence extends from the streets of Madurai to the innovation hubs of 
+        <span className="font-semibold text-black"> Bengaluru, Hyderabad, Mumbai, and Delhi</span>.  
+        We deliver transformative solutions in AI, cloud architecture, automation, product 
+        engineering, mobility, and digital strategy.
+      </p>
+
+      <p className="mb-6">
+        Whether you’re an emerging startup or a scaling enterprise, 
+        <span className="font-semibold text-black"> MarqWon Dynamics </span>
+        is your trusted partner for digital innovation, product development, and end-to-end tech transformation.
+      </p>
+
+      <p>
+        Built in India. Built for the world. Powered by young minds, bold ideas, and next-generation technology.
+      </p>
+    </motion.div>
+  </div>
+
+  {/* ================= OUR DNA ================= */}
+  <motion.h3
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.8, delay: 0.4 }}
+    viewport={{ once: true }}
+    className="text-center text-3xl md:text-4xl font-bold text-black mt-24 mb-14"
+  >
+    Our DNA
+  </motion.h3>
+
+  {/* DNA GRID */}
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+
+    <div className="bg-gradient-to-br from-gray-100 to-white p-6 rounded-2xl shadow-md">
+      <h4 className="text-xl font-semibold mb-3 text-gray-900">Speed & Agility</h4>
+      <p className="text-gray-700">We move fast, adapt faster, and execute with precision.</p>
+    </div>
+
+    <div className="bg-gradient-to-br from-gray-100 to-white p-6 rounded-2xl shadow-md">
+      <h4 className="text-xl font-semibold mb-3 text-gray-900">Innovation-First</h4>
+      <p className="text-gray-700">Every challenge is an opportunity to build something extraordinary.</p>
+    </div>
+
+    <div className="bg-gradient-to-br from-gray-100 to-white p-6 rounded-2xl shadow-md">
+      <h4 className="text-xl font-semibold mb-3 text-gray-900">Next-Gen Vision</h4>
+      <p className="text-gray-700">We design solutions that stand strong today and future-proof tomorrow.</p>
+    </div>
+
+    <div className="bg-gradient-to-br from-gray-100 to-white p-6 rounded-2xl shadow-md">
+      <h4 className="text-xl font-semibold mb-3 text-gray-900">Hustle & Passion</h4>
+      <p className="text-gray-700">We build with heart. We create with purpose.</p>
+    </div>
+
+  </div>
+</section>
+
+
+
+      {/* ================= INDUSTRIES SCROLLER ================= */}
+<section className="w-[95%] mx-auto my-32 font-['Helvetica Neue']">
+  <h2 className="text-4xl md:text-5xl font-bold text-black mb-14 text-center mt-10">
+    Industries We Support
+  </h2>
+
+  <div
+    ref={scrollRef}
+    className="flex gap-8 overflow-x-auto scrollbar-hide py-4 px-2"
+    style={{ scrollBehavior: "smooth" }}
+  >
+    {industries.map((item, i) => (
+      <div
+        key={i}
+        className="min-w-[300px] h-[380px] rounded-3xl shadow-lg relative overflow-hidden cursor-pointer mt-20 group"
+      >
+        <img
+          src={item.img}
+          alt={item.name}
+          className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
+        />
+
+        <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all duration-300"></div>
+
+        <h3 className="absolute bottom-6 left-6 text-2xl font-semibold text-white drop-shadow-lg transition-all duration-300 group-hover:translate-y-[-6px]">
+          {item.name}
+        </h3>
+      </div>
+    ))}
+  </div>
+
+  {/* Scroll progress bar */}
+  <div className="w-full h-1 bg-gray-200 rounded-full mt-13">
+    <div
+      className="h-full rounded-full"
+      style={{
+        width: `${progress}%`,
+        background: "linear-gradient(to right, #ff7a59, #5271ff)",
+      }}
+    ></div>
+  </div>
+</section>
+{/* ================= RESPONSIBILITY SECTION (ACCORDION) ================= */}
+<section className="w-[95%] mx-auto my-32 font-['Inter']">
+
+  <h2 className="text-4xl md:text-5xl font-bold text-black mb-14">
+    Creating Positive Change
+  </h2>
+
+  <p className="text-gray-700 text-lg leading-relaxed max-w-3xl mb-16">
+    We strive to make a meaningful impact globally by leading responsibly
+    and supporting the well-being of our employees, clients, and the
+    communities we serve.
+  </p>
+
+  {/* --- ACCORDION WRAPPER --- */}
+  <div className="w-full bg-[#0a0d33] rounded-3xl shadow-xl p-10 text-white">
+
+    {/* Accordion Item 1 */}
+    <details className="border-b border-white/20 py-6 group">
+      <summary className="flex items-center justify-between cursor-pointer text-xl font-semibold">
+        Digital Trust and Data Privacy
+        <span className="transform group-open:rotate-180 transition">
+          ▼
+        </span>
+      </summary>
+
+      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+        <p className="text-base leading-relaxed text-white/90">
+          We prioritize protecting the digital rights and data privacy of our stakeholders.
+          Our commitment includes implementing stringent cybersecurity protocols,
+          ensuring transparency in data usage, and adhering to global data protection
+          regulations. Trust is the foundation of our digital interactions.
+        </p>
+
+       
+      </div>
+    </details>
+
+    {/* Accordion Item 2 */}
+    <details className="border-b border-white/20 py-6 group">
+      <summary className="flex items-center justify-between cursor-pointer text-xl font-semibold">
+        Community Engagement
+        <span className="transform group-open:rotate-180 transition">
+          ▼
+        </span>
+      </summary>
+
+      <p className="mt-6 text-white/90 leading-relaxed">
+        We actively contribute to community development, education support,
+        youth empowerment, and technology accessibility initiatives.
+      </p>
+    </details>
+
+    {/* Accordion Item 3 */}
+    <details className="border-b border-white/20 py-6 group">
+      <summary className="flex items-center justify-between cursor-pointer text-xl font-semibold">
+        Ethical Supply Chain
+        <span className="transform group-open:rotate-180 transition">
+          ▼
+        </span>
+      </summary>
+
+      <p className="mt-6 text-white/90 leading-relaxed">
+        We ensure fair labor, transparent sourcing, and sustainable production
+        across all partner networks and vendors.
+      </p>
+    </details>
+
+  </div>
+</section>
+
+
+
+      {/* ================= GLOBAL SECTION ================= */}
+      {/* <section className="w-full py-20 flex items-center justify-center bg-white relative z-20">
+        <div className="w-full max-w-4xl px-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8">Global Vision, Local Roots</h2>
+          <div className="text-lg text-gray-700 leading-relaxed space-y-6 font-light max-w-2xl mx-auto">
+            <p>
+              MarqWon began in Madurai—a city rich in heritage—and expanded nationwide,
+              serving clients from startups to large enterprises across Bengaluru, Hyderabad, Mumbai, and Delhi.
+            </p>
+            <p>
+              We are a young, agile team focused on building the future of digital innovation.
+            </p>
           </div>
         </div>
-      </section>
+      </section> */}
+
+      {/* ================= CTA PARALLAX ================= */}
+      <ScrollParallax bg={ctaImage} height="100vh" overlayOpacity={0.4}>
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center"
+        >
+
+<h3 className="text-4xl md:text-6xl font-bold mb-8 text-white">
+  Build What’s Next
+</h3>
+
+<Link to="/enquiries">
+  <button className="px-10 py-4 bg-black text-white text-lg font-bold rounded-full hover:scale-105 hover:bg-gray-900 transition-all duration-300 shadow-2xl">
+    Partner With Us
+  </button>
+</Link>
+
+        </motion.div>
+      </ScrollParallax>
     </div>
   );
 }

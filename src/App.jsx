@@ -7,7 +7,7 @@ import WhoWeAre from "./sections/WhoWeAre.jsx";
 import Services from "./sections/Services.jsx";
 import Products from "./sections/Products.jsx";
 import Careers from "./sections/Careers.jsx";
-import DiscoverMore from "./sections/DiscoverMore.jsx";
+// import DiscoverMore from "./sections/DiscoverMore.jsx";
 import Enquiries from "./sections/Enquiries.jsx";
 import Admin from "./sections/Admin.jsx";
 import Footer from "./sections/footer.jsx";
@@ -34,7 +34,7 @@ export default function App() {
             <Route path="/services" element={<Services />} />
             <Route path="/products" element={<Products />} />
             <Route path="/careers" element={<Careers />} />
-            <Route path="/discover-me" element={<DiscoverMore />} />
+            {/* <Route path="/discover-me" element={<DiscoverMore />} /> */}
             <Route path="/enquiries" element={<Enquiries />} />
             <Route path="/admin" element={<Admin />} />
 
