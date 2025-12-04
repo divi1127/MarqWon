@@ -444,12 +444,13 @@ export default function ServicesPage() {
 
   {/* Footer */}
   <div className="flex items-center justify-between text-sm">
-    <a
-      href={`/services/${slugify(s.title)}`}
-      className="font-semibold text-blue-600 transition-colors group-hover:text-blue-800"
-    >
-      Explore →
-    </a>
+   <Link
+  to={`/services/${slugify(s.title)}`}
+  className="font-semibold text-blue-600 transition-colors group-hover:text-blue-800"
+>
+  Explore →
+</Link>
+
     <span className="text-gray-500 text-xs">
       {s.category}
     </span>
