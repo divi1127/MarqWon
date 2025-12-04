@@ -39,7 +39,7 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16 font-cohere">
 
           {/* LEFT — LOGO */}
-          <Link to="/" reloadDocument className="flex items-center ">
+          <Link to="/" className="flex items-center">
             <img src={logoWhite} alt="MarqWon" className="h-16" />
             <span className="text-black text-2xl font-semibold tracking-tight">
               MarqWon
@@ -59,7 +59,6 @@ export default function Navbar() {
                 >
                   <Link
                     to={l.href}
-                    reloadDocument
                     className={`text-lg transition px-2 py-1 rounded-md
                       ${
                         active
@@ -78,10 +77,11 @@ export default function Navbar() {
           {/* RIGHT — Desktop CTA */}
           <Link
             to="/enquiries"
-            reloadDocument
             className="hidden lg:inline-block relative text-white font-medium px-6 py-2 rounded-full bg-black transition duration-300 hover:scale-[1.04]"
           >
-            <span className="absolute inset-0 -z-10 rounded-full blur-xl opacity-80 bg-[radial-gradient(circle_at_bottom_left,_rgba(255,120,80,0.6),_rgba(255,0,90,0.5),_rgba(120,80,255,0.4))]"></span>
+            <span className="absolute inset-0 -z-10 rounded-full blur-xl opacity-80 
+              bg-[radial-gradient(circle_at_bottom_left,_rgba(255,120,80,0.6),_rgba(255,0,90,0.5),_rgba(120,80,255,0.4))]
+            "></span>
             Request a Call
           </Link>
 
@@ -110,7 +110,6 @@ export default function Navbar() {
                 <Link
                   key={l.href}
                   to={l.href}
-                  reloadDocument
                   onClick={() => setMobileOpen(false)}
                   className={`text-lg py-2 ${
                     location.pathname === l.href
@@ -125,13 +124,11 @@ export default function Navbar() {
               {/* MOBILE CTA */}
               <Link
                 to="/enquiries"
-                reloadDocument
                 onClick={() => setMobileOpen(false)}
                 className="mt-2 text-center bg-black text-white py-2 rounded-full"
               >
                 Request a Call
               </Link>
-
             </ul>
           </motion.div>
         )}
