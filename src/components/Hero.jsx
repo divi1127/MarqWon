@@ -2,6 +2,7 @@ import React from "react";
 import Home from "../sections/Home";
 import TrustedBy from "./TrustedBy";
 import Homecontent from "../components/Homecontent.jsx";
+import { Link } from "react-router-dom";
 
 // NOTE: Ensure 'inter' or a similar clean sans-serif font is configured in your Tailwind/CSS
 export default function Hero() {
@@ -27,12 +28,13 @@ export default function Hero() {
         <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
           
           {/* Primary Button: Text and href updated to Explore Services */}
-          <a
-            href="/services" 
-            className="px-8 py-4 rounded-full bg-black text-white text-lg font-medium hover:bg-gray-800 transition shadow-lg"
-          >
-            Explore Services
-          </a>
+         <Link
+  to="/services"
+  className="px-8 py-4 rounded-full bg-black text-white text-lg font-medium hover:bg-gray-800 transition shadow-lg"
+>
+  Explore Services
+</Link>
+
 
           {/* Secondary Button: Text and href updated to Explore Products. 
               Underline logic is now simplified to only show on hover. */}
