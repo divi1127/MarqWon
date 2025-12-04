@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Network, Code, Workflow, Cpu, ShoppingBag, ShieldCheck } from "lucide-react";
+
 
 export default function ServicesSection() {
   // Scroll fade animation
@@ -22,31 +24,38 @@ export default function ServicesSection() {
   }, []);
 
   const services = [
-    {
-      title: "Crypto & Web3 Solutions",
-      desc: "Unlock the future with decentralized technologies and blockchain integration.",
-    },
-    {
-      title: "Custom Application Development",
-      desc: "Build tailored mobile and web applications that drive business growth.",
-    },
-    {
-      title: "CRM & ERP Systems",
-      desc: "Streamline operations with powerful customer and resource management tools.",
-    },
-    {
-      title: "Digital Transformation Services",
-      desc: "Modernize legacy systems and embrace cutting-edge digital practices.",
-    },
-    {
-      title: "E-Commerce Development",
-      desc: "Launch and scale your online store with secure, high-performance solutions.",
-    },
-    {
-      title: "Cybersecurity Solutions",
-      desc: "Safeguard your digital ecosystem with end-to-end protection.",
-    },
-  ];
+  {
+    title: "Crypto & Web3 Solutions",
+    desc: "Unlock the future with decentralized decentralized technologies and blockchain integration.",
+    icon: Network,
+  },
+  {
+    title: "Custom Application Development",
+    desc: "Build tailored mobile and web applications that drive business growth.",
+    icon: Code,
+  },
+  {
+    title: "CRM & ERP Systems",
+    desc: "Streamline operations with powerful customer and resource management tools.",
+    icon: Workflow,
+  },
+  {
+    title: "Digital Transformation Services",
+    desc: "Modernize legacy systems and embrace cutting-edge digital practices.",
+    icon: Cpu,
+  },
+  {
+    title: "E-Commerce Development",
+    desc: "Launch and scale your online store with secure, high-performance solutions.",
+    icon: ShoppingBag,
+  },
+  {
+    title: "Cybersecurity Solutions",
+    desc: "Safeguard your digital ecosystem with end-to-end protection.",
+    icon: ShieldCheck,
+  },
+];
+
 
   // Horizontal scroll progress bar
   const scrollRef = useRef(null);
@@ -63,11 +72,11 @@ export default function ServicesSection() {
   },
   {
     name: "Healthcare",
-    img: "https://images.unsplash.com/photo-1581091215367-59ab6b4b21b3",
+    img: "https://i.pinimg.com/736x/02/20/b0/0220b0514d2348a24b2ee085c4413ab2.jpg",
   },
   {
     name: "Manufacturing",
-    img: "https://images.unsplash.com/photo-1549921296-3cce903855cd",
+    img: "https://i.pinimg.com/736x/e2/e2/90/e2e29080ea8b6c74b5e4c3ed1ada3c25.jpg",
   },
 
   // --- 7 NEW INDUSTRIES BELOW ---
@@ -90,7 +99,7 @@ export default function ServicesSection() {
   },
   {
     name: "Logistics & Transportation",
-    img: "https://images.unsplash.com/photo-1506619216599-9d16d0903dfd",
+    img: "https://i.pinimg.com/736x/19/9f/eb/199feb6bd46338c69c054efdb7887424.jpg",
   },
   {
     name: "Retail",
@@ -98,7 +107,7 @@ export default function ServicesSection() {
   },
   {
     name: "Energy & Utilities",
-    img: "https://images.unsplash.com/photo-1509395176047-4a66953fd231",
+    img: "https://i.pinimg.com/1200x/6f/b6/7c/6fb67c0a7fb9181b245b5c2c44c3725c.jpg",
   },
 ];
 
@@ -135,7 +144,10 @@ export default function ServicesSection() {
             style={{ transitionDelay: `${index * 120}ms` }}
           >
             <div className="flex items-center gap-3 mb-4">
-              <div className="text-orange-600 text-3xl font-bold">⚡</div>
+              <div className="text-gray-500">
+  <item.icon size={36} strokeWidth={1.5} />
+</div>
+
               <h3 className="text-2xl font-semibold">{item.title}</h3>
             </div>
 

@@ -17,43 +17,45 @@ const benefits = [
     icon: Zap,
     title: "Cutting-Edge Technology",
     description:
-      "Work hands-on with the latest frameworks, generative AI models, and cloud technologies to solve real-world problems. We dedicate time and resources purely to exploratory research.",
+      "Work hands-on with the latest frameworks, generative AI models, and cloud technologies.",
     category: "Technology Focus",
-    color: "bg-blue-600",
+    img: "https://images.unsplash.com/photo-1535223289827-42f1e9919769", // NEW
   },
   {
     icon: TrendingUp,
     title: "Accelerated Growth",
     description:
-      "Benefit from personalized mentorship, continuous learning budgets, and a clear path for professional advancement and leadership. Your career path is custom-designed for rapid elevation.",
+      "Mentorship, continuous learning budgets, and fast career progression.",
     category: "Work and Growth",
-    color: "bg-green-600",
+    img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085", // NEW
   },
   {
     icon: Calendar,
     title: "Flexible Work Model",
     description:
-      "We offer flexible hours and remote options, trusting you to achieve peak productivity and maintain a healthy work-life balance. We focus on results, not hours spent at a desk.",
+      "Flexible hours and remote options for perfect work-life balance.",
     category: "Work and Growth",
-    color: "bg-yellow-600",
+    img: "https://images.unsplash.com/photo-1593642634315-48f5414c3ad9", // NEW
   },
   {
     icon: Feather,
     title: "Creative Freedom",
     description:
-      "We encourage bold ideas and provide the autonomy needed to experiment, innovate, and drive projects from concept to completion. Your voice is essential to our product strategy.",
+      "Your ideas matter — experiment, innovate, and drive concepts end-to-end.",
     category: "Culture and Team",
-    color: "bg-purple-600",
+    img: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b", // NEW
   },
   {
     icon: Users,
     title: "Collaborative Environment",
     description:
-      "Join a tight-knit team where open communication, knowledge sharing, and mutual respect are foundational to our success. We succeed and fail together, always learning from each other.",
+      "Knowledge sharing, open communication, and a team-first mindset.",
     category: "Culture and Team",
-    color: "bg-red-600",
+    img: "https://images.unsplash.com/photo-1551434678-e076c223a692", // NEW
   },
 ];
+
+
 
 // Helper function to group benefits by category
 const groupBenefits = () => {
@@ -71,7 +73,8 @@ const groupedBenefits = groupBenefits();
 
 const Careers = () => {
   // State to track the currently selected benefit item for interaction
-  const [activeBenefit, setActiveBenefit] = useState(benefits[1]); // Start with Accelerated Growth active
+  const [activeBenefit, setActiveBenefit] = useState(benefits[1]);
+  const [openCategory, setOpenCategory] = useState(null); // Start with Accelerated Growth active
   const [resumeFile, setResumeFile] = useState(null);
   const [submissionMessage, setSubmissionMessage] = useState({
     type: null,
@@ -287,98 +290,104 @@ const Careers = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
             {/* Left Side: Image with Dynamic Overlay */}
-            <motion.div
-              initial={{ x: -50, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.8 }}
-              className="lg:col-span-2 relative aspect-video lg:aspect-square rounded-2xl overflow-hidden shadow-2xl"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="Collaborative and modern office environment"
-                className="w-full h-full object-cover"
-              />
-              {/* Dynamic Overlay Class */}
-              <div className={imageOverlayClass}></div>
-              {/* Dynamic Description Box on the Image */}
-              {activeBenefit && (
-                <motion.div
-                  key={activeBenefit.title} // Key ensures re-render and animation on change
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.4 }}
-                  className="absolute bottom-0 left-0 right-0 p-6 bg-white bg-opacity-95 text-gray-900"
-                >
-                  <p className="text-lg font-bold mb-1">
-                    {activeBenefit.title}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    {activeBenefit.description}
-                  </p>
-                </motion.div>
-              )}
-            </motion.div>
+           <motion.div
+  initial={{ x: -50, opacity: 0 }}
+  whileInView={{ x: 0, opacity: 1 }}
+  viewport={{ once: true, amount: 0.2 }}
+  transition={{ duration: 0.8 }}
+  className="lg:col-span-2 relative aspect-video lg:aspect-square rounded-2xl overflow-hidden shadow-2xl"
+>
+  {/* Dynamic Image */}
+  <img
+    src={activeBenefit ? activeBenefit.img : benefits[0].img}
+    alt="Benefit visual"
+    className="w-full h-full object-cover"
+  />
 
-            {/* Right Side: Structured Benefits List */}
-            <motion.div
-              initial={{ x: 50, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.8 }}
-              className="lg:col-span-3 space-y-8 p-4 md:p-8 rounded-xl"
-            >
-              {Object.entries(groupedBenefits).map(([category, items], idx) => {
-                const isCategoryActive =
-                  activeBenefit && activeBenefit.category === category;
-                const categoryClass = isCategoryActive
-                  ? "border-gray-900"
-                  : "border-gray-300";
-                return (
-                  <div
-                    key={category}
-                    className={`border-b ${categoryClass} pb-4 transition-colors duration-300`}
-                  >
-                    <h3 className="text-2xl font-bold mb-4 text-gray-800 relative">
-                      {category}
-                      {/* Dynamic Line Bar */}
-                      {isCategoryActive && (
-                        <motion.span
-                          layoutId="active-benefit-line"
-                          className="absolute left-0 bottom-[-16px] h-1 w-full bg-gradient-to-r from-gray-900 to-gray-500"
-                        ></motion.span>
-                      )}
-                    </h3>
-                    <ul className="mt-6 space-y-3">
-                      {items.map((item, i) => (
-                        <li
-                          key={i}
-                          className={`flex items-start text-gray-700 cursor-pointer p-2 rounded-lg transition-all ${
-                            activeBenefit && activeBenefit.title === item.title
-                              ? "bg-gray-100 text-gray-900 font-medium"
-                              : "hover:bg-gray-50"
-                          }`}
-                          onClick={() => setActiveBenefit(item)}
-                        >
-                          {/* Checkmark icon, similar to the image's bullet */}
-                          <CheckCircle
-                            className={`w-5 h-5 mt-1 mr-3 flex-shrink-0 transition-colors ${
-                              activeBenefit &&
-                              activeBenefit.title === item.title
-                                ? "text-gray-900"
-                                : "text-gray-500"
-                            }`}
-                          />
-                          <p className="text-lg leading-snug">
-                            {item.title}
-                          </p>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                );
-              })}
-            </motion.div>
+  {/* Overlay */}
+  <div className={imageOverlayClass}></div>
+
+  {/* Dynamic Description */}
+  {activeBenefit && (
+    <motion.div
+      key={activeBenefit.title}
+      initial={{ y: 20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      className="absolute bottom-0 left-0 right-0 p-6 bg-white bg-opacity-95 text-gray-900"
+    >
+      <p className="text-lg font-bold mb-1">
+        {activeBenefit.title}
+      </p>
+      <p className="text-sm text-gray-600">
+        {activeBenefit.description}
+      </p>
+    </motion.div>
+  )}
+</motion.div>
+
+
+            {/* Right Side: Category Accordion */}
+<motion.div
+  initial={{ x: 50, opacity: 0 }}
+  whileInView={{ x: 0, opacity: 1 }}
+  viewport={{ once: true, amount: 0.2 }}
+  transition={{ duration: 0.8 }}
+  className="lg:col-span-3 space-y-8 p-4 md:p-8 rounded-xl"
+>
+  {Object.entries(groupedBenefits).map(([category, items]) => {
+    const isOpen = openCategory === category;
+
+    return (
+      <div
+        key={category}
+        className="border-b border-gray-300 pb-4"
+      >
+        {/* Category Title */}
+        <h3
+          className="text-2xl font-bold mb-4 text-gray-800 cursor-pointer flex justify-between items-center"
+          onClick={() =>
+            setOpenCategory(isOpen ? null : category)
+          }
+        >
+          {category}
+          <span className="text-gray-500">
+            {isOpen ? "−" : "+"}
+          </span>
+        </h3>
+
+        {/* Show Items Only If Open */}
+        {isOpen && (
+          <ul className="mt-4 space-y-3">
+            {items.map((item, i) => (
+              <li
+                key={i}
+                className={`flex items-start text-gray-700 cursor-pointer p-2 rounded-lg hover:bg-gray-50 transition-all ${
+                  activeBenefit?.title === item.title
+                    ? "bg-gray-100 text-gray-900 font-medium"
+                    : ""
+                }`}
+                onClick={() => setActiveBenefit(item)}
+              >
+                <CheckCircle
+                  className={`w-5 h-5 mt-1 mr-3 flex-shrink-0 ${
+                    activeBenefit?.title === item.title
+                      ? "text-gray-900"
+                      : "text-gray-500"
+                  }`}
+                />
+                <p className="text-lg leading-snug">
+                  {item.title}
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    );
+  })}
+</motion.div>
+
           </div>
         </div>
       </section>

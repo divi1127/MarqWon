@@ -102,7 +102,7 @@ export default function Footer() {
               </li>
               <li>
                 <a href="tel:+916384942259" className="hover:text-white">
-                  +91 63849 42259
+                  +91 94867 27259
                 </a>
               </li>
             </ul>
@@ -112,7 +112,7 @@ export default function Footer() {
               {[
                 { Icon: Linkedin, href: "https://www.linkedin.com/company/marq-won/" },
                 { Icon: Instagram, href: "https://www.instagram.com/marqwon.mw?igsh=a2RucnBkdDI4Njdt" },
-                { Icon: FaWhatsapp, href: "https://wa.me/916384942259" }
+                { Icon: FaWhatsapp, href: "https://wa.me/919486727259" }
               ].map(({ Icon, href }, i) => (
                 <motion.a
                   key={i}

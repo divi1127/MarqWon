@@ -12,6 +12,8 @@ import Enquiries from "./sections/Enquiries.jsx";
 import Admin from "./sections/Admin.jsx";
 import Footer from "./sections/footer.jsx";
 import WebsiteDevelopment from "./services/WebsiteDevelopment.jsx";
+import ApplicationDevelopment from "./services/ApplicationDevelopment.jsx";
+import CrmErpWorkflow from "./services/CrmErpWorkflow.jsx";
 
 
 export default function App() {
@@ -41,7 +43,10 @@ export default function App() {
 
 
             {/* === Individual Service Pages === */}
-            <Route path="/services/website-development" element={<WebsiteDevelopment />} />
+             {/* Services Detail Pages */}
+        <Route path="/services/website-development" element={<WebsiteDevelopment />} />
+        <Route path="/services/application-development" element={<ApplicationDevelopment />} />
+        <Route path="/services/crm-erp-workflow-systems" element={<CrmErpWorkflow />} />
 
 
 

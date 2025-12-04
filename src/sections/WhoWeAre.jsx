@@ -113,22 +113,56 @@ export default function WhoWeAre() {
   const scrollRef = useRef(null);
   const [progress, setProgress] = useState(0);
 
+  
   const industries = [
-    { name: "Technology", img: "https://images.unsplash.com/photo-1518770660439-4636190af475" },
-    { name: "Financial Services", img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab" },
-    { name: "Healthcare", img: "https://images.unsplash.com/photo-1581091215367-59ab6b4b21b3" },
-    { name: "Manufacturing", img: "https://images.unsplash.com/photo-1549921296-3cce903855cd" },
+  {
+    name: "Technology",
+    img: "https://images.unsplash.com/photo-1518770660439-4636190af475",
+  },
+  {
+    name: "Financial Services",
+    img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab",
+  },
+  {
+    name: "Healthcare",
+    img: "https://i.pinimg.com/736x/02/20/b0/0220b0514d2348a24b2ee085c4413ab2.jpg",
+  },
+  {
+    name: "Manufacturing",
+    img: "https://i.pinimg.com/736x/e2/e2/90/e2e29080ea8b6c74b5e4c3ed1ada3c25.jpg",
+  },
 
-    // NEW INDUSTRIES
-    { name: "E-Commerce", img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0" },
-    { name: "Real Estate", img: "https://images.unsplash.com/photo-1523217582562-09d0def993a6" },
-    { name: "Education", img: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f" },
-    { name: "Travel & Hospitality", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e" },
-    { name: "Logistics & Transportation", img: "https://images.unsplash.com/photo-1506619216599-9d16d0903dfd" },
-    { name: "Retail", img: "https://images.unsplash.com/photo-1506617420156-8e4536971650" },
-    { name: "Energy & Utilities", img: "https://images.unsplash.com/photo-1509395176047-4a66953fd231" },
-  ];
+  // --- 7 NEW INDUSTRIES BELOW ---
 
+  {
+    name: "E-Commerce",
+    img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0",
+  },
+  {
+    name: "Real Estate",
+    img: "https://images.unsplash.com/photo-1523217582562-09d0def993a6",
+  },
+  {
+    name: "Education",
+    img: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f",
+  },
+  {
+    name: "Travel & Hospitality",
+    img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+  },
+  {
+    name: "Logistics & Transportation",
+    img: "https://i.pinimg.com/736x/19/9f/eb/199feb6bd46338c69c054efdb7887424.jpg",
+  },
+  {
+    name: "Retail",
+    img: "https://images.unsplash.com/photo-1506617420156-8e4536971650",
+  },
+  {
+    name: "Energy & Utilities",
+    img: "https://i.pinimg.com/1200x/6f/b6/7c/6fb67c0a7fb9181b245b5c2c44c3725c.jpg",
+  },
+];
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
@@ -489,7 +523,7 @@ export default function WhoWeAre() {
   Build What’s Next
 </h3>
 
-<Link to="/enquiries">
+<Link to="/enquiries" reloadDocument>
   <button className="px-10 py-4 bg-black text-white text-lg font-bold rounded-full hover:scale-105 hover:bg-gray-900 transition-all duration-300 shadow-2xl">
     Partner With Us
   </button>
@@ -500,3 +534,6 @@ export default function WhoWeAre() {
     </div>
   );
 }
+
+
+
