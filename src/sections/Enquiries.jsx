@@ -192,15 +192,18 @@ const Enquiries = () => {
             </div>
 
             <div className="bg-gray-50 rounded-xl shadow overflow-hidden h-80">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126229.64453703456!2d78.11959975!3d9.9252007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b00c582b1189633%3A0xdc955b7264f63933!2sMadurai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1234567890"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                title="MarqWon Location"
-              />
+  <iframe
+   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.0190946278456!2d78.11959975!3d9.9252007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b00c582b1189633%3A0xdc955b7264f63933!2sLavanya%20Complex%2C%209%2C%20Iyer%20Bungalow%2C%20Moondrumavadi%20Main%20Rd%2C%20GR%20Nagar%2C%20Madurai%2C%20Tamil%20Nadu%20625007!5e0!3m2!1sen!2sin!4v1700000000000"
+
+    width="100%"
+    height="100%"
+    style={{ border: 0 }}
+    allowFullScreen
+    loading="lazy"
+    title="MarqWon Office Location"
+  />
+
+
             </div>
           </motion.div>
         </div>

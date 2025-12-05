@@ -48,31 +48,28 @@ export default function Navbar() {
 
           {/* CENTER — DESKTOP NAV */}
           <ul className="hidden lg:flex gap-10">
-            {links.map((l, i) => {
-              const active = location.pathname === l.href;
-              return (
-                <motion.li
-                  key={l.href}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.09 }}
-                >
-                  <Link
-                    to={l.href}
-                    className={`text-lg transition px-2 py-1 rounded-md
-                      ${
-                        active
-                          ? "font-semibold text-black active-gradient-border"
-                          : "text-black/70 hover:text-black hover:border-b-2 hover:border-[#A66BFF]"
-                      }
-                    `}
-                  >
-                    {l.label}
-                  </Link>
-                </motion.li>
-              );
-            })}
-          </ul>
+  {links.map((l, i) => {
+    const active = location.pathname === l.href;
+    return (
+      <motion.li
+        key={l.href}
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: i * 0.09 }}
+      >
+        <Link
+          to={l.href}
+          className={`text-lg transition px-2 py-1 rounded-md
+            ${active ? "font-semibold text-black" : "text-black/70 hover:text-black"}
+          `}
+        >
+          {l.label}
+        </Link>
+      </motion.li>
+    );
+  })}
+</ul>
+
 
           {/* RIGHT — Desktop CTA */}
           <Link
