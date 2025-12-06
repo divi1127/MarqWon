@@ -11,9 +11,10 @@ import Careers from "./sections/Careers.jsx";
 import Enquiries from "./sections/Enquiries.jsx";
 import Admin from "./sections/Admin.jsx";
 import Footer from "./sections/footer.jsx";
-import WebsiteDevelopment from "./services/WebsiteDevelopment.jsx";
-import ApplicationDevelopment from "./services/ApplicationDevelopment.jsx";
-import CrmErpWorkflow from "./services/CrmErpWorkflow.jsx";
+// import WebsiteDevelopment from "./services/WebsiteDevelopment.jsx";
+// import ApplicationDevelopment from "./services/ApplicationDevelopment.jsx";
+// import CrmErpWorkflow from "./services/CrmErpWorkflow.jsx";
+import ServiceDetailPage from "./sections/ServiceDetailPage.jsx";
 
 
 export default function App() {
@@ -44,9 +45,11 @@ export default function App() {
 
             {/* === Individual Service Pages === */}
              {/* Services Detail Pages */}
-        <Route path="/services/website-development" element={<WebsiteDevelopment />} />
+
+             <Route path="/services/:slug" element={<ServiceDetailPage />} />
+        {/* <Route path="/services/website-development" element={<WebsiteDevelopment />} />
         <Route path="/services/application-development" element={<ApplicationDevelopment />} />
-        <Route path="/services/crm-erp-workflow-systems" element={<CrmErpWorkflow />} />
+        <Route path="/services/crm-erp-workflow-systems" element={<CrmErpWorkflow />} /> */}
 
 
 

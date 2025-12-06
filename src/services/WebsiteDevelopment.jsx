@@ -15,7 +15,7 @@ export default function WebsiteDevelopment() {
       <section
         className="relative h-[80vh] w-full bg-cover bg-center bg-fixed flex items-center justify-center mt-30"
         style={{
-          backgroundImage: `url("https://i.pinimg.com/1200x/b6/cb/9d/b6cb9d1b3645bf0de660120859f784e3.jpg")`,
+          backgroundImage: `url("https://i.pinimg.com/1200x/12/5e/bc/125ebc3dc6b2826dabec5ee4b8b93048.jpg")`,
         }}
       >
         {/* Overlay */}

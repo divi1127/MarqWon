@@ -38,37 +38,23 @@ const Products = () => {
       logo: deeplearnerLogo,
     },
 
+    // NEW PRODUCT ADDED HERE
     {
-      title: "Bhuumi",
+      title: "SwiftBill Pro",
       status: "Live",
-      category: "AgriTech",
+      category: "Business / Finance",
       description:
-        "AI-enabled platform to empower farmers with actionable analytics, market access, and training.",
-      features: ["Marketplace", "Soil analytics", "AI advisory"],
+        "An AI-powered invoicing and billing software for small to medium businesses, automating payment tracking and ledger management.",
+      features: ["Auto-Invoicing", "GST/Tax Compliance", "Payment Gateway Integration"],
       benefits: [
-        "Increase farmer income",
-        "Reduce wastage & risk",
-        "Improve crop outcomes",
+        "Save time on admin work",
+        "Minimize billing errors",
+        "Accelerate cash flow",
       ],
-      link: "https://bhuumi.in/",
+      link: "https://swiftbillpro.com/", // Placeholder URL
       logo: null,
     },
-
-    {
-      title: "Dental365",
-      status: "Live",
-      category: "Healthcare",
-      description:
-        "A full-service dental appointment and patient management platform for clinics and hospitals.",
-      features: ["Appointments", "Billing", "EHR"],
-      benefits: [
-        "Reduce clinic workload",
-        "Improve patient experience",
-        "Increase revenue efficiency",
-      ],
-      link: "https://dental365.in/",
-      logo: null,
-    },
+    // END OF NEW PRODUCT
 
     {
       title: "MarqWon Foundation",
@@ -123,15 +109,17 @@ const Products = () => {
             solutions to maximize efficiency and results.
           </motion.p>
 
-          <motion.button
+          {/* <motion.button
             custom={3}
             variants={fadeInUp}
             className="px-8 py-3 bg-black text-white text-lg font-semibold rounded-lg hover:bg-gray-800 transition-colors duration-300 shadow-lg hover:shadow-xl"
           >
             Request a demo
-          </motion.button>
+          </motion.button> */}
         </motion.div>
       </section>
+
+      {/* --- */}
 
       {/* PARALLAX */}
       <section className="h-[60vh] overflow-hidden relative z-10">
@@ -156,10 +144,14 @@ const Products = () => {
         </div>
       </section>
 
+      {/* --- */}
+
       {/* BRAND TRUST SECTION */}
       <div>
         <TrustedBy />
       </div>
+
+      {/* --- */}
 
       {/* PRODUCT GRID */}
       <section className="py-20 relative z-10 bg-white">

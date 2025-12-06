@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { motion } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Upload,
   CheckCircle,
@@ -55,8 +55,6 @@ const benefits = [
   },
 ];
 
-
-
 // Helper function to group benefits by category
 const groupBenefits = () => {
   const groups = {
@@ -74,7 +72,8 @@ const groupedBenefits = groupBenefits();
 const Careers = () => {
   // State to track the currently selected benefit item for interaction
   const [activeBenefit, setActiveBenefit] = useState(benefits[1]);
-  const [openCategory, setOpenCategory] = useState(null); // Start with Accelerated Growth active
+  // Initialize openCategory to the category of the initial activeBenefit
+  const [openCategory, setOpenCategory] = useState(benefits[1].category);
   const [resumeFile, setResumeFile] = useState(null);
   const [submissionMessage, setSubmissionMessage] = useState({
     type: null,
@@ -97,6 +96,8 @@ const Careers = () => {
   const [isJob, setIsJob] = useState(false);
   const formRef = useRef(null);
 
+  const WHATSAPP_NUMBER = "916369199664"; // Format without plus sign or spaces
+
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setResumeFile(e.target.files[0]);
@@ -108,46 +109,52 @@ const Careers = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // --- MODIFIED SUBMISSION FUNCTION ---
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmissionMessage({ type: null, text: "" }); // Clear previous message
 
-    const formDataToSend = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      formDataToSend.append(key, value);
-    });
-    if (resumeFile) formDataToSend.append("resume", resumeFile);
+    // 1. Construct the message pattern
+    let applicationDetails = `*Application Details for ${formData.role}*\n`;
+    applicationDetails += `Role: ${formData.role}\n`;
+    applicationDetails += `Name: ${formData.name}\n`;
+    applicationDetails += `Email: ${formData.email}\n`;
+    applicationDetails += `Phone: ${formData.phone}\n`;
 
-    try {
-      // NOTE: This fetch call is targeting a placeholder URL (localhost:5000).
-      // In a real application, replace this with your actual backend endpoint.
-      // Since a real API is not available in this environment, we simulate success/failure.
-
-      // Simulate a network delay
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      // Simulate success for demonstration
-      const success = true; // Change to false to test error message
-
-      if (success) {
-        setSubmissionMessage({
-          type: "success",
-          text: `Application for ${formData.role} submitted successfully! We'll be in touch soon.`,
-        });
-      } else {
-        // This path would be hit if the simulated 'success' was false
-        setSubmissionMessage({
-          type: "error",
-          text: "❌ Application submission failed. Please ensure all required fields are filled.",
-        });
-      }
-    } catch (error) {
-      // This path would be hit if the fetch failed (e.g., server down)
-      setSubmissionMessage({
-        type: "error",
-        text: "❌ Failed to submit application due to a network error.",
-      });
+    if (isJob) {
+      applicationDetails += `\n*Job Specifics:*\n`;
+      applicationDetails += `Experience: ${formData.experience} years\n`;
+      applicationDetails += `Current CTC: ${formData.currentCTC} LPA\n`;
+      applicationDetails += `Expected CTC: ${formData.expectedCTC} LPA\n`;
+    } else {
+      applicationDetails += `\n*Internship Specifics:*\n`;
+      applicationDetails += `College: ${formData.college}\n`;
+      applicationDetails += `Major: ${formData.department}\n`;
+      applicationDetails += `Passout Year: ${formData.passoutYear}\n`;
+      applicationDetails += `Address: ${formData.address}\n`;
     }
+
+    applicationDetails += `\n*Resume Status:*\n`;
+    applicationDetails += resumeFile
+      ? `File ready: ${resumeFile.name}. *Please send the file manually in the chat that opens.*\n`
+      : "*No resume attached. Please ensure you send it manually.*\n";
+
+    applicationDetails += `\nThank you!`;
+
+    // 2. Encode the message for the URL
+    const encodedMessage = encodeURIComponent(applicationDetails);
+    
+    // 3. Construct the WhatsApp URL
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+
+    // 4. Open the chat
+    window.open(whatsappUrl, "_blank");
+
+    // 5. Provide feedback to the user
+    setSubmissionMessage({
+      type: "success",
+      text: `✅ Application details for ${formData.role} formatted. Please check the new window/tab to *send the message and attach your resume* on WhatsApp.`,
+    });
 
     // Reset form data and file after submission attempt
     setFormData({
@@ -166,6 +173,7 @@ const Careers = () => {
     setResumeFile(null);
     e.target.reset(); // Resets input fields including the file input
   };
+  // --- END MODIFIED SUBMISSION FUNCTION ---
 
   const scrollToForm = () => {
     formRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -257,6 +265,46 @@ const Careers = () => {
       : "bg-gray-900 bg-opacity-10" // Default gray overlay
   }`;
 
+  // Smoother Image Change: Use AnimatePresence for the image wrapper
+  // We use activeBenefit.title as the key to trigger the image/description transition
+  const ImageWrapper = ({ activeBenefit }) => (
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={activeBenefit.title} // Key change forces re-render/animation
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        transition={{ duration: 0.5, delay: 0.1 }} // Slight delay to ensure click registers smoothly
+        className="w-full h-full"
+      >
+        <img
+          src={activeBenefit.img}
+          alt="Benefit visual"
+          className="w-full h-full object-cover"
+        />
+
+        {/* Overlay */}
+        <div className={imageOverlayClass}></div>
+
+        {/* Dynamic Description (also animated) */}
+        <motion.div
+          key={activeBenefit.description} // key change forces re-render/animation
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.2 }} // Description fades in slightly after the image
+          className="absolute bottom-0 left-0 right-0 p-6 bg-white bg-opacity-95 text-gray-900"
+        >
+          <p className="text-lg font-bold mb-1">
+            {activeBenefit.title}
+          </p>
+          <p className="text-sm text-gray-600">
+            {activeBenefit.description}
+          </p>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 font-inter">
       {/* Hero Section */}
@@ -276,7 +324,9 @@ const Careers = () => {
         </motion.div>
       </section>
 
-      {/* NEW: Culture and Benefits Section (Split-Layout as Requested) */}
+      {/* --- */}
+
+      {/* NEW: Culture and Benefits Section (Split-Layout) */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6 max-w-6xl">
           <motion.h2
@@ -288,110 +338,97 @@ const Careers = () => {
             Why Choose MarqWon?
           </motion.h2>
 
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
             {/* Left Side: Image with Dynamic Overlay */}
-           <motion.div
-  initial={{ x: -50, opacity: 0 }}
-  whileInView={{ x: 0, opacity: 1 }}
-  viewport={{ once: true, amount: 0.2 }}
-  transition={{ duration: 0.8 }}
-  className="lg:col-span-2 relative aspect-video lg:aspect-square rounded-2xl overflow-hidden shadow-2xl"
->
-  {/* Dynamic Image */}
-  <img
-    src={activeBenefit ? activeBenefit.img : benefits[0].img}
-    alt="Benefit visual"
-    className="w-full h-full object-cover"
-  />
-
-  {/* Overlay */}
-  <div className={imageOverlayClass}></div>
-
-  {/* Dynamic Description */}
-  {activeBenefit && (
-    <motion.div
-      key={activeBenefit.title}
-      initial={{ y: 20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.4 }}
-      className="absolute bottom-0 left-0 right-0 p-6 bg-white bg-opacity-95 text-gray-900"
-    >
-      <p className="text-lg font-bold mb-1">
-        {activeBenefit.title}
-      </p>
-      <p className="text-sm text-gray-600">
-        {activeBenefit.description}
-      </p>
-    </motion.div>
-  )}
-</motion.div>
-
+            <motion.div
+              initial={{ x: -50, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.8 }}
+              className="lg:col-span-2 relative aspect-video lg:aspect-square rounded-2xl overflow-hidden shadow-2xl"
+            >
+              {activeBenefit && <ImageWrapper activeBenefit={activeBenefit} />}
+            </motion.div>
 
             {/* Right Side: Category Accordion */}
-<motion.div
-  initial={{ x: 50, opacity: 0 }}
-  whileInView={{ x: 0, opacity: 1 }}
-  viewport={{ once: true, amount: 0.2 }}
-  transition={{ duration: 0.8 }}
-  className="lg:col-span-3 space-y-8 p-4 md:p-8 rounded-xl"
->
-  {Object.entries(groupedBenefits).map(([category, items]) => {
-    const isOpen = openCategory === category;
+            <motion.div
+              initial={{ x: 50, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.8 }}
+              className="lg:col-span-3 space-y-8 p-4 md:p-8 rounded-xl"
+            >
+              {Object.entries(groupedBenefits).map(([category, items]) => {
+                const isOpen = openCategory === category;
 
-    return (
-      <div
-        key={category}
-        className="border-b border-gray-300 pb-4"
-      >
-        {/* Category Title */}
-        <h3
-          className="text-2xl font-bold mb-4 text-gray-800 cursor-pointer flex justify-between items-center"
-          onClick={() =>
-            setOpenCategory(isOpen ? null : category)
-          }
-        >
-          {category}
-          <span className="text-gray-500">
-            {isOpen ? "−" : "+"}
-          </span>
-        </h3>
+                return (
+                  <div
+                    key={category}
+                    className="border-b border-gray-300 pb-4"
+                  >
+                    {/* Category Title */}
+                    <h3
+                      className="text-2xl font-bold mb-4 text-gray-800 cursor-pointer flex justify-between items-center"
+                      onClick={() =>
+                        setOpenCategory(isOpen ? null : category)
+                      }
+                    >
+                      {category}
+                      <span className="text-gray-500 transition-transform duration-300 transform">
+                        {isOpen ? "−" : "+"}
+                      </span>
+                    </h3>
 
-        {/* Show Items Only If Open */}
-        {isOpen && (
-          <ul className="mt-4 space-y-3">
-            {items.map((item, i) => (
-              <li
-                key={i}
-                className={`flex items-start text-gray-700 cursor-pointer p-2 rounded-lg hover:bg-gray-50 transition-all ${
-                  activeBenefit?.title === item.title
-                    ? "bg-gray-100 text-gray-900 font-medium"
-                    : ""
-                }`}
-                onClick={() => setActiveBenefit(item)}
-              >
-                <CheckCircle
-                  className={`w-5 h-5 mt-1 mr-3 flex-shrink-0 ${
-                    activeBenefit?.title === item.title
-                      ? "text-gray-900"
-                      : "text-gray-500"
-                  }`}
-                />
-                <p className="text-lg leading-snug">
-                  {item.title}
-                </p>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    );
-  })}
-</motion.div>
-
+                    {/* Show Items Only If Open - Animated using AnimatePresence */}
+                    <AnimatePresence>
+                      {isOpen && (
+                        <motion.ul
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="mt-4 space-y-3 overflow-hidden"
+                        >
+                          {items.map((item, i) => (
+                            <li
+                              key={i}
+                              className={`flex items-start text-gray-700 cursor-pointer p-3 rounded-lg hover:bg-gray-100 transition-all ${
+                                activeBenefit?.title === item.title
+                                  ? "bg-gray-100 text-gray-900 font-medium shadow-sm"
+                                  : ""
+                              }`}
+                              onClick={() => {
+                                // Set active benefit
+                                setActiveBenefit(item);
+                                // Ensure the correct category is open if a benefit is clicked
+                                setOpenCategory(category);
+                              }}
+                            >
+                              <CheckCircle
+                                className={`w-5 h-5 mt-1 mr-3 flex-shrink-0 transition-colors ${
+                                  activeBenefit?.title === item.title
+                                    ? "text-gray-900"
+                                    : "text-gray-500"
+                                }`}
+                              />
+                              <p className="text-lg leading-snug">
+                                {item.title}
+                              </p>
+                            </li>
+                          ))}
+                        </motion.ul>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
+            </motion.div>
           </div>
         </div>
       </section>
       {/* End of NEW Section */}
+
+      {/* --- */}
 
       {/* Tabs */}
       <section className="py-20 container mx-auto px-6">
@@ -424,7 +461,7 @@ const Careers = () => {
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-gray-50 rounded-2xl p-6 shadow-xl border border-gray-200 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
+                className="bg-white rounded-2xl p-6 shadow-xl border border-gray-200 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
               >
                 <h3 className="text-xl font-bold mb-3 text-gray-900">
                   {intern.title}
@@ -467,7 +504,7 @@ const Careers = () => {
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-gray-50 p-6 rounded-2xl shadow-xl border border-gray-200 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1"
+                className="bg-white p-6 rounded-2xl shadow-xl border border-gray-200 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1"
               >
                 <h3 className="text-xl font-bold mb-3 text-gray-900">
                   {job.title}
@@ -498,6 +535,8 @@ const Careers = () => {
             ))}
           </motion.div>
         )}
+
+        {/* --- */}
 
         {/* Hiring Process + Resume Form */}
         {activeTab === "process" && (
@@ -718,8 +757,11 @@ const Careers = () => {
                   whileTap={{ scale: 0.99 }}
                   className="w-full bg-gray-900 text-white py-3 rounded-xl hover:bg-gray-800 transition font-semibold shadow-lg"
                 >
-                  Submit Application
+                  Submit Application via WhatsApp 💬
                 </motion.button>
+                <p className="text-xs text-center text-red-500 font-medium pt-2">
+                    *Note: You must manually send the message and attach your resume in the WhatsApp chat.*
+                </p>
               </form>
             </div>
           </motion.div>
