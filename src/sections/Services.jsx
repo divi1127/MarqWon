@@ -274,92 +274,158 @@ export default function ServicesPage() {
       />
 
       {/* CATEGORY GRID */}
-      <div className="pt-10 pb-20">
-        {servicesByCategory.map((category, index) => (
-          <section
-            key={category.categoryTitle}
-            className={`py-20 bg-white`}
-          >
-            <div className="max-w-7xl mx-auto px-6 md:px-12">
-              <motion.h2
-                className="text-4xl md:text-5xl font-bold text-center mb-14"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                {category.categoryTitle}
-              </motion.h2>
+<div className="pt-10 pb-20">
+  {servicesByCategory.map((category, index) => (
+    <section
+      key={category.categoryTitle}
+      className={`py-20 bg-white`}
+    >
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                {category.services.map((s, i) => {
-                  const Icon = s.icon;
-                  return (
-                    <motion.div
-                      key={s.title}
-                      initial={{ opacity: 0, y: 50, scale: 0.95 }}
-                      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.7, ease: "easeOut" }} // **MODIFIED: Removed delay: i * 0.1**
-                      className="relative overflow-hidden rounded-xl 
-                        bg-white border border-gray-100 shadow-md 
-                        transition-all cursor-pointer group text-gray-900
-                        flex flex-col h-[480px] hover:shadow-xl" // Increased height for image and minimal hover
-                    >
-                      {/* 1. IMAGE CONTAINER (with zoom effect) */}
-                      <div className="h-[200px] overflow-hidden">
-                        <img
-                          src={s.imgUrl}
-                          alt={s.title}
-                          className="w-full h-full object-cover transition-transform duration-500 ease-in-out transform 
-                            group-hover:scale-110" // Zoom-in on hover
-                        />
-                      </div>
+        {/* HEADING */}
+        <motion.h2
+          className="text-4xl md:text-5xl font-bold text-center mb-14"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          {category.categoryTitle}
+        </motion.h2>
 
-                      {/* 2. CONTENT CONTAINER (white, fixed) */}
-                      <div className="p-6 flex flex-col flex-grow">
-                        
-                        {/* ICON */}
-                        <div
-                          className="w-12 h-12 rounded-full mb-3 flex items-center justify-center 
-                            bg-gray-100 shadow-inner border border-gray-200"
-                        >
-                          <Icon className="w-6 h-6 text-gray-700" />
-                        </div>
+        {/* CUSTOM GRID 3 + 2 CENTER */}
+        <div className="w-full">
 
-                        {/* TITLE */}
-                        <h3 className="text-xl font-bold mb-2">
-                          {s.title}
-                        </h3>
+          {/* FIRST ROW: 3 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-10">
+            {category.services.slice(0, 3).map((s, i) => {
+              const Icon = s.icon;
+              return (
+                <motion.div
+                  key={s.title}
+                  initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, ease: "easeOut" }}
+                  className="relative overflow-hidden rounded-xl bg-white border border-gray-100 shadow-md 
+                      transition-all cursor-pointer group text-gray-900
+                      - flex flex-col h-[520px] hover:shadow-xl"
+                      // increased height
+                >
 
-                        {/* DESCRIPTION */}
-                        <p className="text-sm text-gray-600 leading-normal mb-4 flex-grow">
-                          {s.desc}
-                        </p>
+                  {/* IMAGE */}
+                  <div className="h-[240px] overflow-hidden">
+                    <img
+                      src={s.imgUrl}
+                      alt={s.title}
+                      className="w-full h-full object-cover transition-transform duration-500 ease-in-out transform group-hover:scale-110"
+                    />
+                  </div>
 
-                        {/* FOOTER / LINK */}
-                        <div className="flex items-center justify-between text-sm pt-4 border-t border-gray-100">
-                          <Link
-                            to={`/services/${slugify(s.title)}`}
-                            className="font-semibold text-blue-600 transition-colors hover:text-blue-800 flex items-center"
-                          >
-                            Discover Service
-                            <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
-                          </Link>
+                  {/* CONTENT */}
+                  <div className="p-8 flex flex-col flex-grow">
 
-                          <span className="text-xs px-3 py-1 bg-gray-100 rounded-full text-gray-500">
-                            {s.category}
-                          </span>
-                        </div>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
-          </section>
-        ))}
-      </div>
+                    <div className="w-14 h-14 rounded-full mb-4 mt-2 flex items-center justify-center 
+    bg-gray-100 shadow-inner border border-gray-200">
+  <Icon className="w-7 h-7 text-gray-700" />
+</div>
+
+
+                  <h3 className="text-2xl font-bold mb-2 line-clamp-1 min-h-[32px]">
+  {s.title}
+</h3>
+
+
+                    <p className="text-base text-gray-600 leading-relaxed mb-6 flex-grow line-clamp-2">
+  {s.desc}
+</p>
+
+
+                    <div className="flex items-center justify-between text-sm pt-4 border-t border-gray-100">
+                      <Link
+                        to={`/services/${slugify(s.title)}`}
+                        className="font-semibold text-blue-600 hover:text-blue-800 flex items-center"
+                      >
+                        Discover Service
+                        <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+                      </Link>
+
+                      <span className="text-xs px-3 py-1 bg-gray-100 rounded-full text-gray-500">
+                        {s.category}
+                      </span>
+                    </div>
+                  </div>
+
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* SECOND ROW: 2 CENTERED */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10 justify-center max-w-4xl mx-auto">
+            {category.services.slice(3, 5).map((s, i) => {
+              const Icon = s.icon;
+              return (
+                <motion.div
+                  key={s.title}
+                  initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, ease: "easeOut" }}
+                  className="relative overflow-hidden rounded-xl bg-white border border-gray-100 shadow-md 
+                      transition-all cursor-pointer group text-gray-900
+                      flex flex-col h-[520px] hover:shadow-xl" // same height
+                >
+
+                  {/* IMAGE */}
+                  <div className="h-[240px] overflow-hidden">
+                    <img
+                      src={s.imgUrl}
+                      alt={s.title}
+                      className="w-full h-full object-cover transition-transform duration-500 ease-in-out transform group-hover:scale-110"
+                    />
+                  </div>
+
+                  {/* CONTENT */}
+                  <div className="p-8 flex flex-col flex-grow">
+
+                    <div className="w-14 h-14 rounded-full mb-4 flex items-center justify-center 
+                        bg-gray-100 shadow-inner border border-gray-200">
+                      <Icon className="w-7 h-7 text-gray-700" />
+                    </div>
+
+                    <h3 className="text-2xl font-bold mb-2">{s.title}</h3>
+
+                    <p className="text-base text-gray-600 leading-relaxed mb-6 flex-grow">
+                      {s.desc}
+                    </p>
+
+                    <div className="flex items-center justify-between text-sm pt-4 border-t border-gray-100">
+                      <Link
+                        to={`/services/${slugify(s.title)}`}
+                        className="font-semibold text-blue-600 hover:text-blue-800 flex items-center"
+                      >
+                        Discover Service
+                        <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+                      </Link>
+
+                      <span className="text-xs px-3 py-1 bg-gray-100 rounded-full text-gray-500">
+                        {s.category}
+                      </span>
+                    </div>
+                  </div>
+
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+
+      </div>
+    </section>
+  ))}
+</div>
+
     </main>
   );
 }
