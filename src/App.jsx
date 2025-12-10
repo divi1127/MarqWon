@@ -15,6 +15,8 @@ import Footer from "./sections/footer.jsx";
 // import ApplicationDevelopment from "./services/ApplicationDevelopment.jsx";
 // import CrmErpWorkflow from "./services/CrmErpWorkflow.jsx";
 import ServiceDetailPage from "./sections/ServiceDetailPage.jsx";
+import PrivacyPolicyPage from "./sections/PrivacyPolicyPage.jsx";
+import TermsAndConditionsPage from "./sections/TermsAndConditionsPage.jsx";
 
 
 export default function App() {
@@ -40,6 +42,9 @@ export default function App() {
             {/* <Route path="/discover-me" element={<DiscoverMore />} /> */}
             <Route path="/enquiries" element={<Enquiries />} />
             <Route path="/admin" element={<Admin />} />
+
+            <Route path="/privacy_policy" element={<PrivacyPolicyPage />} />
+            <Route path="/term_condition" element={<TermsAndConditionsPage/>} />
 
 
 

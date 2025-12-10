@@ -100,7 +100,7 @@ const services = [
     desc: "Custom theme design, app integration, and optimization for the Shopify platform.",
     icon: ShoppingCart, // Using ShoppingCart for Shopify
     imgUrl:
-      "https://i.pinimg.com/1200x/6e/8b/4c/6e8b4c7d0d0c3c8f8b0d4c1f5e8f4c1f.jpg", // Placeholder image
+      "https://i.pinimg.com/736x/95/23/23/95232386cad9cb667892b7e64afd0639.jpg", // Placeholder image
     color: "from-green-500 to-emerald-600",
   },
   {
@@ -109,7 +109,7 @@ const services = [
     desc: "Building and optimizing high-performance BigCommerce stores for retail growth.",
     icon: MonitorSmartphone,
     imgUrl:
-      "https://i.pinimg.com/1200x/2c/8e/3c/2c8e3c8f8d5e8f4e2f8c6d7d5e4b4b4b.jpg",
+      "https://i.pinimg.com/736x/cc/d4/14/ccd414b59c6d7b2b529bc91f570c2397.jpg",
     color: "from-blue-700 to-indigo-600",
   },
   {
@@ -210,6 +210,13 @@ const ParallaxHeader = ({ imgUrl, title, subtitle }) => {
 
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.3]);
+useEffect(() => {
+  services.forEach(s => {
+    const img = new Image();
+    img.src = s.imgUrl;
+  });
+}, []);
+
 
   return (
     <div ref={ref} className="relative h-[700px] overflow-hidden">
@@ -366,16 +373,19 @@ export default function ServicesPage() {
             {category.services.slice(3, 5).map((s, i) => {
               const Icon = s.icon;
               return (
-                <motion.div
-                  key={s.title}
-                  initial={{ opacity: 0, y: 50, scale: 0.95 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.7, ease: "easeOut" }}
-                  className="relative overflow-hidden rounded-xl bg-white border border-gray-100 shadow-md 
-                      transition-all cursor-pointer group text-gray-900
-                      flex flex-col h-[520px] hover:shadow-xl" // same height
-                >
+              <motion.div
+  key={s.title}
+  initial={{ opacity: 0, y: 30 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, amount: 0.1 }} // NEVER retrigger
+  transition={{
+    duration: 0.45,
+    ease: "easeOut",
+  }}
+  className="relative overflow-hidden rounded-xl bg-white border border-gray-100 shadow-md 
+            transition-all cursor-pointer group text-gray-900
+            flex flex-col h-[520px] hover:shadow-xl"
+>
 
                   {/* IMAGE */}
                   <div className="h-[240px] overflow-hidden">

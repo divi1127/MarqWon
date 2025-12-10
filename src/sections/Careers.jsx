@@ -1,89 +1,157 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Upload,
   CheckCircle,
-  Zap, // For Cutting-Edge Technology
-  Feather, // For Creative Freedom
-  Users, // For Collaborative Environment
-  TrendingUp, // For Accelerated Growth
-  Calendar, // For Flexible Work Model
-  XCircle, // For Error Messages
+  Zap,
+  Feather,
+  Users,
+  TrendingUp,
+  Calendar,
+  XCircle,
 } from "lucide-react";
 
-// Data for the new culture/values section
-const benefits = [
+// --- Data ---
+const BENEFITS = [
   {
+    id: "tech",
     icon: Zap,
     title: "Cutting-Edge Technology",
     description:
       "Work hands-on with the latest frameworks, generative AI models, and cloud technologies.",
     category: "Technology Focus",
-    img: "https://images.unsplash.com/photo-1535223289827-42f1e9919769", // NEW
+    img: "https://images.unsplash.com/photo-1535223289827-42f1e9919769?auto=format&fit=crop&w=1600&q=80",
+    color: "from-blue-400 to-indigo-600",
   },
   {
+    id: "growth",
     icon: TrendingUp,
     title: "Accelerated Growth",
     description:
       "Mentorship, continuous learning budgets, and fast career progression.",
     category: "Work and Growth",
-    img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085", // NEW
+    img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=80",
+    color: "from-green-400 to-teal-600",
   },
   {
+    id: "flex",
     icon: Calendar,
     title: "Flexible Work Model",
-    description:
-      "Flexible hours and remote options for perfect work-life balance.",
+    description: "Flexible hours and remote options for perfect work-life balance.",
     category: "Work and Growth",
-    img: "https://images.unsplash.com/photo-1593642634315-48f5414c3ad9", // NEW
+    img: "https://images.unsplash.com/photo-1593642634315-48f5414c3ad9?auto=format&fit=crop&w=1600&q=80",
+    color: "from-yellow-400 to-orange-500",
   },
   {
+    id: "creative",
     icon: Feather,
     title: "Creative Freedom",
     description:
       "Your ideas matter — experiment, innovate, and drive concepts end-to-end.",
     category: "Culture and Team",
-    img: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b", // NEW
+    img: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=1600&q=80",
+    color: "from-pink-400 to-rose-600",
   },
   {
+    id: "collab",
     icon: Users,
     title: "Collaborative Environment",
     description:
       "Knowledge sharing, open communication, and a team-first mindset.",
     category: "Culture and Team",
-    img: "https://images.unsplash.com/photo-1551434678-e076c223a692", // NEW
+    img: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1600&q=80",
+    color: "from-gray-400 to-gray-700",
   },
 ];
 
-// Helper function to group benefits by category
-const groupBenefits = () => {
-  const groups = {
-    "Work and Growth": [],
-    "Culture and Team": [],
-    "Technology Focus": [],
-  };
-  benefits.forEach((item) => {
-    groups[item.category].push(item);
-  });
-  return groups;
+const groupByCategory = (items) => {
+  return items.reduce((acc, it) => {
+    acc[it.category] = acc[it.category] || [];
+    acc[it.category].push(it);
+    return acc;
+  }, {});
 };
-const groupedBenefits = groupBenefits();
 
-const Careers = () => {
-  // State to track the currently selected benefit item for interaction
-  const [activeBenefit, setActiveBenefit] = useState(benefits[1]);
-  // Initialize openCategory to the category of the initial activeBenefit
-  const [openCategory, setOpenCategory] = useState(benefits[1].category);
-  const [resumeFile, setResumeFile] = useState(null);
-  const [submissionMessage, setSubmissionMessage] = useState({
-    type: null,
-    text: "",
-  });
-  const [formData, setFormData] = useState({
+// --- Small UI utilities ---
+const IconWrapper = ({ Icon }) => (
+  <div className="w-9 h-9 rounded-md bg-white/20 flex items-center justify-center">
+    <Icon className="w-5 h-5 text-white" />
+  </div>
+);
+
+// SmoothImage: preloads and crossfades
+const SmoothImage = ({ src, alt, overlayClass }) => {
+  const [loaded, setLoaded] = useState(false);
+  const [currentSrc, setCurrentSrc] = useState(src);
+  useEffect(() => {
+    let cancelled = false;
+    const img = new Image();
+    img.src = src;
+    img.onload = () => {
+      if (!cancelled) {
+        setCurrentSrc(src);
+        setLoaded(true);
+      }
+    };
+    // start as not loaded for new src
+    setLoaded(false);
+    return () => {
+      cancelled = true;
+    };
+  }, [src]);
+
+  return (
+    <div className="w-full h-full relative">
+      <AnimatePresence mode="wait">
+        {loaded && (
+          <motion.img
+            key={currentSrc}
+            src={currentSrc}
+            alt={alt}
+            initial={{ opacity: 0, scale: 1.02 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="w-full h-full object-cover absolute inset-0"
+          />
+        )}
+        {!loaded && (
+          <motion.div
+            key="placeholder"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="w-full h-full bg-gray-100 flex items-center justify-center absolute inset-0"
+          >
+            <svg
+              className="w-12 h-12 text-gray-300 animate-pulse"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <path d="M3 9h18" />
+            </svg>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* overlay */}
+      <div className={`absolute inset-0 pointer-events-none ${overlayClass}`} />
+    </div>
+  );
+};
+
+// Application Form component
+const ApplicationForm = ({ isJob, role, onSubmitted }) => {
+  const [form, setForm] = useState({
     name: "",
     email: "",
     phone: "",
-    role: "",
     experience: "",
     currentCTC: "",
     expectedCTC: "",
@@ -92,328 +160,297 @@ const Careers = () => {
     passoutYear: "",
     address: "",
   });
-  const [activeTab, setActiveTab] = useState("internships");
-  const [isJob, setIsJob] = useState(false);
-  const formRef = useRef(null);
+  const [resume, setResume] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
-  const WHATSAPP_NUMBER = "916369199664"; // Format without plus sign or spaces
+  const WHATSAPP_NUMBER = "916369199664"; // change if needed
 
-  const handleFileChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setResumeFile(e.target.files[0]);
-    }
-  };
+  useEffect(() => {
+    // reset when role or type changes
+    setForm((s) => ({ ...s, role }));
+    setResume(null);
+  }, [role, isJob]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setForm((p) => ({ ...p, [name]: value }));
   };
 
-  // --- MODIFIED SUBMISSION FUNCTION ---
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSubmissionMessage({ type: null, text: "" }); // Clear previous message
+  const handleFile = (e) => {
+    if (e.target.files && e.target.files[0]) setResume(e.target.files[0]);
+  };
 
-    // 1. Construct the message pattern
-    let applicationDetails = `*Application Details for ${formData.role}*\n`;
-    applicationDetails += `Role: ${formData.role}\n`;
-    applicationDetails += `Name: ${formData.name}\n`;
-    applicationDetails += `Email: ${formData.email}\n`;
-    applicationDetails += `Phone: ${formData.phone}\n`;
-
+  const buildMessage = () => {
+    let msg = `*Application: ${role}*\n`;
+    msg += `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\n`;
     if (isJob) {
-      applicationDetails += `\n*Job Specifics:*\n`;
-      applicationDetails += `Experience: ${formData.experience} years\n`;
-      applicationDetails += `Current CTC: ${formData.currentCTC} LPA\n`;
-      applicationDetails += `Expected CTC: ${formData.expectedCTC} LPA\n`;
+      msg += `Experience: ${form.experience} years\nCurrent CTC: ${form.currentCTC} LPA\nExpected CTC: ${form.expectedCTC} LPA\n`;
     } else {
-      applicationDetails += `\n*Internship Specifics:*\n`;
-      applicationDetails += `College: ${formData.college}\n`;
-      applicationDetails += `Major: ${formData.department}\n`;
-      applicationDetails += `Passout Year: ${formData.passoutYear}\n`;
-      applicationDetails += `Address: ${formData.address}\n`;
+      msg += `College: ${form.college}\nDepartment: ${form.department}\nPassout Year: ${form.passoutYear}\nAddress: ${form.address}\n`;
+    }
+    msg += `\nResume: ${resume ? resume.name : "Not attached"}\n\nPlease find my application details above.`;
+    return msg;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+
+    // Basic validation
+    if (!form.name || !form.email || !form.phone) {
+      alert("Please fill in name, email and phone");
+      setSubmitting(false);
+      return;
     }
 
-    applicationDetails += `\n*Resume Status:*\n`;
-    applicationDetails += resumeFile
-      ? `File ready: ${resumeFile.name}. *Please send the file manually in the chat that opens.*\n`
-      : "*No resume attached. Please ensure you send it manually.*\n";
+    const encoded = encodeURIComponent(buildMessage());
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`;
+    window.open(url, "_blank");
 
-    applicationDetails += `\nThank you!`;
-
-    // 2. Encode the message for the URL
-    const encodedMessage = encodeURIComponent(applicationDetails);
-    
-    // 3. Construct the WhatsApp URL
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
-
-    // 4. Open the chat
-    window.open(whatsappUrl, "_blank");
-
-    // 5. Provide feedback to the user
-    setSubmissionMessage({
-      type: "success",
-      text: `✅ Application details for ${formData.role} formatted. Please check the new window/tab to *send the message and attach your resume* on WhatsApp.`,
-    });
-
-    // Reset form data and file after submission attempt
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      role: "",
-      experience: "",
-      currentCTC: "",
-      expectedCTC: "",
-      college: "",
-      department: "",
-      passoutYear: "",
-      address: "",
-    });
-    setResumeFile(null);
-    e.target.reset(); // Resets input fields including the file input
-  };
-  // --- END MODIFIED SUBMISSION FUNCTION ---
-
-  const scrollToForm = () => {
-    formRef.current?.scrollIntoView({ behavior: "smooth" });
+    // Clear locally but keep a friendly confirmation
+    setTimeout(() => {
+      setSubmitting(false);
+      onSubmitted && onSubmitted({ success: true });
+      setForm({
+        name: "",
+        email: "",
+        phone: "",
+        experience: "",
+        currentCTC: "",
+        expectedCTC: "",
+        college: "",
+        department: "",
+        passoutYear: "",
+        address: "",
+      });
+      setResume(null);
+    }, 400);
   };
 
-  const handleApply = (role, isJobRole = false) => {
-    setFormData({ ...formData, role });
-    setIsJob(isJobRole);
-    setActiveTab("process");
-    setSubmissionMessage({ type: null, text: "" }); // Clear previous message
-    setTimeout(scrollToForm, 300);
-  };
+  const inputClass =
+    "w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-shadow";
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <input
+        name="name"
+        placeholder="Full Name *"
+        value={form.name}
+        onChange={handleChange}
+        required
+        className={inputClass}
+      />
+
+      <input
+        name="email"
+        type="email"
+        placeholder="Email *"
+        value={form.email}
+        onChange={handleChange}
+        required
+        className={inputClass}
+      />
+
+      <input
+        name="phone"
+        type="tel"
+        placeholder="Phone Number *"
+        value={form.phone}
+        onChange={handleChange}
+        required
+        className={inputClass}
+      />
+
+      <input
+        name="role"
+        value={role}
+        readOnly
+        className="w-full p-3 rounded-lg border border-gray-300 bg-gray-50 font-semibold"
+      />
+
+      {isJob ? (
+        <>
+          <input
+            name="experience"
+            placeholder="Total Experience (in years) *"
+            value={form.experience}
+            onChange={handleChange}
+            required
+            className={inputClass}
+          />
+          <input
+            name="currentCTC"
+            placeholder="Current CTC (LPA) *"
+            value={form.currentCTC}
+            onChange={handleChange}
+            required
+            className={inputClass}
+          />
+          <input
+            name="expectedCTC"
+            placeholder="Expected CTC (LPA) *"
+            value={form.expectedCTC}
+            onChange={handleChange}
+            required
+            className={inputClass}
+          />
+        </>
+      ) : (
+        <>
+          <input
+            name="college"
+            placeholder="College Name *"
+            value={form.college}
+            onChange={handleChange}
+            required
+            className={inputClass}
+          />
+          <input
+            name="department"
+            placeholder="Major / Department *"
+            value={form.department}
+            onChange={handleChange}
+            required
+            className={inputClass}
+          />
+          <input
+            name="passoutYear"
+            placeholder="Passout Year / Batch *"
+            value={form.passoutYear}
+            onChange={handleChange}
+            required
+            className={inputClass}
+          />
+          <textarea
+            name="address"
+            placeholder="Current Address *"
+            value={form.address}
+            onChange={handleChange}
+            rows={2}
+            required
+            className={inputClass}
+          />
+        </>
+      )}
+
+      <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center bg-gray-50">
+        <input
+          id="resume-input"
+          type="file"
+          accept=".pdf,.doc,.docx"
+          onChange={handleFile}
+          className="hidden"
+        />
+        <label htmlFor="resume-input" className="cursor-pointer block">
+          <Upload className="w-8 h-8 mx-auto mb-2 text-gray-500" />
+          {resume ? (
+            <p className="text-sm text-green-600 font-medium">{resume.name} (Ready)</p>
+          ) : (
+            <p className="text-sm text-gray-600">Click to upload or drag and drop your Resume (Required)</p>
+          )}
+        </label>
+      </div>
+
+      <motion.button
+        type="submit"
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.99 }}
+        className="w-full bg-gray-900 text-white py-3 rounded-xl hover:bg-gray-800 transition font-semibold shadow-lg"
+        disabled={submitting}
+      >
+        {submitting ? "Opening WhatsApp..." : "Submit Application via WhatsApp 💬"}
+      </motion.button>
+
+      <p className="text-xs text-center text-gray-500">*You will need to attach your resume manually in WhatsApp if it did not auto-send.*</p>
+    </form>
+  );
+};
+
+// Main Careers Page (single-file export)
+export default function CareersPage() {
+  const grouped = groupByCategory(BENEFITS);
+  const defaultActive = BENEFITS[1];
+  const [activeBenefit, setActiveBenefit] = useState(defaultActive);
+  const [openCategory, setOpenCategory] = useState(defaultActive.category);
+  const [activeTab, setActiveTab] = useState("internships");
+  const [submissionMessage, setSubmissionMessage] = useState(null);
 
   const internships = [
-    {
-      title: "Full Stack Development Intern",
-      duration: "3-6 months",
-      requirements: ["React.js", "Node.js", "Database basics", "Git"],
-    },
-    {
-      title: "Mobile App Development Intern",
-      duration: "3-6 months",
-      requirements: ["React Native or Flutter", "Mobile UI/UX", "REST APIs"],
-    },
-    {
-      title: "AI/ML Intern",
-      duration: "3-6 months",
-      requirements: ["Python", "Machine Learning basics", "TensorFlow"],
-    },
-    {
-      title: "UI/UX Design Intern",
-      duration: "3-6 months",
-      requirements: ["Figma", "Wireframing", "Prototyping", "Creativity"],
-    },
+    { title: "Full Stack Development Intern", duration: "3-6 months", requirements: ["React.js", "Node.js", "Database basics", "Git"] },
+    { title: "Mobile App Development Intern", duration: "3-6 months", requirements: ["React Native or Flutter", "Mobile UI/UX", "REST APIs","Firebase or Local Storage"  ] },
+    { title: "AI/ML Intern", duration: "3-6 months", requirements: ["Python", "Machine Learning basics", "TensorFlow","Data Preprocessing & Visualization"  ] },
+    { title: "UI/UX Design Intern", duration: "3-6 months", requirements: ["Figma", "Wireframing", "Prototyping"] },
   ];
 
   const jobs = [
-    {
-      title: "Senior Full Stack Developer",
-      type: "Full-time",
-      experience: "4-6 years",
-      skills: ["React", "Node.js", "MongoDB", "AWS"],
-    },
-    {
-      title: "Mobile App Developer",
-      type: "Full-time",
-      experience: "3-5 years",
-      skills: ["React Native", "iOS/Android", "Firebase"],
-    },
-    {
-      title: "DevOps Engineer",
-      type: "Full-time",
-      experience: "3-5 years",
-      skills: ["Docker", "Kubernetes", "AWS/Azure"],
-    },
-    {
-      title: "UI/UX Designer",
-      type: "Full-time",
-      experience: "2-4 years",
-      skills: ["Figma", "Adobe XD", "User Research"],
-    },
+    { title: "Senior Full Stack Developer", type: "Full-time", experience: "4-6 years", skills: ["React", "Node.js", "MongoDB", "AWS"] },
+    { title: "Mobile App Developer", type: "Full-time", experience: "3-5 years", skills: ["React Native", "iOS/Android", "Firebase"] },
+    { title: "DevOps Engineer", type: "Full-time", experience: "3-5 years", skills: ["Docker", "Kubernetes", "AWS/Azure"] },
+    { title: "UI/UX Designer", type: "Full-time", experience: "2-4 years", skills: ["Figma", "Adobe XD", "User Research"] },
   ];
 
   const hiringSteps = [
     { title: "Apply", description: "Submit your resume and details" },
     { title: "Screening", description: "Initial review of your application" },
-    {
-      title: "Technical Round",
-      description: "Assessment of your technical skills",
-    },
+    { title: "Technical Round", description: "Assessment of your technical skills" },
     { title: "Interview", description: "Final HR and managerial discussions" },
     { title: "Offer", description: "Job offer and onboarding" },
   ];
 
-  const tabClass = (tab) =>
-    `px-6 py-2 rounded-full font-semibold transition ${
-      activeTab === tab
-        ? "bg-gray-900 text-white shadow-md shadow-gray-400"
-        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-    }`;
-
-  const inputClass =
-    "w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-shadow";
-
-  // Dynamic class for the image overlay
-  const imageOverlayClass = `absolute inset-0 transition-colors duration-500 ${
-    activeBenefit
-      ? `${activeBenefit.color} bg-opacity-30` // Use dynamic color if active
-      : "bg-gray-900 bg-opacity-10" // Default gray overlay
-  }`;
-
-  // Smoother Image Change: Use AnimatePresence for the image wrapper
-  // We use activeBenefit.title as the key to trigger the image/description transition
-  const ImageWrapper = ({ activeBenefit }) => (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={activeBenefit.title} // Key change forces re-render/animation
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.95 }}
-        transition={{ duration: 0.5, delay: 0.1 }} // Slight delay to ensure click registers smoothly
-        className="w-full h-full"
-      >
-        <img
-          src={activeBenefit.img}
-          alt="Benefit visual"
-          className="w-full h-full object-cover"
-        />
-
-        {/* Overlay */}
-        <div className={imageOverlayClass}></div>
-
-        {/* Dynamic Description (also animated) */}
-        <motion.div
-          key={activeBenefit.description} // key change forces re-render/animation
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.2 }} // Description fades in slightly after the image
-          className="absolute bottom-0 left-0 right-0 p-6 bg-white bg-opacity-95 text-gray-900"
-        >
-          <p className="text-lg font-bold mb-1">
-            {activeBenefit.title}
-          </p>
-          <p className="text-sm text-gray-600">
-            {activeBenefit.description}
-          </p>
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
-  );
+  const onFormSubmitted = ({ success }) => {
+    setSubmissionMessage(success ? { type: "success", text: "Application prepared — please finish sending it in WhatsApp." } : { type: "error", text: "There was an issue preparing your application." });
+    setTimeout(() => setSubmissionMessage(null), 6000);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 font-inter">
-      {/* Hero Section */}
-      <section className="pt-40 pb-20 text-center bg-white shadow-inner">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <h1 className="text-5xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent">
-            Join Our Team
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Build your career with{" "}
-            <b className="text-gray-900">MarqWon</b> — work on cutting-edge
-            technology and shape the future of AI.
-          </p>
+      {/* HERO */}
+      <section className="pt-28 pb-10 text-center bg-white">
+        <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}>
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-3 bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent">Join Our Team</h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">Build your career with <span className="font-semibold text-gray-900">MarqWon</span> — work on cutting-edge technology and shape the future of AI.</p>
         </motion.div>
       </section>
 
-      {/* --- */}
+      {/* BENEFITS + IMAGE */}
+      <section className="py-16">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <motion.h2 initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-3xl md:text-4xl font-bold text-center mb-10">Why Choose MarqWon?</motion.h2>
 
-      {/* NEW: Culture and Benefits Section (Split-Layout) */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6 max-w-6xl">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            className="text-4xl font-extrabold text-center mb-16 text-gray-900 font-poppins"
-          >
-            Why Choose MarqWon?
-          </motion.h2>
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+            {/* Left image */}
+            <div className="lg:col-span-2 relative aspect-video lg:aspect-square rounded-2xl overflow-hidden shadow-lg">
+              <div className="absolute inset-4 rounded-xl overflow-hidden">
+                <SmoothImage src={activeBenefit.img} alt={activeBenefit.title} overlayClass="" />
 
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
-            {/* Left Side: Image with Dynamic Overlay */}
-            <motion.div
-              initial={{ x: -50, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.8 }}
-              className="lg:col-span-2 relative aspect-video lg:aspect-square rounded-2xl overflow-hidden shadow-2xl"
-            >
-              {activeBenefit && <ImageWrapper activeBenefit={activeBenefit} />}
-            </motion.div>
+                <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.25 }} className="absolute bottom-0 left-0 right-0 p-6 bg-white/90">
+                  <p className="text-lg font-bold text-gray-900">{activeBenefit.title}</p>
+                  <p className="text-sm text-gray-700 mt-1">{activeBenefit.description}</p>
+                </motion.div>
+              </div>
+            </div>
 
-            {/* Right Side: Category Accordion */}
-            <motion.div
-              initial={{ x: 50, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.8 }}
-              className="lg:col-span-3 space-y-8 p-4 md:p-8 rounded-xl"
-            >
-              {Object.entries(groupedBenefits).map(([category, items]) => {
+            {/* Right list */}
+            <div className="lg:col-span-3 space-y-6 p-4 md:p-6 rounded-xl">
+              {Object.entries(grouped).map(([category, items]) => {
                 const isOpen = openCategory === category;
-
                 return (
-                  <div
-                    key={category}
-                    className="border-b border-gray-300 pb-4"
-                  >
-                    {/* Category Title */}
-                    <h3
-                      className="text-2xl font-bold mb-4 text-gray-800 cursor-pointer flex justify-between items-center"
-                      onClick={() =>
-                        setOpenCategory(isOpen ? null : category)
-                      }
-                    >
-                      {category}
-                      <span className="text-gray-500 transition-transform duration-300 transform">
-                        {isOpen ? "−" : "+"}
-                      </span>
-                    </h3>
+                  <div key={category} className="border-b border-gray-200 pb-4">
+                    <button onClick={() => setOpenCategory(isOpen ? null : category)} className="w-full flex justify-between items-center text-left">
+                      <h3 className="text-xl font-semibold text-gray-800">{category}</h3>
+                      <span className="text-gray-500">{isOpen ? '−' : '+'}</span>
+                    </button>
 
-                    {/* Show Items Only If Open - Animated using AnimatePresence */}
                     <AnimatePresence>
                       {isOpen && (
-                        <motion.ul
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="mt-4 space-y-3 overflow-hidden"
-                        >
-                          {items.map((item, i) => (
-                            <li
-                              key={i}
-                              className={`flex items-start text-gray-700 cursor-pointer p-3 rounded-lg hover:bg-gray-100 transition-all ${
-                                activeBenefit?.title === item.title
-                                  ? "bg-gray-100 text-gray-900 font-medium shadow-sm"
-                                  : ""
-                              }`}
-                              onClick={() => {
-                                // Set active benefit
-                                setActiveBenefit(item);
-                                // Ensure the correct category is open if a benefit is clicked
-                                setOpenCategory(category);
-                              }}
-                            >
-                              <CheckCircle
-                                className={`w-5 h-5 mt-1 mr-3 flex-shrink-0 transition-colors ${
-                                  activeBenefit?.title === item.title
-                                    ? "text-gray-900"
-                                    : "text-gray-500"
-                                }`}
-                              />
-                              <p className="text-lg leading-snug">
-                                {item.title}
-                              </p>
+                        <motion.ul initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.28 }} className="mt-4 space-y-3 overflow-hidden">
+                          {items.map((it) => (
+                            <li key={it.id} onClick={() => { setActiveBenefit(it); setOpenCategory(category); }} className={`flex items-start p-3 rounded-lg cursor-pointer transition-all ${activeBenefit.id === it.id ? 'bg-gray-100 shadow-sm' : 'hover:bg-gray-50'}`}>
+                              <CheckCircle className={`w-5 h-5 mt-1 mr-3 flex-shrink-0 ${activeBenefit.id === it.id ? 'text-gray-900' : 'text-gray-400'}`} />
+                              <div>
+                                <p className={`text-lg ${activeBenefit.id === it.id ? 'font-medium text-gray-900' : 'text-gray-700'}`}>{it.title}</p>
+                                <p className="text-sm text-gray-500 mt-1 hidden md:block">{it.description}</p>
+                              </div>
                             </li>
                           ))}
                         </motion.ul>
@@ -422,353 +459,75 @@ const Careers = () => {
                   </div>
                 );
               })}
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
-      {/* End of NEW Section */}
 
-      {/* --- */}
-
-      {/* Tabs */}
-      <section className="py-20 container mx-auto px-6">
-        <div className="flex justify-center mb-12 gap-4 flex-wrap">
-          {["internships", "jobs", "process"].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={tabClass(tab)}
-            >
-              {tab === "internships"
-                ? "Internships"
-                : tab === "jobs"
-                ? "Find a Job"
-                : "Hiring Process"}
+      {/* TABS */}
+      <section className="py-12 container mx-auto px-4 max-w-6xl"> 
+        <div className="flex justify-center mb-8 gap-3 flex-wrap">
+          {['internships', 'jobs', 'process'].map((t) => (
+            <button key={t} onClick={() => setActiveTab(t)} className={`px-5 py-2 rounded-full font-semibold transition ${activeTab === t ? 'bg-gray-900 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
+              {t === 'internships' ? 'Internships' : t === 'jobs' ? 'Find a Job' : 'Hiring Process'}
             </button>
           ))}
         </div>
 
-        {/* Internships */}
-        {activeTab === "internships" && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {internships.map((intern, i) => (
-              <motion.div
-                key={intern.title}
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-white rounded-2xl p-6 shadow-xl border border-gray-200 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
-              >
-                <h3 className="text-xl font-bold mb-3 text-gray-900">
-                  {intern.title}
-                </h3>
-                <p className="text-sm text-gray-600 mb-4">
-                  Duration: {intern.duration}
-                </p>
-                <ul className="text-sm text-gray-700 mb-6 space-y-2">
-                  <h4 className="font-semibold text-gray-800 mb-1">
-                    Key Requirements:
-                  </h4>
-                  {intern.requirements.map((req) => (
-                    <li key={req} className="flex items-center">
-                      <CheckCircle className="w-4 h-4 mr-2 text-green-500 flex-shrink-0" />{" "}
-                      {req}
-                    </li>
+        {activeTab === 'internships' && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {internships.map((i, idx) => (
+              <motion.div key={i.title} initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: idx * 0.06 }} className="bg-white rounded-2xl p-6 shadow-md border border-gray-100">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">{i.title}</h3>
+                <p className="text-sm text-gray-600 mb-4">Duration: {i.duration}</p>
+                <ul className="text-sm text-gray-700 space-y-2 mb-4">
+                  {i.requirements.map((r) => (
+                    <li key={r} className="flex items-center"><CheckCircle className="w-4 h-4 mr-2 text-green-500" />{r}</li>
                   ))}
                 </ul>
-                <button
-                  onClick={() => handleApply(intern.title, false)}
-                  className="w-full bg-gray-900 text-white py-3 rounded-xl hover:bg-gray-800 transition-all font-semibold shadow-md hover:shadow-lg"
-                >
-                  Apply Now
-                </button>
+                <button onClick={() => { setActiveTab('process'); setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }), 200); }} className="w-full bg-gray-900 text-white py-2 rounded-lg">Apply Now</button>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         )}
 
-        {/* Jobs */}
-        {activeTab === "jobs" && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"
-          >
-            {jobs.map((job, i) => (
-              <motion.div
-                key={job.title}
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-white p-6 rounded-2xl shadow-xl border border-gray-200 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1"
-              >
-                <h3 className="text-xl font-bold mb-3 text-gray-900">
-                  {job.title}
-                </h3>
-                <p className="text-sm text-gray-600 mb-4">
-                  <span className="font-medium text-gray-800">
-                    {job.type}
-                  </span>{" "}
-                  | Experience: {job.experience}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {job.skills.map((s) => (
-                    <span
-                      key={s}
-                      className="text-xs px-3 py-1 bg-gray-100 rounded-full text-gray-700 border border-gray-200 font-medium"
-                    >
-                      {s}
-                    </span>
-                  ))}
+        {activeTab === 'jobs' && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {jobs.map((j, idx) => (
+              <motion.div key={j.title} initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: idx * 0.06 }} className="bg-white p-6 rounded-2xl shadow-md border border-gray-100">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">{j.title}</h3>
+                <p className="text-sm text-gray-600 mb-4"><span className="font-medium text-gray-800">{j.type}</span> | Experience: {j.experience}</p>
+                <div className="flex flex-wrap gap-2 mb-4">{j.skills.map(s => <span key={s} className="text-xs px-3 py-1 bg-gray-100 rounded-full">{s}</span>)}</div>
+                <button onClick={() => { setActiveTab('process'); setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }), 200); }} className="w-full bg-gray-900 text-white py-2 rounded-lg">Apply Now</button>
+              </motion.div>
+            ))}
+          </div>
+        )}
+
+        {activeTab === 'process' && (
+          <div>
+            <h2 className="text-2xl font-bold text-center mb-8">Our Simple Hiring Journey</h2>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+              {hiringSteps.map((s, idx) => (
+                <div key={s.title} className="bg-white rounded-xl p-4 text-center shadow-sm border border-gray-50">
+                  <div className="w-10 h-10 bg-gray-900 text-white rounded-full mx-auto mb-2 flex items-center justify-center font-semibold">{idx+1}</div>
+                  <h3 className="font-bold text-sm text-gray-900">{s.title}</h3>
+                  <p className="text-xs text-gray-500 mt-1">{s.description}</p>
                 </div>
-                <button
-                  onClick={() => handleApply(job.title, true)}
-                  className="w-full bg-gray-900 text-white py-3 rounded-xl hover:bg-gray-800 transition-all font-semibold shadow-md hover:shadow-lg"
-                >
-                  Apply Now
-                </button>
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
-
-        {/* --- */}
-
-        {/* Hiring Process + Resume Form */}
-        {activeTab === "process" && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-              Our Simple Hiring Journey
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-5 mb-16">
-              {hiringSteps.map((step, i) => (
-                <motion.div
-                  key={step.title}
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="bg-white rounded-xl p-4 text-center shadow-lg border border-gray-100"
-                >
-                  <div className="w-10 h-10 bg-gray-900 text-white flex items-center justify-center rounded-full mx-auto mb-3 font-extrabold text-lg">
-                    {i + 1}
-                  </div>
-                  <h3 className="font-bold text-gray-900 text-sm md:text-base">
-                    {step.title}
-                  </h3>
-                  <p className="text-xs text-gray-600 mt-1">
-                    {step.description}
-                  </p>
-                </motion.div>
               ))}
             </div>
 
-            {/* Submission Message Box */}
-            {submissionMessage.type && (
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className={`p-4 mb-6 rounded-lg font-medium max-w-2xl mx-auto flex items-center shadow-lg ${
-                  submissionMessage.type === "success"
-                    ? "bg-green-100 text-green-800 border-green-300"
-                    : "bg-red-100 text-red-800 border-red-300"
-                }`}
-              >
-                {submissionMessage.type === "success" ? (
-                  <CheckCircle className="w-5 h-5 mr-2" />
-                ) : (
-                  <XCircle className="w-5 h-5 mr-2" />
-                )}
-                {submissionMessage.text}
-              </motion.div>
+            {submissionMessage && (
+              <div className={`p-3 mb-6 rounded-md max-w-2xl mx-auto text-sm ${submissionMessage.type === 'success' ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>{submissionMessage.text}</div>
             )}
 
-            {/* Resume Form */}
-            <div
-              ref={formRef}
-              className="max-w-2xl mx-auto bg-white rounded-xl p-8 shadow-2xl border border-gray-200"
-            >
-              <h3 className="text-2xl font-bold mb-6 text-center text-gray-900">
-                Submit Your Application
-                <span className="block text-sm font-normal text-gray-500">
-                  {formData.role || "Select a role above to auto-fill"}
-                </span>
-              </h3>
-
-              <form onSubmit={handleSubmit} className="space-y-4">
-                {/* Common fields */}
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Full Name *"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className={inputClass}
-                />
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email *"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className={inputClass}
-                />
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder="Phone Number *"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                  className={inputClass}
-                />
-
-                <input
-                  type="text"
-                  name="role"
-                  placeholder="Role Applied *"
-                  value={formData.role}
-                  readOnly
-                  required
-                  className="w-full p-3 rounded-lg border border-gray-300 bg-gray-100 font-semibold"
-                />
-
-                {/* Conditional Fields: Internship */}
-                {!isJob && (
-                  <>
-                    <input
-                      type="text"
-                      name="college"
-                      placeholder="College Name *"
-                      value={formData.college}
-                      onChange={handleChange}
-                      required
-                      className={inputClass}
-                    />
-                    <input
-                      type="text"
-                      name="department"
-                      placeholder="Major / Department *"
-                      value={formData.department}
-                      onChange={handleChange}
-                      required
-                      className={inputClass}
-                    />
-                    <input
-                      type="text"
-                      name="passoutYear"
-                      placeholder="Passout Year / Batch *"
-                      value={formData.passoutYear}
-                      onChange={handleChange}
-                      required
-                      className={inputClass}
-                    />
-                    <textarea
-                      name="address"
-                      placeholder="Current Address *"
-                      value={formData.address}
-                      onChange={handleChange}
-                      required
-                      rows="2"
-                      className={inputClass}
-                    />
-                  </>
-                )}
-
-                {/* Conditional Fields: Job */}
-                {isJob && (
-                  <>
-                    <input
-                      type="text"
-                      name="experience"
-                      placeholder="Total Experience (in years) *"
-                      value={formData.experience}
-                      onChange={handleChange}
-                      required
-                      className={inputClass}
-                    />
-                    <input
-                      type="text"
-                      name="currentCTC"
-                      placeholder="Current CTC (LPA) *"
-                      value={formData.currentCTC}
-                      onChange={handleChange}
-                      required
-                      className={inputClass}
-                    />
-                    <input
-                      type="text"
-                      name="expectedCTC"
-                      placeholder="Expected CTC (LPA) *"
-                      value={formData.expectedCTC}
-                      onChange={handleChange}
-                      required
-                      className={inputClass}
-                    />
-                    <div className="border-2 border-dashed border-gray-400 rounded-lg p-4 text-center bg-gray-50">
-                      <input
-                        id="letter"
-                        type="file"
-                        accept=".pdf,.doc,.docx"
-                        className="hidden"
-                      />
-                      <label
-                        htmlFor="letter"
-                        className="cursor-pointer block text-sm text-gray-600"
-                      >
-                        Optional: Upload Letter of Recommendation (PDF, DOC)
-                      </label>
-                    </div>
-                  </>
-                )}
-
-                {/* Resume Upload (Required for both) */}
-                <div className="border-2 border-dashed border-gray-400 rounded-lg p-6 text-center hover:border-gray-600 transition duration-300 bg-gray-50">
-                  <input
-                    id="resume"
-                    type="file"
-                    accept=".pdf,.doc,.docx"
-                    onChange={handleFileChange}
-                    required
-                    className="hidden"
-                  />
-                  <label htmlFor="resume" className="cursor-pointer block">
-                    <Upload className="w-8 h-8 mx-auto mb-2 text-gray-500" />
-                    {resumeFile ? (
-                      <p className="text-sm text-green-600 font-medium">
-                        {resumeFile.name} (Ready to upload)
-                      </p>
-                    ) : (
-                      <p className="text-sm text-gray-600">
-                        Click to upload or drag and drop your Resume (Required)
-                      </p>
-                    )}
-                  </label>
-                </div>
-
-                <motion.button
-                  type="submit"
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.99 }}
-                  className="w-full bg-gray-900 text-white py-3 rounded-xl hover:bg-gray-800 transition font-semibold shadow-lg"
-                >
-                  Submit Application via WhatsApp 💬
-                </motion.button>
-                <p className="text-xs text-center text-red-500 font-medium pt-2">
-                    *Note: You must manually send the message and attach your resume in the WhatsApp chat.*
-                </p>
-              </form>
+            <div className="max-w-2xl mx-auto bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+              <h3 className="text-xl font-bold mb-4">Submit Your Application</h3>
+              <ApplicationForm isJob={false} role={"(Select a role above)"} onSubmitted={onFormSubmitted} />
             </div>
-          </motion.div>
+          </div>
         )}
       </section>
     </div>
   );
-};
-
-export default Careers;
+}
