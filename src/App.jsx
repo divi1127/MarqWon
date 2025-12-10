@@ -43,8 +43,8 @@ export default function App() {
             <Route path="/enquiries" element={<Enquiries />} />
             <Route path="/admin" element={<Admin />} />
 
-            <Route path="/privacy_policy" element={<PrivacyPolicyPage />} />
-            <Route path="/term_condition" element={<TermsAndConditionsPage/>} />
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+            <Route path="/terms-conditions" element={<TermsAndConditionsPage/>} />
 
 
 

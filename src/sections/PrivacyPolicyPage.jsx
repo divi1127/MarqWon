@@ -1,7 +1,7 @@
 import React from 'react';
 import { ShieldCheck, Mail, MapPin, Layers, Briefcase, Lock, User, TrendingUp } from 'lucide-react';
 
-// --- Data Definitions ---
+// --- Data Definitions (Updated to match detailed policy text) ---
 
 const policyData = {
     companyName: "MARQWON DYNAMICS PRIVATE LIMITED",
@@ -14,59 +14,80 @@ const policyData = {
         email: "info@marqwon.com",
         address: "No. 9, Lavanya Complex, GR Nagar, Moondrumavadi Rd, Pudur Bazaar, Madurai, Tamil Nadu, Tamil Nadu, India - 625007",
     },
+    // Updated data table with full retention details
     dataTable: [
         {
             category: "Identity & Contact Data",
-            data: "Name, Email, Phone, Company Name",
-            collection: "Contact forms, Quote requests, Email",
-            purpose: "Respond to inquiries, provide quotes, deliver services",
-            legalBasis: "Consent / Contractual necessity"
+            data: "Name, Email, Phone, Company Name, Designation",
+            collection: "Contact/Quote forms, email, WhatsApp Business",
+            purpose: "Respond to inquiries, communicate, send quotes, facilitate service delivery",
+            legalBasis: "Consent / Contractual Necessity",
+            retention: "Up to 5 years post-engagement"
         },
         {
             category: "Technical & Usage Data",
-            data: "IP address, browser type, pages visited, time spent",
-            collection: "Cookies, Google Analytics, Microsoft Clarity",
-            purpose: "Improve website performance, security, analytics",
-            legalBasis: "Consent (via cookie banner)"
+            data: "IP address, browser type/version, pages visited, time spent, referral source",
+            collection: "Cookies, server logs, Google Analytics, Microsoft Clarity",
+            purpose: "Website performance analysis, security monitoring, improving user experience",
+            legalBasis: "Consent (via cookie banner)",
+            retention: "Generally retained for 26 months"
         },
         {
-            category: "Transaction Data",
-            data: "Amount, Date, Payment Status",
-            collection: "Razorpay / Cashfree payment gateways",
-            purpose: "Process payments, accounting & tax compliance",
-            legalBasis: "Legal obligation / Contract"
+            category: "Communication Data",
+            data: "Email threads, chat logs, recorded calls (if any)",
+            collection: "Direct communication channels (Email, live chat, phone)",
+            purpose: "Robust service delivery, support, internal quality assurance",
+            legalBasis: "Contractual Necessity",
+            retention: "Duration of relationship plus 3 years"
+        },
+        {
+            category: "Transaction & Financial Data",
+            data: "Invoice amount, payment date, transaction ID, partial bank details (if applicable)",
+            collection: "Razorpay / Cashfree payment processors, direct bank transfers",
+            purpose: "Payment processing, financial accounting, tax compliance, and refund processing",
+            legalBasis: "Legal Obligation (Tax/Regulatory) and Contract",
+            retention: "8 years (as per Companies Act & GST requirements)"
         },
     ],
-    processors: ["Razorpay", "Cashfree", "Google", "Microsoft", "cloud providers"]
+    // Expanded processor details for section 5
+    processors: [
+        { name: "Google LLC and Microsoft Corporation", location: "USA", purpose: "Analytics, Email hosting, workspace services", safeguards: "Standard Contractual Clauses (SCCs) and DPDP-compliant contracts" },
+        { name: "Razorpay / Cashfree", location: "India", purpose: "Payment services", safeguards: "RBI compliant and DPDP contracts" },
+        { name: "AWS / DigitalOcean", location: "India / USA", purpose: "Cloud hosting and backups", safeguards: "DPDP-compliant Data Processing Agreements (DPA)" },
+    ]
 };
 
 // ------------------------
-//   Policy Section Component (Modified)
+//   Policy Section Component (Modified to remove numbering)
 // ------------------------
 
-// Removed section number prefix from title
-const PolicySection = ({ icon: Icon, title, children }) => (
-    <div className="mb-12 border-b border-gray-100 pb-8">
-        <div className="flex items-start mb-4">
-            <Icon className="w-6 h-6 text-indigo-600 mr-3 mt-1 flex-shrink-0" />
-            <h2 
-                className="text-3xl font-extrabold text-black leading-tight" // Lighter Header Color (text-gray-600) & Poppins Sim (font-extrabold)
-                style={{ fontFamily: 'Poppins, sans-serif' }} // Explicit Poppins simulation
+const PolicySection = ({ icon: Icon, title, children }) => {
+    // Logic to remove the number, period, and space (e.g., "1. " or "10. ") from the title
+    const displayTitle = title.replace(/^\d+\.\s*/, '');
+
+    return (
+        <div className="mb-12 border-b border-gray-100 pb-8">
+            <div className="flex items-start mb-4">
+                <Icon className="w-6 h-6 text-indigo-600 mr-3 mt-1 flex-shrink-0" />
+                <h2
+                    className="text-3xl font-extrabold text-black leading-tight" // Poppins Sim (font-extrabold)
+                    style={{ fontFamily: 'Poppins, sans-serif' }}
+                >
+                    {displayTitle}
+                </h2>
+            </div>
+            <div
+                className="text-gray-700 text-lg font-light leading-relaxed pl-9" // Inter Light Thin Sim (font-light)
+                style={{ fontFamily: 'Inter, sans-serif' }}
             >
-                {title}
-            </h2>
+                {children}
+            </div>
         </div>
-        <div 
-            className="text-gray-700 text-lg font-light leading-relaxed pl-9" // Inter Light Thin Sim (font-light)
-            style={{ fontFamily: 'Inter, sans-serif' }} // Explicit Inter simulation
-        >
-            {children}
-        </div>
-    </div>
-);
+    );
+};
 
 // ------------------------
-//   MAIN PRIVACY POLICY PAGE
+//   MAIN PRIVACY POLICY PAGE
 // ------------------------
 
 export default function PrivacyPolicyPage() {
@@ -77,9 +98,9 @@ export default function PrivacyPolicyPage() {
                 {/* Header Block */}
                 <header className="text-center mb-16 mt-20">
                     <ShieldCheck className="w-12 h-12 text-indigo-600 mx-auto mb-4" />
-                    <h1 
+                    <h1
                         className="text-5xl font-extrabold text-gray-900 tracking-tight mb-2"
-                        style={{ fontFamily: 'Poppins, sans-serif' }} // Poppins Sim
+                        style={{ fontFamily: 'Poppins, sans-serif' }}
                     >
                         Privacy Policy
                     </h1>
@@ -93,35 +114,36 @@ export default function PrivacyPolicyPage() {
                     </div>
                 </header>
 
-                {/* Introduction */}
+                {/* Introduction (Custom Section) */}
                 <section className="mb-16 border-b border-gray-100 pb-10" style={{ fontFamily: 'Inter, sans-serif' }}>
                     <p className="text-lg text-gray-700 font-light leading-relaxed">
-                        {policyData.dataFiduciary} with registered office at <strong className="font-normal">{policyData.registeredOffice}</strong> is the **Data Fiduciary** under the Digital Personal Data Protection Act, 2023 (DPDP Act). We respect your privacy and are committed to protecting your personal data in a lawful, fair, and transparent manner.
+                        We, at MarqWon Dynamics Private Limited (“Company,” “we,” “us,” “our”), act as the Data Fiduciary under the Digital Personal Data Protection Act, 2023 (the “DPDP Act”). This Privacy Policy describes how we collect, use, store, share, and protect your personal data when you visit our website (<a href="https://marqwon.com" className="text-indigo-600 hover:underline">https://marqwon.com</a>) or engage with our services.
                     </p>
                 </section>
 
-
-                {/* 1. Data We Collect (Title modified) */}
-                <PolicySection icon={Layers} title="Personal Data We Collect">
-                    <p className="mb-6">The table below details the categories of personal data we collect, the methods of collection, the purposes for processing, and the legal basis as required by the DPDP Act.</p>
+                {/* 1. Categories of Personal Data We Process */}
+                <PolicySection icon={Layers} title="1. Categories of Personal Data We Process">
+                    <p className="mb-6">We process several categories of Digital Personal Data based on your interaction with us, adhering strictly to the principle of purpose limitation:</p>
 
                     <div className="overflow-x-auto shadow-sm border border-gray-100 rounded-lg">
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead className="bg-gray-50">
                                 <tr>
-                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/4">Category</th>
-                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/4">How Collected</th>
-                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/4">Purpose</th>
-                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/4">Legal Basis</th>
+                                    <th className="px-3 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/5">Category</th>
+                                    <th className="px-3 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/5">Source</th>
+                                    <th className="px-3 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/5">Purpose</th>
+                                    <th className="px-3 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/5">Legal Basis</th>
+                                    <th className="px-3 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-1/5">Retention</th>
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-100">
                                 {policyData.dataTable.map((row, index) => (
                                     <tr key={index} className="transition-colors duration-150 odd:bg-gray-50 hover:bg-indigo-50/50">
-                                        <td className="px-4 py-4 whitespace-normal text-sm font-medium text-gray-900">{row.category}</td>
-                                        <td className="px-4 py-4 whitespace-normal text-sm font-light text-gray-600">{row.collection}</td>
-                                        <td className="px-4 py-4 whitespace-normal text-sm font-light text-gray-600">{row.purpose}</td>
-                                        <td className="px-4 py-4 whitespace-normal text-sm font-light text-gray-600">{row.legalBasis}</td>
+                                        <td className="px-3 py-4 whitespace-normal text-sm font-medium text-gray-900">{row.category}</td>
+                                        <td className="px-3 py-4 whitespace-normal text-sm font-light text-gray-600">{row.collection}</td>
+                                        <td className="px-3 py-4 whitespace-normal text-sm font-light text-gray-600">{row.purpose}</td>
+                                        <td className="px-3 py-4 whitespace-normal text-sm font-light text-gray-600">{row.legalBasis}</td>
+                                        <td className="px-3 py-4 whitespace-normal text-sm font-light text-gray-600">{row.retention}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -130,64 +152,78 @@ export default function PrivacyPolicyPage() {
                 </PolicySection>
 
 
-                {/* 2. Consent & Your Rights (Title modified) */}
-                <PolicySection icon={User} title="Consent & Your Rights">
-                    <ul className="list-disc pl-5 space-y-3">
-                        <li>
-                            **Consent Requirement:** We collect data only with your free, informed, specific, and **unambiguous consent**.
-                        </li>
-                        <li>
-                            **Right to Withdraw:** You can withdraw your consent anytime. Please contact us via email to initiate this process.
-                        </li>
-                        <li>
-                            **Your Rights:** As a Data Principal, you have the right to:
-                            <ul className="list-disc pl-8 mt-2 space-y-1 text-base">
-                                <li>Access and Correction of data.</li>
-                                <li>Erasure (deletion) of data.</li>
-                                <li>Grievance Redressal.</li>
-                                <li>Nomination.</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </PolicySection>
-
-
-                {/* 3. Security & Data Protection (Title modified) */}
-                <PolicySection icon={Lock} title="Security & Data Protection">
-                    <p className="mb-3">We implement robust technical and organizational measures to safeguard your data:</p>
+                {/* 2. Lawful Basis for Processing: Obtaining Consent */}
+                <PolicySection icon={Lock} title="2. Lawful Basis for Processing: Obtaining Consent">
+                    <p className="mb-3">Our commitment to the DPDP Act mandates that any Consent obtained is always free, informed, specific, unconditional, and unambiguous.</p>
                     <ul className="list-disc pl-5 space-y-2 text-base">
-                        <li>We utilize **SSL encryption** and strict access controls.</li>
-                        <li>Regular security audits are conducted to prevent breaches.</li>
-                        <li>In case of a data breach, we will notify affected individuals and the **Data Protection Board** without delay.</li>
+                        <li>We secure consent through clear affirmative action from the Data Principal (e.g., a checkbox that is not pre-ticked).</li>
+                        <li>The Data Principal may withdraw consent at any time with the same ease by using the mechanism provided (e.g., replying to an email or writing to <a href="mailto:info@marqwon.com" className="text-indigo-600 hover:underline">info@marqwon.com</a>).</li>
                     </ul>
                 </PolicySection>
 
 
-                {/* 4. Third-Party Processors & Cross-Border Transfer (Title modified) */}
-                <PolicySection icon={TrendingUp} title="Third-Party Processors & Cross-Border Transfer">
-                    <p className="mb-3">We engage trusted third-party processors under strict contractual obligations:</p>
+                {/* 3. Rights of the Data Principal (Your Rights) */}
+                <PolicySection icon={User} title="3. Rights of the Data Principal (Your Rights)">
+                    <p className="mb-3">As a Data Principal, you hold the following rights under Sections 11–13 of the DPDP Act, which we will uphold completely free of charge:</p>
                     <ul className="list-disc pl-5 space-y-2 text-base">
-                        <li>**Processors include:** {policyData.processors.join(", ")}.</li>
-                        <li>**Cross-Border Transfer:** Data may be transferred outside India only when legally permitted under the DPDP Act.</li>
+                        <li>Right to Access: Obtain a summary and confirmation of the personal data we process.</li>
+                        <li>Right to Correction & Updation: Correct inaccurate or misleading data.</li>
+                        <li>Right to Erasure ("Right to be Forgotten"): Request deletion when the purpose of processing is served or consent is withdrawn.</li>
+                        <li>Right to Grievance Redressal.</li>
+                        <li>Right to Nominate: Nominate a person to exercise these rights in the event of your death or incapacity.</li>
+                    </ul>
+                    <p className="mt-4 text-sm font-normal text-gray-600">
+                        All valid requests concerning your rights will be responded to within 30 days of receipt (or a shorter period if specified by DPDP Rules).
+                    </p>
+                </PolicySection>
+
+
+                {/* 4. Security Safeguards & Data Breach Notification */}
+                <PolicySection icon={ShieldCheck} title="4. Security Safeguards & Data Breach Notification">
+                    <p className="mb-3">We implement commercially reasonable technical and organisational measures to protect your personal data, including:</p>
+                    <ul className="list-disc pl-5 space-y-2 text-base">
+                        <li>End-to-end SSL/TLS encryption.</li>
+                        <li>Firewalls, Role-Based Access Control (RBAC), and regular security audits.</li>
+                        <li>Breach Notification: In the event of a personal data breach, we will notify the Data Protection Board of India and the affected Data Principals without undue delay (not later than 72 hours, where feasible).</li>
                     </ul>
                 </PolicySection>
 
 
-                {/* 5. Data Retention (Title modified) */}
-                <PolicySection icon={Briefcase} title="Data Retention">
-                    <p className="text-base">We keep your personal data only for as long as required for the original purpose of collection or as mandated by law.</p>
+                {/* 5. Third-Party Data Processors (Sub-Processors) */}
+                <PolicySection icon={TrendingUp} title="5. Third-Party Data Processors (Sub-Processors)">
+                    <p className="mb-3">We engage necessary third-party processors to facilitate our enterprise operations. We remain fully responsible for their compliance. Our key processors include:</p>
+
+                    <ul className="list-disc pl-5 space-y-2 text-base">
+                        {policyData.processors.map((p, index) => (
+                            <li key={index}>
+                                {p.name} ({p.location}): Used for {p.purpose}. Safeguards include {p.safeguards}.
+                            </li>
+                        ))}
+                    </ul>
                 </PolicySection>
 
 
-                {/* 6. Grievance Officer (Title modified) */}
+                {/* 6. Cross-Border Data Transfer */}
+                <PolicySection icon={MapPin} title="6. Cross-Border Data Transfer">
+                    <p className="text-base">Certain data may be processed in data centres outside India (e.g., USA, Singapore) by our Sub-Processors. Such transfers only occur under government-approved mechanisms, ensuring the destination country provides an adequate level of protection.</p>
+                </PolicySection>
+
+
+                {/* 7. Data Retention & Secure Deletion */}
+                <PolicySection icon={Briefcase} title="7. Data Retention & Secure Deletion">
+                    <p className="text-base">Personal data is retained only for the duration specified in Section 1 or as legally required. Once the retention period expires, the data will be securely deleted or anonymised beyond recovery.</p>
+                </PolicySection>
+
+
+                {/* 8. Designated Grievance Redressal Officer (GRO) - Modified Title here */}
                 <div className="mb-12 border-b border-gray-100 pb-8 pt-4">
                     <div className="flex items-start mb-6">
                         <Mail className="w-6 h-6 text-indigo-600 mr-3 mt-1 flex-shrink-0" />
-                        <h2 
-                            className="text-3xl font-extrabold text-gray-600 leading-tight"
+                        <h2
+                            className="text-3xl font-extrabold text-black leading-tight"
                             style={{ fontFamily: 'Poppins, sans-serif' }}
                         >
-                            Grievance Officer (GRO)
+                            Designated Grievance Redressal Officer (GRO)
                         </h2>
                     </div>
 
@@ -214,13 +250,12 @@ export default function PrivacyPolicyPage() {
                     </div>
                 </div>
 
-                {/* 7. Changes and 8. Contact (Title modified) */}
-                <PolicySection icon={MapPin} title="Changes & Contact Us">
-                    <ul className="list-disc pl-5 space-y-3 text-base">
-                        <li>**Changes to this Policy:** Any updates will be posted on this page with a new "Last Updated" date.</li>
-                        <li>**Contact:** For privacy-related questions, please email us at <a href="mailto:info@marqwon.com" className="font-normal text-indigo-600 hover:underline">info@marqwon.com</a>.</li>
-                    </ul>
+                {/* 9. Policy Updates */}
+                <PolicySection icon={Briefcase} title="9. Policy Updates">
+                    <p className="text-base">We may update this policy periodically. We will communicate any material changes via a prominent notice on our website or through email. The latest version and its effective date are always posted here: <a href="https://marqwon.com/privacy-policy" className="text-indigo-600 hover:underline">https://marqwon.com/privacy-policy</a>.</p>
                 </PolicySection>
+
+
 
             </div>
         </div>

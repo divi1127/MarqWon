@@ -75,10 +75,11 @@ blur-3xl mix-blend-multiply -translate-x-1/2 -translate-y-1/2 animate-float" />
 blur-3xl mix-blend-multiply translate-x-1/4 translate-y-1/4 animate-float2" />
 
           {/* Main Title */}
-          <h3
-            className="scroll-fade text-4xl md:text-5xl lg:text-6xl font-extrabold font-['Poppins'] text-black mb-8 leading-tight"
-            data-delay="80ms"
-          >
+   <h3
+    className="scroll-fade text-3xl md:text-5xl lg:text-5xl font-light text-black mb-8 leading-tight"
+    style={{ fontFamily: 'Poppins, sans-serif' }} // Explicitly using Poppins simulation
+    data-delay="80ms"
+>
             {contentData.mainTitle}
           </h3>
 

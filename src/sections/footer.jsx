@@ -132,14 +132,14 @@ export default function Footer() {
             {/* Legal Links (Horizontal and placed under social icons) */}
             <div className="flex flex-row gap-4 mt-6 text-xs sm:text-sm font-inter font-light">
                 <Link
-                  to="/privacy_policy"
+                  to="/privacy-policy"
                   className="text-gray-500 hover:text-white transition-colors duration-200"
                 >
                   Privacy Policy
                 </Link>
                 <span className="text-gray-700">|</span>
                 <Link
-                  to="/term_condition"
+                  to="/terms-conditions"
                   className="text-gray-500 hover:text-white transition-colors duration-200"
                 >
                   Terms & Conditions
