@@ -166,10 +166,7 @@ export default function TermsAndConditionsPage() {
                     </div>
                 </div>
 
-                {/* Footer */}
-                <div className="pt-10">
-                    <p className="text-center text-sm text-gray-400">© 2025 {termsData.companyName}. All rights reserved.</p>
-                </div>
+               
 
             </div>
         </div>
