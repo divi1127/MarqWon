@@ -50,7 +50,7 @@ const PolicySection = ({ icon: Icon, title, children }) => (
         <div className="flex items-start mb-4">
             <Icon className="w-6 h-6 text-indigo-600 mr-3 mt-1 flex-shrink-0" />
             <h2 
-                className="text-3xl font-extrabold text-gray-600 leading-tight" // Lighter Header Color (text-gray-600) & Poppins Sim (font-extrabold)
+                className="text-3xl font-extrabold text-black leading-tight" // Lighter Header Color (text-gray-600) & Poppins Sim (font-extrabold)
                 style={{ fontFamily: 'Poppins, sans-serif' }} // Explicit Poppins simulation
             >
                 {title}
