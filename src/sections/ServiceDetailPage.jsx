@@ -62,7 +62,7 @@ export default function ServiceDetailPage() {
   const renderContentList = (dataList, isRightAligned) => (
     <ul
       className={`space-y-3 p-4 bg-gray-50 rounded-lg shadow-sm ${
-        isRightAligned ? "lg:text-right" : "lg:text-left"
+        isRightAligned ? "lg:text-left" : "lg:text-left"
       }`}
     >
       {dataList?.length > 0 ? (
