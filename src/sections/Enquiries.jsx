@@ -25,7 +25,7 @@ const Enquiries = () => {
     {
       icon: Phone,
       title: 'Call Us',
-      details: ['+91 XXXXX XXXXX', '+91 XXXXX XXXXX', 'Mon-Sat: 9AM - 6PM'],
+      details: ['+91 94867 27259', 'Mon-Sat: 9AM - 9PM'],
     },
     {
       icon: Mail,

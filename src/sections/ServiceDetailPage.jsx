@@ -5,7 +5,7 @@ import {
   CheckCircle,
   HardHat,
   Lightbulb,
-  Zap,
+  Rocket, // CHANGED: Import Rocket icon for Business Benefits
   ArrowLeft,
 } from "lucide-react";
 
@@ -47,17 +47,23 @@ export default function ServiceDetailPage() {
     { title: "Why Choose Us", key: "whyChoose", color: "text-black", Icon: CheckCircle },
     { title: "Core Technologies", key: "technologies", color: "text-black", Icon: HardHat },
     { title: "Key Features", key: "features", color: "text-black", Icon: Lightbulb },
-    { title: "Business Benefits", key: "benefits", color: "text-black", Icon: Zap },
+    { title: "Business Benefits", key: "benefits", color: "text-black", Icon: Rocket }, // CHANGED: Icon is now Rocket
   ];
 
-  const rowVariants = {
-    hidden: { opacity: 0, y: 30 },
+  // CHANGED: Added slide animation 'x' based on position
+  const rowVariants = (isOdd) => ({
+    hidden: { 
+      opacity: 0, 
+      y: 30, 
+      x: isOdd ? 100 : -100 // Slide from right if odd, slide from left if even
+    },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6 },
+      x: 0, // Animate to final position (x=0)
+      transition: { duration: 0.6, ease: "easeOut" },
     },
-  };
+  });
 
   const renderContentList = (dataList, isRightAligned) => (
     <ul
@@ -136,10 +142,12 @@ export default function ServiceDetailPage() {
         <h2 className="text-3xl font-bold text-gray-800 text-center mb-10 border-b pb-4">
           Service Focus Breakdown
         </h2>
+        
+        {/*  */}
 
         {detailSections.map((section, index) => {
           const dataList = service.details?.[section.key] || [];
-          const isOdd = index % 2 !== 0;
+          const isOdd = index % 2 !== 0; // True for 1st, 3rd, etc. (zero-indexed: 1, 3, 5...)
           const Icon = section.Icon;
 
           return (
@@ -148,7 +156,7 @@ export default function ServiceDetailPage() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
-              variants={rowVariants}
+              variants={rowVariants(isOdd)} // CHANGED: Pass isOdd to variants function
               transition={{ delay: index * 0.1 }}
               className={`grid grid-cols-1 lg:grid-cols-2 gap-8 items-start mb-16 border-b border-gray-100 pb-8`}
             >
@@ -166,12 +174,12 @@ export default function ServiceDetailPage() {
                   }`}
                 >
                   <Icon
-                    className={`w-6 h-6 ${section.color} flex-shrink-0 ${
-                      isOdd ? "ml-3" : "mr-3"
+                    className={`w-8 h-8 ${section.color} flex-shrink-0 ${ // Increased icon size slightly
+                      isOdd ? "ml-4" : "mr-4" // Increased margin slightly
                     }`}
                   />
                   <h3
-                    className={`text-3xl font-poppins font-thin ${section.color}`}
+                    className={`text-4xl font-poppins font-thin ${section.color}`} // CHANGED: Increased text size to 4xl
                   >
                     {section.title}
                   </h3>
@@ -191,9 +199,13 @@ export default function ServiceDetailPage() {
           <h3 className="text-2xl font-semibold text-gray-700 mb-4">
             Ready to Discuss Your Project?
           </h3>
-          <button className="bg-black text-white py-3 px-10 rounded-full font-semibold hover:bg-gray-900 transition shadow-lg">
+          
+          <Link 
+            to="/enquiries" // This links to your Enquiries route
+            className="bg-black text-white py-3 px-10 rounded-full font-semibold hover:bg-gray-900 transition shadow-lg inline-block" // Note: Added inline-block to make the link behave like a button's container
+          >
             Start a Conversation Today
-          </button>
+          </Link>
         </div>
       </div>
     </main>

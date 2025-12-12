@@ -1,88 +1,73 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar.jsx";
-import Hero from "./components/Hero.jsx";
+
+// 🚨 FIX: IMPORT ALL COMPONENTS USED BELOW 
+// (Checking against your original file, these look like the necessary imports)
+
+import Navbar from "./components/Navbar.jsx"; // <-- ADD THIS LINE
+import Hero from "./components/Hero.jsx"; // <-- ADD THIS LINE
+import ScrollToTop from "./components/ScrollToTop.jsx"; 
+import Footer from "./sections/footer.jsx"; // <-- ADD THIS LINE
+
+// Section Imports
 import WhoWeAre from "./sections/WhoWeAre.jsx";
-// import WhatWeDo from "./sections/WhatWeDo.jsx";
 import Services from "./sections/Services.jsx";
 import Products from "./sections/Products.jsx";
 import Careers from "./sections/Careers.jsx";
-// import DiscoverMore from "./sections/DiscoverMore.jsx";
 import Enquiries from "./sections/Enquiries.jsx";
 import Admin from "./sections/Admin.jsx";
-import Footer from "./sections/footer.jsx";
-// import WebsiteDevelopment from "./services/WebsiteDevelopment.jsx";
-// import ApplicationDevelopment from "./services/ApplicationDevelopment.jsx";
-// import CrmErpWorkflow from "./services/CrmErpWorkflow.jsx";
 import ServiceDetailPage from "./sections/ServiceDetailPage.jsx";
 import PrivacyPolicyPage from "./sections/PrivacyPolicyPage.jsx";
 import TermsAndConditionsPage from "./sections/TermsAndConditionsPage.jsx";
 
+// You can safely remove the unused 'other imports' comment now.
 
 export default function App() {
   const [overlap, setOverlap] = useState(false);
 
   return (
     <Router>
-      {/* ✅ Use flex column layout to push footer to bottom */}
+      
+      {/* Scroll component to ensure page always starts at the top */}
+      <ScrollToTop /> 
+      
+      {/* Use flex column layout to push footer to bottom */}
       <div className="flex flex-col min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-500">
         
         {/* Navbar always visible */}
-        <Navbar overlap={overlap} />
+        <Navbar overlap={overlap} /> 
         
         {/* Main content fills space between header and footer */}
         <main className="flex-1">
           <Routes>
             <Route path="/" element={<Hero />} />
             <Route path="/who-we-are" element={<WhoWeAre />} />
-            {/* <Route path="/what-we-do" element={<WhatWeDo />} /> */}
             <Route path="/services" element={<Services />} />
             <Route path="/products" element={<Products />} />
             <Route path="/careers" element={<Careers />} />
-            {/* <Route path="/discover-me" element={<DiscoverMore />} /> */}
             <Route path="/enquiries" element={<Enquiries />} />
             <Route path="/admin" element={<Admin />} />
 
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
             <Route path="/terms-conditions" element={<TermsAndConditionsPage/>} />
 
+            {/* Services Detail Pages */}
+            <Route path="/services/:slug" element={<ServiceDetailPage />} />
 
-
-            {/* === Individual Service Pages === */}
-             {/* Services Detail Pages */}
-
-             <Route path="/services/:slug" element={<ServiceDetailPage />} />
-        {/* <Route path="/services/website-development" element={<WebsiteDevelopment />} />
-        <Route path="/services/application-development" element={<ApplicationDevelopment />} />
-        <Route path="/services/crm-erp-workflow-systems" element={<CrmErpWorkflow />} /> */}
-
-
-
-
-
-
-
-
-
-             {/* Optional: 404 fallback */}
-          <Route
-            path="*"
-            element={
-              <div className="flex items-center justify-center h-screen text-gray-400">
-                <h2 className="text-3xl">404 | Page Not Found</h2>
-              </div>
-            }
-          />
-            
-    
-        
+            {/* Optional: 404 fallback */}
+            <Route
+              path="*"
+              element={
+                <div className="flex items-center justify-center h-screen text-gray-400">
+                  <h2 className="text-3xl">404 | Page Not Found</h2>
+                </div>
+              }
+            />
           </Routes>
-
-
         </main>
 
-        {/* ✅ Footer always visible on all pages */}
-        <Footer />
+        {/* Footer always visible on all pages */}
+        <Footer /> 
       </div>
     </Router>
   );

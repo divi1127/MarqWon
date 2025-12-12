@@ -82,7 +82,7 @@ export default function Footer() {
               Company Info
             </h3>
             <ul className="space-y-2 font-inter font-light">
-              <li>MarqWon Dynamic Pvt. Ltd.</li>
+              <li>MarqWon Dynamics Pvt. Ltd.</li>
               <li>Madurai, India</li>
               {/* NOTE: Legal links moved to the 'Connect With Us' section */}
             </ul>
@@ -155,7 +155,7 @@ export default function Footer() {
 
         {/* 🧾 Copyright */}
         <div className="absolute bottom-3 left-0 w-full text-center text-gray-600 text-xs sm:text-sm z-20 font-inter font-light">
-          © {new Date().getFullYear()} MarqWon Dynamic Pvt. Ltd.
+          © {new Date().getFullYear()} MarqWon Dynamics Pvt. Ltd.
         </div>
       </footer>
     </>
