@@ -1,8 +1,9 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
-import deeplearnerLogo from "../assets/deep.jpg";
+import deeplearnerLogo from "../assets/deep.png";
 import TrustedBy from "../components/TrustedBy";
+import marq from "../assets/marq.png";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -17,62 +18,65 @@ const fadeInUp = {
 const AI_BANNER_URL =
   "https://i.pinimg.com/1200x/c4/e4/fa/c4e4fab939ab349fa4cd836b4b98e637.jpg";
 
+// ... (imports)
+
 const Products = () => {
-  const { scrollYProgress } = useScroll();
-  const yImage = useTransform(scrollYProgress, [0, 1], [-100, 100]);
+  const { scrollYProgress } = useScroll();
+  const yImage = useTransform(scrollYProgress, [0, 1], [-100, 100]);
 
-  const products = [
-    {
-      title: "DeepLearner",
-      status: "Live",
-      category: "Education",
-      description:
-        "A next-generation learning platform offering expert-led courses, workshops, and mentorship programs.",
-      features: ["Courses", "Live workshops", "Mentor support"],
-      benefits: [
-        "Affordable quality education",
-        "Self-paced learning",
-        "Skill development for jobs",
-      ],
-      link: "https://deeplearner.academy/",
-      logo: deeplearnerLogo,
-    },
+  const products = [
+    {
+      title: "DeepLearner",
+      status: "Live",
+      category: "Education",
+      description:
+        "A next-generation learning platform offering expert-led courses, workshops, and mentorship programs.",
+      features: ["Courses", "Live workshops", "Mentor support"],
+      benefits: [
+        "Affordable quality education",
+        "Self-paced learning",
+        "Skill development for jobs",
+      ],
+      link: "https://deeplearner.academy/",
+      logo: deeplearnerLogo, // Local import used here
+    },
 
-    // NEW PRODUCT ADDED HERE
-    {
-      title: "SwiftBill Pro",
-      status: "Live",
-      category: "Business / Finance",
-      description:
-        "An AI-powered invoicing and billing software for small to medium businesses, automating payment tracking and ledger management.",
-      features: ["Auto-Invoicing", "GST/Tax Compliance", "Payment Gateway Integration"],
-      benefits: [
-        "Save time on admin work",
-        "Minimize billing errors",
-        "Accelerate cash flow",
-      ],
-      link: "https://swiftbillpro.com/", // Placeholder URL
-      logo: null,
-    },
-    // END OF NEW PRODUCT
+    // NEW PRODUCT: STATUS CHANGED TO "Upcoming"
+    {
+      title: "SwiftBill Pro",
+      status: "Upcoming", // <--- CHANGED TO UPCOMING
+      category: "Business / Finance",
+      description:
+        "An AI-powered invoicing and billing software for small to medium businesses, automating payment tracking and ledger management.",
+      features: ["Auto-Invoicing", "GST/Tax Compliance", "Payment Gateway Integration"],
+      benefits: [
+        "Save time on admin work",
+        "Minimize billing errors",
+        "Accelerate cash flow",
+      ],
+      link: null, // Link set to null because it's upcoming
+      logo: '', // Placeholder logo URL
+    },
+    // END OF NEW PRODUCT
 
-    {
-      title: "MarqWon Foundation",
-      status: "Upcoming",
-      category: "Non-Profit / Education",
-      description:
-        "A social initiative focused on democratizing education, tech awareness, and career support.",
-      features: ["Scholarships", "Bootcamps", "Career guidance"],
-      benefits: [
-        "Accessible education for all",
-        "Youth empowerment",
-        "Community growth",
-      ],
-      link: null,
-      logo: null,
-    },
-  ];
+    {
+      title: "MarqWon Foundation",
+      status: "Upcoming",
+      category: "Non-Profit / Education",
+      description:
+        "A social initiative focused on democratizing education, tech awareness, and career support.",
+      features: ["Scholarships", "Bootcamps", "Career guidance"],
+      benefits: [
+        "Accessible education for all",
+        "Youth empowerment",
+        "Community growth",
+      ],
+      link: null,
+      logo: marq, // Placeholder logo for foundation
+    },
+  ];
 
+// ...
   return (
     <div className="min-h-screen bg-white text-black relative overflow-hidden">
       {/* HERO */}
@@ -179,9 +183,19 @@ const Products = () => {
                     {product.status}
                   </div>
 
-                  <h3 className="text-3xl font-semibold text-gray-900 mb-1">
-                    {product.title}
-                  </h3>
+                 {/* FLEX ROW FOR TITLE AND LOGO */}
+                  <div className="flex items-center gap-3 mb-1">
+                    <h3 className="text-3xl font-semibold text-gray-900">
+                      {product.title}
+                    </h3>
+                    {product.logo && (
+                      <img
+                        src={product.logo}
+                        alt={`${product.title} logo`}
+                        className="w-15 h-15 object-contain  "
+                      />
+                    )}
+                  </div>
 
                   <p className="text-sm text-gray-600">{product.category}</p>
                 </div>

@@ -16,6 +16,31 @@ const Enquiries = () => {
     setFormData({ name: '', email: '', phone: '', message: '' });
   };
 
+  // 1. New function to format the data for the WhatsApp message
+  const createWhatsAppMessage = () => {
+    // The WhatsApp API requires URL encoding for the message text,
+    // and '%0A' is the URL-encoded equivalent of a newline character.
+    const message = `
+*New Enquiry from MarqWon Website*
+
+---
+
+*Name:* ${formData.name}
+*Email:* ${formData.email}
+*Phone:* ${formData.phone}
+
+*Message:*
+${formData.message}
+
+---
+`;
+    // Trim and encode the message
+    return encodeURIComponent(message.trim());
+  };
+  
+  // Base number for WhatsApp API
+  const whatsappNumber = '919486727259';
+
   const contactInfo = [
     {
       icon: MapPin,
@@ -157,12 +182,31 @@ const Enquiries = () => {
                   />
                 </div>
 
+                {/* Form Submit Button (Standard email/database submission) */}
                 <button
                   type="submit"
                   className="w-full bg-gray-800 text-white py-3 px-6 rounded-lg flex items-center justify-center hover:bg-gray-900 transition"
                 >
                   Send Message <Send className="ml-2 w-4 h-4" />
                 </button>
+
+                {/* WhatsApp Button (Uses the formatted message) */}
+                <a
+                  // 2. Updated href to include pre-filled message
+                  href={`https://wa.me/${whatsappNumber}?text=${createWhatsAppMessage()}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-green-500 text-white py-3 px-6 rounded-lg flex items-center justify-center hover:bg-green-600 transition"
+                >
+                  Message on WhatsApp
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    viewBox="0 0 448 512" 
+                    className="ml-2 w-4 h-4 fill-current"
+                  >
+                    <path d="M380.9 97.4C339.4 55.9 283.4 33.7 227.1 33.8c-100.8.2-192.1 48.6-250 134.1L12.4 345.8c-7.7 21.6 1.7 45.4 19.8 59l57.5 45c1.8 1.4 3.7 2.6 5.6 3.7 13.7 7.7 29.5 12.5 46 14.5l.3-.4c1.8-.7 3.6-1.6 5.4-2.7 8.3-4.9 17.5-8.4 27.2-10.8l20.4-5.2c1.6-4.5 3-9.1 4-13.8 2.2-11.4 1.3-23.7-2.6-35.3-7.5-22.1-1.3-46.7 16.9-63.1l20-17.7c27.1-23.9 65.4-29.2 97.2-14.9 31.8 14.3 53.7 44.4 56.4 78.5 2.6 33.1-13.7 65.2-41.9 83.3l-20.9 13.9c-1.3 2.1-2.6 4.3-3.7 6.5-1.9 3.8-3.4 7.8-4.5 11.9-2.5 9.1-3.6 18.7-3.2 28.5l.5 12.3c.4 1.8.8 3.5 1.2 5.3 1.5 7.1 3.5 13.9 6 20.3 3.6 9.4 8.7 18.2 15 26.3 3.5 4.5 7.5 8.7 11.8 12.7 2.2 2.1 4.5 4.1 6.8 6.1 1.1 1 2.3 2 3.5 3 2.1 1.7 4.3 3.3 6.6 4.8 10 6.6 21 11.6 32.5 14.9 11.6 3.4 23.7 3.9 35.7 1.6 16.3-3 31.7-10.2 45.9-21.2 14.2-11 26.2-24.6 35.7-40.3 9.4-15.7 16.2-33.1 20.2-51.7 3.9-18.7 5.1-37.9 3.4-57.1-1.7-19.1-7.1-37.8-15.8-55.2zM227.1 480C101.4 480 0 378.6 0 252.9 0 167 48.7 91.2 124.9 50.1L97.5 174.5 189 270.8l-91.5 59.8L227.1 480z"/>
+                  </svg>
+                </a>
               </form>
             </div>
           </motion.div>
@@ -192,18 +236,15 @@ const Enquiries = () => {
             </div>
 
             <div className="bg-gray-50 rounded-xl shadow overflow-hidden h-80">
-  <iframe
-   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.0190946278456!2d78.11959975!3d9.9252007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b00c582b1189633%3A0xdc955b7264f63933!2sLavanya%20Complex%2C%209%2C%20Iyer%20Bungalow%2C%20Moondrumavadi%20Main%20Rd%2C%20GR%20Nagar%2C%20Madurai%2C%20Tamil%20Nadu%20625007!5e0!3m2!1sen!2sin!4v1700000000000"
-
-    width="100%"
-    height="100%"
-    style={{ border: 0 }}
-    allowFullScreen
-    loading="lazy"
-    title="MarqWon Office Location"
-  />
-
-
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.0190946278456!2d78.11959975!3d9.9252007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b00c582b1189633%3A0xdc955b7264f63933!2sLavanya%20Complex%2C%209%2C%20Iyer%20Bungalow%2C%20Moondrumavadi%20Main%20Rd%2C%20GR%20Nagar%2C%20Madurai%2C%20Tamil%20Nadu%20625007!5e0!3m2!1sen!2sin!4v1700000000000"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                title="MarqWon Office Location"
+              />
             </div>
           </motion.div>
         </div>

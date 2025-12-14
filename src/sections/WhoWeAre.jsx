@@ -208,20 +208,33 @@ export default function WhoWeAre() {
 
           {/* RIGHT COLUMN IMAGE */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }} 
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="relative md:w-6/12 lg:w-7/12 mt-12 md:mt-0 flex justify-center items-center h-[550px]"
-          >
-            <div className="absolute w-full h-full p-4 ml-30 mt-20">
-              <img
-                src={heroMainImage}
-                alt="Team collaboration"
-                className="w-full h-full object-cover rounded-lg shadow-2xl absolute top-0 left-0"
-                style={{ clipPath: "polygon(0% 0%, 100% 0%, 100% 85%, 0% 100%)" }}
-              />
-            </div>
-          </motion.div>
+  initial={{ opacity: 0, scale: 0.95 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 0.8, delay: 0.4 }}
+  className="relative w-full md:w-6/12 lg:w-7/12 mt-12 md:mt-0 flex justify-center"
+>
+  <div className="
+    relative w-full max-w-xl md:max-w-full
+    aspect-[4/3] md:aspect-[16/9]
+    p-3 md:p-6
+  ">
+    <img
+      src={heroMainImage}
+      alt="Team collaboration"
+      className="
+        w-full h-120 object-cover rounded-2xl shadow-2xl
+        transition-all duration-500 
+      "
+      style={{
+        clipPath:
+          window.innerWidth < 768
+            ? "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"
+            : "polygon(0% 0%, 100% 0%, 100% 85%, 0% 100%)",
+      }}
+    />
+  </div>
+</motion.div>
+
         </div>
       </section>
 
