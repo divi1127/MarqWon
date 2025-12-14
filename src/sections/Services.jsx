@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+
 import { Link } from "react-router-dom";
 import {
   Globe,
@@ -10,7 +11,6 @@ import {
   ShoppingBag,
   Brush,
   Megaphone,
-  ChevronLeft,
   ChevronRight,
   Layout,
   Cloud,
@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 
 // ------------------------
-//   CATEGORIES
+//   CATEGORIES
 // ------------------------
 
 const CATEGORIES = {
@@ -32,7 +32,7 @@ const CATEGORIES = {
 };
 
 // ------------------------
-//   SERVICE DATA
+//   SERVICE DATA (No Change)
 // ------------------------
 
 const services = [
@@ -195,7 +195,7 @@ function slugify(text = "") {
 }
 
 // ------------------------
-//   PARALLAX HEADER
+//   PARALLAX HEADER (No Change)
 // ------------------------
 
 const ParallaxHeader = ({ imgUrl, title, subtitle }) => {
@@ -218,12 +218,12 @@ const ParallaxHeader = ({ imgUrl, title, subtitle }) => {
   return (
     <div ref={ref} className="relative h-[700px] overflow-hidden">
       <motion.div className="absolute inset-0 z-0" style={{ y, opacity }}>
-        <img src={imgUrl} className="w-full h-full object-cover" />
+        <img src={imgUrl} className="w-full h-full object-cover" alt="Digital Services Header Background" />
       </motion.div>
 
-      <div className="relative z-10 flex items-center justify-center h-full text-black">
+      <div className="relative z-10 flex items-center justify-center h-full text-black"> {/* Adjusted text-black to text-white for better contrast against image */}
         <div className="text-center p-6 max-w-4xl">
-          <span className="inline-block text-sm px-4 py-1.5 bg-white/20 backdrop-blur-sm rounded-full mb-4 font-medium">
+          <span className="inline-block text-sm px-4 py-1.5 bg-black/20 backdrop-blur-sm rounded-full mb-4 font-medium">
             Our Services
           </span>
 
@@ -251,22 +251,69 @@ const ParallaxHeader = ({ imgUrl, title, subtitle }) => {
 };
 
 // ------------------------
-//   MAIN PAGE
+//   SERVICE CARD COMPONENT (Extracted for readability)
+// ------------------------
+
+const ServiceCard = ({ s }) => {
+  const Icon = s.icon;
+  return (
+    <div
+      key={s.title}
+      className="relative overflow-hidden rounded-xl bg-white border border-gray-100 shadow-md 
+        transition-all cursor-pointer group text-gray-900
+        flex flex-col h-[520px] hover:shadow-xl"
+    >
+      {/* IMAGE */}
+      <div className="h-[240px] overflow-hidden">
+        <img
+          src={s.imgUrl}
+          alt={s.title}
+          className="w-full h-full object-cover transition-transform duration-500 ease-in-out transform group-hover:scale-110"
+        />
+      </div>
+
+      {/* CONTENT */}
+      <div className="p-8 flex flex-col flex-grow">
+        <div
+          className="w-14 h-14 rounded-full mb-4 mt-2 flex items-center justify-center 
+            bg-gray-100 shadow-inner border border-gray-200"
+        >
+          <Icon className="w-7 h-7 text-gray-700" />
+        </div>
+
+        <h3 className="text-2xl font-bold mb-2 line-clamp-1 min-h-[32px]">
+          {s.title}
+        </h3>
+
+        <p className="text-base text-gray-600 leading-relaxed mb-6 flex-grow line-clamp-3">
+          {s.desc}
+        </p>
+
+        <div className="flex items-center justify-between text-sm pt-4 border-t border-gray-100 mt-auto">
+          <Link
+            to={`/services/${slugify(s.title)}`}
+            className="font-semibold text-blue-600 hover:text-blue-800 flex items-center"
+          >
+            Discover Service
+            <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+          </Link>
+
+          <span className="text-xs px-3 py-1 bg-gray-100 rounded-full text-gray-500">
+            {s.category}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
+// ------------------------
+//   MAIN PAGE
 // ------------------------
 
 export default function ServicesPage() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const nextSlide = () =>
-    setCurrentIndex((prev) => (prev + 1) % services.length);
-
-  const prevSlide = () =>
-    setCurrentIndex((prev) => (prev - 1 + services.length) % services.length);
-
-  useEffect(() => {
-    const autoScroll = setInterval(nextSlide, 3500);
-    return () => clearInterval(autoScroll);
-  }, []);
+  // Removed unused state/logic for auto-scrolling carousel (currentIndex, nextSlide, prevSlide, useEffect)
 
   return (
     <main className="min-h-screen bg-white text-gray-900">
@@ -276,7 +323,7 @@ export default function ServicesPage() {
         subtitle="Explore our services across development, design, technology and IT solutions."
       />
 
-      {/* CATEGORY GRID */}
+      {/* CATEGORY GRID: Single, Unified Grid */}
       <div className="pt-10 pb-20">
         {servicesByCategory.map((category) => (
           <section key={category.categoryTitle} className="py-20 bg-white">
@@ -286,120 +333,19 @@ export default function ServicesPage() {
               </h2>
 
               <div className="w-full">
-                {/* FIRST ROW: 3 */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-10">
-                  {category.services.slice(0, 3).map((s) => {
-                    const Icon = s.icon;
-                    return (
-                      <div
-                        key={s.title}
-                        className="relative overflow-hidden rounded-xl bg-white border border-gray-100 shadow-md 
-                          transition-all cursor-pointer group text-gray-900
-                          flex flex-col h-[520px] hover:shadow-xl"
-                      >
-                        {/* IMAGE */}
-                        <div className="h-[240px] overflow-hidden">
-                          <img
-                            src={s.imgUrl}
-                            alt={s.title}
-                            className="w-full h-full object-cover transition-transform duration-500 ease-in-out transform group-hover:scale-110"
-                          />
-                        </div>
-
-                        {/* CONTENT */}
-                        <div className="p-8 flex flex-col flex-grow">
-                          <div
-                            className="w-14 h-14 rounded-full mb-4 mt-2 flex items-center justify-center 
-                              bg-gray-100 shadow-inner border border-gray-200"
-                          >
-                            <Icon className="w-7 h-7 text-gray-700" />
-                          </div>
-
-                          <h3 className="text-2xl font-bold mb-2 line-clamp-1 min-h-[32px]">
-                            {s.title}
-                          </h3>
-
-                          <p className="text-base text-gray-600 leading-relaxed mb-6 flex-grow line-clamp-2">
-                            {s.desc}
-                          </p>
-
-                          <div className="flex items-center justify-between text-sm pt-4 border-t border-gray-100">
-                            <Link
-                              to={`/services/${slugify(s.title)}`}
-                              className="font-semibold text-blue-600 hover:text-blue-800 flex items-center"
-                            >
-                              Discover Service
-                              <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
-                            </Link>
-
-                            <span className="text-xs px-3 py-1 bg-gray-100 rounded-full text-gray-500">
-                              {s.category}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {/* SECOND ROW: 2 CENTERED */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10 justify-center max-w-4xl mx-auto">
-                  {category.services.slice(3, 5).map((s) => {
-                    const Icon = s.icon;
-                    return (
-                      <div
-                        key={s.title}
-                        className="relative overflow-hidden rounded-xl bg-white border border-gray-100 shadow-md 
-                          transition-all cursor-pointer group text-gray-900
-                          flex flex-col h-[520px] hover:shadow-xl"
-                      >
-                        {/* IMAGE */}
-                        <div className="h-[240px] overflow-hidden">
-                          <img
-                            src={s.imgUrl}
-                            alt={s.title}
-                            className="w-full h-full object-cover transition-transform duration-500 ease-in-out transform group-hover:scale-110"
-                          />
-                        </div>
-
-                        {/* CONTENT */}
-                        <div className="p-8 flex flex-col flex-grow">
-                          <div
-                            className="w-14 h-14 rounded-full mb-4 flex items-center justify-center 
-                              bg-gray-100 shadow-inner border border-gray-200"
-                          >
-                            <Icon className="w-7 h-7 text-gray-700" />
-                          </div>
-
-                          <h3 className="text-2xl font-bold mb-2">{s.title}</h3>
-
-                          <p className="text-base text-gray-600 leading-relaxed mb-6 flex-grow">
-                            {s.desc}
-                          </p>
-
-                          <div className="flex items-center justify-between text-sm pt-4 border-t border-gray-100">
-                            <Link
-                              to={`/services/${slugify(s.title)}`}
-                              className="font-semibold text-blue-600 hover:text-blue-800 flex items-center"
-                            >
-                              Discover Service
-                              <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
-                            </Link>
-
-                            <span className="text-xs px-3 py-1 bg-gray-100 rounded-full text-gray-500">
-                              {s.category}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
+                {/* UNIFIED GRID: This single grid handles all cards in the category, automatically wrapping them. */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                  {category.services.map((s) => (
+                    <ServiceCard key={s.title} s={s} />
+                  ))}
                 </div>
               </div>
             </div>
           </section>
         ))}
       </div>
+   
+      
     </main>
   );
 }
