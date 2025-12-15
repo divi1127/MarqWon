@@ -14,24 +14,24 @@ export default function TrustedBy() {
 
   return (
     <section className="w-full py-16 bg-white overflow-hidden">
-   <h3 className="text-center text-gray-900 md:text-1xl font-semibold mb-12">
-  Trusted by Industry Leaders Worldwide
-</h3>
+      <h3 className="text-center text-gray-900 text-xl md:text-2xl font-semibold mb-12">
+        Trusted by Industry Leaders Worldwide
+      </h3>
 
-
-      {/* MARQUEE */}
-      <div className="relative overflow-hidden marquee-mask">
+      <div className="relative overflow-hidden">
         <div className="marquee-track">
-          {[...trustedLogos, ...trustedLogos, ...trustedLogos].map(
-            (brand, i) => (
+          {[...trustedLogos, ...trustedLogos].map((brand, i) => (
+            <div
+              key={i}
+              className="logo-box"
+            >
               <img
-                key={i}
                 src={brand.logo}
                 alt={brand.name}
-                className="h-20 md:h-24 object-contain filter invert grayscale hover:grayscale-0 transition duration-300"
+                className="logo-img"
               />
-            )
-          )}
+            </div>
+          ))}
         </div>
       </div>
     </section>
