@@ -103,3 +103,37 @@ html {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+/* Smooth infinite marquee */
+.marquee-track {
+  display: flex;
+  gap: 6rem;
+  width: max-content;
+  animation: marquee-scroll 30s linear infinite;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-33.333%);
+  }
+}
+
+/* Fade edges so repetition is invisible */
+.marquee-mask {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 15%,
+    black 85%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 15%,
+    black 85%,
+    transparent
+  );
+}

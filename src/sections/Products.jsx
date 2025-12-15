@@ -3,7 +3,7 @@ import { ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import deeplearnerLogo from "../assets/deep.png";
 import TrustedBy from "../components/TrustedBy";
-import marq from "../assets/marq.png";
+import marq from "../assets/logomain.png";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -26,7 +26,7 @@ const Products = () => {
 
   const products = [
     {
-      title: "DeepLearner",
+      title: "DeepLearner Academy",
       status: "Live",
       category: "Education",
       description:
@@ -184,16 +184,18 @@ const Products = () => {
                   </div>
 
                  {/* FLEX ROW FOR TITLE AND LOGO */}
-                  <div className="flex items-center gap-3 mb-1">
+                  <div className="flex items-center gap-60 mb-1">
                     <h3 className="text-3xl font-semibold text-gray-900">
                       {product.title}
                     </h3>
                     {product.logo && (
-                      <img
-                        src={product.logo}
-                        alt={`${product.title} logo`}
-                        className="w-15 h-15 object-contain  "
-                      />
+  <div className="w-8 h-10 rounded-full bg-black flex items-center justify-center  shadow-md hover:scale-105 transition">
+    <img
+      src={product.logo}
+      alt={`${product.title} logo`}
+      className="w-8 h-8 object-contain "
+    />
+  </div>
                     )}
                   </div>
 
