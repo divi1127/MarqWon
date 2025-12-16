@@ -107,12 +107,13 @@ html {
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee 18s linear infinite;
+  animation: marquee 25s linear infinite;
+  will-change: transform;
 }
 
 .logo-box {
   width: 180px;
-  height: 80px;
+  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -123,14 +124,59 @@ html {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  filter: brightness(0); /* Pure black */
+  filter: brightness(0);
+
+   /* Pure black */
 }
 
 @keyframes marquee {
   0% {
-    transform: translateX(0);
+    transform: translateX(+10%);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-10%);
   }
 }
+
+/* 1. Target the main container where the fade effect will be applied */
+.trusted-logos-container {
+    /* Ensure the container is positioned relative to anchor the pseudo-elements */
+    position: relative;
+}
+
+/* 2. Create the LEFT fade effect using ::before pseudo-element */
+.trusted-logos-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0; /* Pin to the left edge */
+    width: 80px; /* Width of the fade area */
+    z-index: 10; /* Ensure it sits on top of the logos */
+    pointer-events: none; /* Allows clicks to pass through */
+    
+    /* The white linear gradient (fading from opaque white to transparent) */
+    background: linear-gradient(to right, 
+        rgb(255, 255, 255) 0%, 
+        rgba(255, 255, 255, 0) 100%
+    );
+}
+
+/* 3. Create the RIGHT fade effect using ::after pseudo-element */
+.trusted-logos-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0; /* Pin to the right edge */
+    width: 80px; /* Width of the fade area */
+    z-index: 10;
+    pointer-events: none;
+
+    /* The white linear gradient (fading from transparent to opaque white) */
+    background: linear-gradient(to left, 
+        rgb(255, 255, 255) 0%, 
+        rgba(255, 255, 255, 0) 100%
+    );
+}
+

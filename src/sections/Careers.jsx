@@ -74,7 +74,6 @@ const groupByCategory = (items) => {
 
 // --- TERMS AND CONDITIONS DATA ---
 const INTERNSHIP_TERMS = `## Marqwon Dynamics Pvt. Ltd. Internship Terms & Conditions
-Effective Date: ____________________
 Company: Marqwon Dynamics Pvt. Ltd.
 Location: Madurai, Tamil Nadu, India
 
@@ -167,11 +166,6 @@ These Terms & Conditions are governed by the laws of India, with exclusive juris
 
 ### 16. Acceptance
 By accepting the internship offer and commencing work, the intern confirms full understanding and acceptance of these Terms & Conditions.
-Intern Name: __________________________
-Signature: ____________________________
-Date: _________________________________
-For Marqwon Dynamics Pvt. Ltd.
-Authorized Signatory: _____________________
 `;
 
 // Placeholder for Job Terms since they were not provided
