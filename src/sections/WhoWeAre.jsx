@@ -4,6 +4,8 @@ import { Title, Meta } from "react-head";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
 /* ---------- ANIMATION VARIANTS ---------- */
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -176,6 +178,17 @@ export default function WhoWeAre() {
     return () => el.removeEventListener("scroll", updateProgress);
   }, []);
 
+  const scroll = (direction) => {
+  if (scrollRef.current) {
+    const { scrollLeft, clientWidth } = scrollRef.current;
+    // Calculate scroll amount (e.g., width of one card + gap)
+    const scrollTo = direction === "left" 
+      ? scrollLeft - 332 
+      : scrollLeft + 332;
+    
+    scrollRef.current.scrollTo({ left: scrollTo, behavior: "smooth" });
+  }
+};
   /* ------------------- RETURN UI ------------------- */
   return (
     <div className="w-full text-black font-poppins overflow-x-hidden bg-white">
@@ -397,6 +410,23 @@ export default function WhoWeAre() {
   <h2 className="text-4xl md:text-5xl font-bold text-black mb-14 text-center mt-10">
     Industries We Support
   </h2>
+  {/* Navigation Arrows */}
+        <div className="flex gap-3 mt-6 md:mt-0 ml-auto mb-4 justify-end">
+          <button 
+            onClick={() => scroll("left")}
+            className="p-3 rounded-full border border-gray-200 bg-white hover:bg-gray-50 transition shadow-sm active:scale-95"
+            aria-label="Scroll left"
+          >
+            <ChevronLeft className="w-6 h-6 text-black" />
+          </button>
+          <button 
+            onClick={() => scroll("right")}
+            className="p-3 rounded-full border border-gray-200 bg-white hover:bg-gray-50 transition shadow-sm active:scale-95"
+            aria-label="Scroll right"
+          >
+            <ChevronRight className="w-6 h-6 text-black" />
+          </button>
+        </div>
 
   <div
     ref={scrollRef}
