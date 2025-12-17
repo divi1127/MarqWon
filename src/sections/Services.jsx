@@ -132,7 +132,7 @@ const services = [
   // TECH & MARKETING
   {
     title: "Game Development",
-    category: CATEGORIES.TECH_MARKETING,
+    category: CATEGORIES.DEVELOPMENT,
     desc: "Immersive 2D and 3D games.",
     icon: Rocket,
     imgUrl:
@@ -208,27 +208,27 @@ const ParallaxHeader = ({ imgUrl, title, subtitle }) => {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.3]);
 
-  useEffect(() => {
-    services.forEach((s) => {
-      const img = new Image();
-      img.src = s.imgUrl;
-    });
-  }, []);
-
   return (
-    <div ref={ref} className="relative h-[700px] overflow-hidden">
+    <div ref={ref} className="relative h-[600px] md:h-[700px] overflow-hidden">
       <motion.div className="absolute inset-0 z-0" style={{ y, opacity }}>
-        <img src={imgUrl} className="w-full h-full object-cover" alt="Digital Services Header Background" />
+        <img 
+          src={imgUrl} 
+          className="w-full h-full object-cover" 
+          alt="Digital Services Header Background" 
+        />
+        {/* Added an overlay to ensure text readability on mobile */}
+        <div className="absolute inset-0 " />
       </motion.div>
 
-      <div className="relative z-10 flex items-center justify-center h-full text-black"> {/* Adjusted text-black to text-white for better contrast against image */}
-        <div className="text-center p-6 max-w-4xl">
-          <span className="inline-block text-sm px-4 py-1.5 bg-black/20 backdrop-blur-sm rounded-full mb-4 font-medium">
+      <div className="relative z-10 flex items-center justify-center h-full text-black"> 
+        <div className="text-center p-6 w-full max-w-5xl flex flex-col gap-4 md:gap-6 mt-20">
+          
+          <span className="inline-block text-[15px] md:text-sm px-4 py-1.5 font-light tracking-[0.2em] md:tracking-[0.3em] uppercase">
             Our Services
           </span>
 
           <motion.h1
-            className="text-5xl md:text-6xl font-bold drop-shadow-lg"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-inter-bold drop-shadow-2xl leading-[1.1] md:leading-[1.2] [word-spacing:0.2rem] md:word-spacing-[0.4rem]" 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -237,7 +237,7 @@ const ParallaxHeader = ({ imgUrl, title, subtitle }) => {
           </motion.h1>
 
           <motion.p
-            className="text-xl opacity-90 drop-shadow-md"
+            className="text-base md:text-xl lg:text-2xl font-extralight opacity-90 drop-shadow-md leading-relaxed max-w-2xl mx-auto [word-spacing:0.1rem] md:word-spacing-[0.2rem]" 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -261,10 +261,10 @@ const ServiceCard = ({ s }) => {
       key={s.title}
       className="relative overflow-hidden rounded-xl bg-white border border-gray-100 shadow-md 
         transition-all cursor-pointer group text-gray-900
-        flex flex-col h-[520px] hover:shadow-xl"
+        flex flex-col h-[580px] hover:shadow-xl" // Slightly reduced height since text is shorter
     >
-      {/* IMAGE */}
-      <div className="h-[240px] overflow-hidden">
+     {/* IMAGE - Increased height */}
+      <div className="h-[320px] overflow-hidden"> {/* Increased from 240px to 320px */}
         <img
           src={s.imgUrl}
           alt={s.title}
@@ -285,7 +285,8 @@ const ServiceCard = ({ s }) => {
           {s.title}
         </h3>
 
-        <p className="text-base text-gray-600 leading-relaxed mb-6 flex-grow line-clamp-3">
+        {/* DESCRIPTION - Restricted to exactly two lines */}
+        <p className="text-base text-gray-600 leading-relaxed mb-6 line-clamp-2 min-h-[3rem]">
           {s.desc}
         </p>
 

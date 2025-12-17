@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Network, Code, Workflow, Cpu, ShoppingBag, ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function ServicesSection() {
   // Scroll fade animation
@@ -24,6 +24,18 @@ export default function ServicesSection() {
     elements.forEach((el) => obs.observe(el));
     return () => obs.disconnect();
   }, []);
+
+  const scroll = (direction) => {
+  if (scrollRef.current) {
+    const { scrollLeft, clientWidth } = scrollRef.current;
+    // Calculate scroll amount (e.g., width of one card + gap)
+    const scrollTo = direction === "left" 
+      ? scrollLeft - 332 
+      : scrollLeft + 332;
+    
+    scrollRef.current.scrollTo({ left: scrollTo, behavior: "smooth" });
+  }
+};
 
   const services = [
   {
@@ -200,6 +212,23 @@ export default function ServicesSection() {
     Industries We Support
   </h2>
 
+  {/* Navigation Arrows */}
+      <div className="flex gap-3 mt-6 md:mt-0 ml-auto mb-4 justify-end">
+        <button 
+          onClick={() => scroll("left")}
+          className="p-3 rounded-full border border-gray-200 bg-white hover:bg-gray-50 transition shadow-sm active:scale-95"
+          aria-label="Scroll left"
+        >
+          <ChevronLeft className="w-6 h-6 text-black" />
+        </button>
+        <button 
+          onClick={() => scroll("right")}
+          className="p-3 rounded-full border border-gray-200 bg-white hover:bg-gray-50 transition shadow-sm active:scale-95"
+          aria-label="Scroll right"
+        >
+          <ChevronRight className="w-6 h-6 text-black" />
+        </button>
+      </div>
   <div
     ref={scrollRef}
     className="flex gap-8 overflow-x-auto scrollbar-hide py-4 px-2 fade-item opacity-0 translate-y-6"

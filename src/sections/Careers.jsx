@@ -789,7 +789,7 @@ export default function CareersPage() {
   { 
     title: "UI/UX Design Intern", 
     duration: "3-6 months", 
-    requirements: ["Figma", "Wireframing", "Prototyping"] 
+    requirements: ["Figma", "Wireframing", "Prototyping", "User Research"] 
   },
   { 
     title: "Python Developer Intern", 

@@ -99,7 +99,7 @@ const Products = () => {
           <motion.h1
             custom={1}
             variants={fadeInUp}
-            className="text-5xl md:text-7xl font-extrabold mb-6 text-gray-900 leading-tight"
+            className="text-5xl md:text-7xl  mb-6 text-gray-900 leading-tight"
           >
             Accelerate AI Adoption: From Concept to Scalable Deployment
           </motion.h1>
@@ -151,9 +151,9 @@ const Products = () => {
       {/* --- */}
 
       {/* BRAND TRUST SECTION */}
-      <div>
+      {/* <div>
         <TrustedBy />
-      </div>
+      </div> */}
 
       {/* --- */}
 
@@ -183,22 +183,22 @@ const Products = () => {
                     {product.status}
                   </div>
 
-                 {/* FLEX ROW FOR TITLE AND LOGO */}
-                  <div className="flex items-center gap-60 mb-1">
-                    <h3 className="text-3xl font-semibold text-gray-900">
-                      {product.title}
-                    </h3>
-                    {product.logo && (
-  <div className="w-8 h-10 rounded-full bg-black flex items-center justify-center  shadow-md hover:scale-105 transition">
-    <img
-      src={product.logo}
-      alt={`${product.title} logo`}
-      className="w-8 h-8 object-contain "
-    />
-  </div>
-                    )}
-                  </div>
-
+                {/* FLEX ROW FOR TITLE AND LOGO */}
+<div className="flex flex-row items-center justify-between mb-2">
+  <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 leading-tight pr-4">
+    {product.title}
+  </h3>
+  
+  {product.logo && (
+    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-black flex items-center justify-center shadow-md">
+      <img
+        src={product.logo}
+        alt="logo"
+        className="w-6 h-6 md:w-8 md:h-8 object-contain"
+      />
+    </div>
+  )}
+</div>
                   <p className="text-sm text-gray-600">{product.category}</p>
                 </div>
               </div>

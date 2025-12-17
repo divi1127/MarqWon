@@ -158,35 +158,36 @@ export const services = [
         },
     },
     {
-        title: "Startup MVP",
-        category: CATEGORIES.DEVELOPMENT,
-        desc: "Rapid prototyping and MVP development for startups.",
-        icon: Rocket,
-        imgUrl: "https://i.pinimg.com/1200x/c5/ec/52/c5ec523a122c184e504756db1374e8e6.jpg",
-        color: "from-red-500 to-pink-500",
-        details: {
-            whyChoose: [
-                "Extreme focus on core functionality to validate your market hypothesis quickly\nreducing time-to-market significantly.",
-                "Cost-effective development to maximize runway\nutilizing lean development practices and smart tech choices.",
-                "Clear path and documentation for future scaling\nensuring the MVP codebase is production-ready.",
-            ],
-            technologies: [
-                "Rapid prototyping tools (Figma, Framer)\nfor quick visual iteration before coding starts.",
-                "Lean tech stack (e.g., Firebase, Next.js, Vercel)\nchosen for speed of development and low initial overhead.",
-                "Serverless functions (AWS Lambda, Google Functions)\nfor automatic scaling and reduced infrastructure costs.",
-            ],
-            features: [
-                "Core user registration and profile management\nthe absolute minimum required for user interaction.",
-                "Single, essential feature of your product\nfocused on delivering the primary value proposition.",
-                "Basic analytics integration to measure key metrics\nlike activation, retention, and drop-off points.",
-            ],
-            benefits: [
-                "Launch your product in weeks, not months\ngiving you a head start on the competition.",
-                "Collect real user feedback to inform the next iteration\nminimizing the risk of building the wrong features.",
-                "Secure early funding with a working, demonstrable product\nshowing investors real traction.",
-            ],
-        },
-    },
+  title: "Startup MVP",
+  category: CATEGORIES.DEVELOPMENT,
+  // Added the full form "Minimum Viable Product" here
+  desc: "Rapid prototyping and Minimum Viable Product (MVP) development for startups.",
+  icon: Rocket,
+  imgUrl: "https://i.pinimg.com/1200x/c5/ec/52/c5ec523a122c184e504756db1374e8e6.jpg",
+  color: "from-red-500 to-pink-500",
+  details: {
+    whyChoose: [
+      "Extreme focus on core functionality to validate your market hypothesis quickly\nreducing time-to-market significantly.",
+      "Cost-effective development to maximize runway\nutilizing lean development practices and smart tech choices.",
+      "Clear path and documentation for future scaling\nensuring the MVP codebase is production-ready.",
+    ],
+    technologies: [
+      "Rapid prototyping tools (Figma, Framer)\nfor quick visual iteration before coding starts.",
+      "Lean tech stack (e.g., Firebase, Next.js, Vercel)\nchosen for speed of development and low initial overhead.",
+      "Serverless functions (AWS Lambda, Google Functions)\nfor automatic scaling and reduced infrastructure costs.",
+    ],
+    features: [
+      "Core user registration and profile management\nthe absolute minimum required for user interaction.",
+      "Single, essential feature of your product\nfocused on delivering the primary value proposition.",
+      "Basic analytics integration to measure key metrics\nlike activation, retention, and drop-off points.",
+    ],
+    benefits: [
+      "Launch your product in weeks, not months\ngiving you a head start on the competition.",
+      "Collect real user feedback to inform the next iteration\nminimizing the risk of building the wrong features.",
+      "Secure early funding with a working, demonstrable product\nshowing investors real traction.",
+    ],
+  },
+},
     // BUSINESS & DESIGN
     {
         title: "E-Commerce Development",
