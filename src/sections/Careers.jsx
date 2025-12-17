@@ -11,6 +11,8 @@ import {
   XCircle,
 } from "lucide-react";
 
+import FAQ from "../sections/FAQ.jsx";
+
 // --- Data ---
 const BENEFITS = [
   {
@@ -131,7 +133,7 @@ Interns shall:
 * Refrain from any action that may harm the company’s reputation, systems, or people
 
 ### 11. Early Exit & Termination Policy
-#### 11.1 Termination by Marqwon
+### 11.1 Termination by Marqwon
 Marqwon may terminate the internship immediately and without prior notice in cases including, but not limited to:
 * Unsatisfactory performance or failure to deliver
 * Repeated absenteeism, unresponsiveness, or lack of discipline
@@ -140,12 +142,12 @@ Marqwon may terminate the internship immediately and without prior notice in cas
 * Submission of false or misleading information
 Such termination shall not entitle the intern to any compensation, certificate, or claims.
 
-#### 11.2 Voluntary Exit by Intern
+### 11.2 Voluntary Exit by Intern
 * Interns must provide 7 days written notice for voluntary discontinuation.
 * All assigned work, handovers, and exit formalities must be completed during the notice period.
 * Non-compliance shall result in termination without completion status.
 
-#### 11.3 Management Discretion
+### 11.3 Management Discretion
 Internship completion, continuation, certification, or future consideration remains at the sole discretion of Marqwon management, whose decision shall be final.
 
 ### 12. Exit Obligations
@@ -169,14 +171,182 @@ By accepting the internship offer and commencing work, the intern confirms full 
 `;
 
 // Placeholder for Job Terms since they were not provided
-const JOB_TERMS = `## Marqwon Dynamics Pvt. Ltd. Employment Terms (Placeholder)
-By submitting a job application, you agree to our standard employment terms and conditions, which cover:
-1.  Equal Opportunity Employer statement.
-2.  Data Privacy and Application Handling Policy.
-3.  Standard offer terms regarding compensation, benefits, and at-will employment (where applicable).
-4.  Standard Intellectual Property Assignment.
+const JOB_TERMS = `## Marqwon Dynamics Private Limited
+Employee Terms & Conditions
 
-The full terms will be provided upon successful completion of the interview process and before any formal offer of employment is made.
+Effective Date: 12/16/2025
+
+These Employee Terms & Conditions (“Terms”) define the policies, processes, and expectations governing employment at Marqwon Dynamics Private Limited (“Company”, “Marqwon”, “we”, “us”). All employees are required to read, understand, and comply with these Terms.
+
+
+
+### 1. Employment Relationship
+* Employment at Marqwon Dynamics is based on mutual trust, performance, and business requirements.
+* Unless otherwise specified in a written agreement, employment is at-will, subject to applicable Indian labor laws.
+* These Terms apply to full-time, part-time, contract, and probationary employees, unless stated otherwise.
+
+### 2. Hiring & Selection Policy
+* Hiring is conducted based on merit, skills, experience, cultural alignment, and business needs.
+### The selection process may include:
+* Application screening
+* Interviews (technical/managerial)
+* Skill assessments or assignments
+* Background and reference checks (where applicable)
+* Submission of false information at any stage may lead to immediate disqualification or termination.
+
+### 3. Offer Letter & Joining Process
+* Selected candidates will receive a formal Offer Letter detailing role, compensation, work mode, and joining date.
+### Employment becomes effective only upon:
+* Acceptance of the offer
+* Submission of required documents
+* Successful completion of onboarding formalities
+* Failure to join on the agreed date without prior approval may result in automatic withdrawal of the offer.
+
+### 4. Employment Classification
+### Employees may be engaged under one of the following models:
+* On-site – Working from the company office
+* Hybrid – Combination of on-site and remote work
+* Remote – Fully work-from-home or remote location
+ Work mode is decided by management and may be changed based on business needs.
+
+### 5. Probation Period
+* All new employees are subject to a probation period of 3–6 months, unless stated otherwise.
+During probation:
+* Performance, behavior, and cultural fit are evaluated
+* Either party may terminate employment with shorter notice or immediate effect
+* Successful completion of probation is confirmed in writing.
+
+### 6. Compensation & Salary Policy
+* Salary is determined based on role, experience, performance, and market benchmarks.
+###  Compensation structure may include:
+* Fixed monthly salary
+* Performance-based incentives or bonuses (if applicable)
+* Salary will be paid on or before the 28th of each month, subject to applicable statutory deductions.
+* Any delay due to banking or statutory reasons will be communicated in advance.
+* Salary revisions are not guaranteed and depend on individual performance, company growth, and management discretion.
+
+### 7. Working Hours & Attendance
+* Standard working hours: 9 hours per day, including breaks (unless specified otherwise).
+* Employees are expected to maintain punctuality and regular attendance.
+* Flexible hours may be allowed for certain roles, subject to manager approval.
+
+### 8. Remote, Hybrid & On-Site Work Policy
+### Hybrid Work (Default Model)
+* Hybrid work consists of **3 days working from the office and 2 days working remotely** per week.
+* Office days will be assigned by management.
+* Non-adherence may lead to revocation of hybrid privileges.
+
+### Remote Work
+* Employees must ensure:
+* Reliable internet connectivity
+* Secure and professional work environment
+* Availability during agreed working hours
+
+### On-Site Work
+* Employees are required to be present at the assigned office location during working hours.
+The company reserves the right to revise work mode based on business or client requirements.
+
+### 9. Dress Code Policy
+* On-site employees must follow a smart casual or professional dress code.
+* Clothing must be neat, appropriate, and respectful.
+* Remote employees must maintain professional appearance during meetings and calls.
+
+### 10. Code of Conduct
+Employees must:
+* Act with integrity, honesty, and professionalism
+* Respect colleagues, clients, and partners
+* Protect company reputation and confidential information
+* Avoid conflicts of interest
+Harassment, discrimination, misconduct, or unethical behavior will result in disciplinary action.
+
+### 11. Confidentiality, Intellectual Property & Data Security
+* All work products including code, designs, documents, strategies, client data, and intellectual output created during employment are the **exclusive property of Marqwon Dynamics.**
+### Employees must follow company Data Security & IT Usage Policy, including:
+* Secure handling of company data
+* No unauthorized sharing of credentials
+* Use of company-approved tools and devices
+* Employees must not disclose confidential or proprietary information during or after employment.
+* Any data breach or security violation may result in disciplinary and legal action.
+
+### 12. Social Media Policy
+* Employees must not post or share confidential company, client, or internal information on social media.
+* Public representation of the company must remain professional and aligned with company values.
+* Any official statements on behalf of the company require prior written approval.
+
+### 13. Moonlighting & Dual Employment Policy
+* Employees are not permitted to engage in dual employment, freelancing, consulting, or business activities "without prior written approval" from the company.
+* Any conflict of interest must be disclosed immediately.
+
+### 14. Non-Compete & Non-Solicitation (Startup-Friendly)
+* During employment, employees must not engage in activities that directly compete with the company.
+For a period of "6 months after separation", employees shall not:
+* Solicit company clients or employees
+* Use company trade secrets or confidential information for personal or competitive advantage
+* This clause is intended to protect business interests while remaining reasonable and compliant with Indian law.
+
+### 15. Performance Management
+###  Performance is reviewed periodically based on:
+* Role-specific KPIs
+* Quality of work
+* Timelines and accountability
+* Team collaboration
+* Consistent underperformance may result in corrective action or termination.
+
+### 16. Leave Policy
+* Employees are entitled to **2 days of Paid Leave (PL) per month.**
+* Paid leaves can be accumulated and utilized during the year.
+* After completion of 12 months of service, employees may apply for up to 1 week (7 days) of continuous vacation leave, subject to manager approval.
+* Leaves must be planned and approved in advance.
+* Unauthorized absence may lead to salary deduction or disciplinary action.
+This leave policy may be revised based on company growth, statutory changes, or business needs.
+
+### 17. Termination Policy
+### Termination by Employee (Resignation)
+* Written resignation is mandatory.
+### Notice period:
+* During probation: 7–15 days
+* Post-confirmation: 30 days (unless specified otherwise)
+
+### Termination by Company
+* The company may terminate employment due to:
+* Poor performance
+* Misconduct or policy violation
+* Business restructuring
+* Termination may be with or without notice, depending on circumstances and law.
+
+### 18. Exit & Removal Process
+### Employees must:
+* Complete handover of responsibilities
+* Return company assets
+* Clear dues and access credentials
+* Final settlement will be processed after successful exit formalities.
+
+### 19. Disciplinary Action
+The company may take actions including:
+* Verbal or written warnings
+* Suspension
+* Termination
+Based on the severity of misconduct.
+
+### 20. Amendments & Policy Changes
+* Marqwon Dynamics reserves the right to modify these Terms at any time.
+* Employees will be notified of significant changes.
+
+### 21. Governing Law
+* These Terms comply with applicable Indian labor laws including the Shops & Establishments Act, and statutory requirements such as PF and ESI, where applicable.
+These Terms are governed by the laws of India.
+
+### 22. Mandatory Acknowledgment & Acceptance
+* This document forms part of the Employee Handbook of Marqwon Dynamics Private Limited.
+* Every employee must read, understand, and sign this document before joining the company.
+* Signing this document is mandatory and a condition of employment.
+
+
+### Employee Declaration
+
+I hereby confirm that I have read, understood, and agree to abide by the Employee Terms & Conditions and policies of Marqwon Dynamics Private Limited.
+
+
 `;
 
 // --- New Modal Component for T&C ---
@@ -601,11 +771,37 @@ export default function CareersPage() {
   const [selectedRole, setSelectedRole] = useState("");
 
   const internships = [
-    { title: "Full Stack Development Intern", duration: "3-6 months", requirements: ["React.js", "Node.js", "Database basics", "Git"] },
-    { title: "Mobile App Development Intern", duration: "3-6 months", requirements: ["React Native or Flutter", "Mobile UI/UX", "REST APIs","Firebase or Local Storage"  ] },
-    { title: "AI/ML Intern", duration: "3-6 months", requirements: ["Python", "Machine Learning basics", "TensorFlow","Data Preprocessing & Visualization"  ] },
-    { title: "UI/UX Design Intern", duration: "3-6 months", requirements: ["Figma", "Wireframing", "Prototyping"] },
-  ];
+  { 
+    title: "Full Stack Development Intern", 
+    duration: "3-6 months", 
+    requirements: ["React.js", "Node.js", "Database basics", "Git"] 
+  },
+  { 
+    title: "Mobile App Development Intern", 
+    duration: "3-6 months", 
+    requirements: ["React Native or Flutter", "Mobile UI/UX", "REST APIs", "Firebase or Local Storage"] 
+  },
+  { 
+    title: "AI/ML Intern", 
+    duration: "3-6 months", 
+    requirements: ["Python", "Machine Learning basics", "TensorFlow", "Data Preprocessing & Visualization"] 
+  },
+  { 
+    title: "UI/UX Design Intern", 
+    duration: "3-6 months", 
+    requirements: ["Figma", "Wireframing", "Prototyping"] 
+  },
+  { 
+    title: "Python Developer Intern", 
+    duration: "3-6 months", 
+    requirements: ["Core Python", "Django or Flask", "API Development", "PostgreSQL/MySQL"] 
+  },
+  { 
+    title: "Data Analytics Intern", 
+    duration: "3-6 months", 
+    requirements: ["SQL", "Pandas/NumPy", "PowerBI or Tableau", "Statistical Analysis"] 
+  }
+];
 
   const jobs = [
     { title: "Senior Full Stack Developer", type: "Full-time", experience: "4-6 years", skills: ["React", "Node.js", "MongoDB", "AWS"] },
@@ -646,15 +842,24 @@ export default function CareersPage() {
       {/* HERO */}
       <section className="pt-28 pb-10 text-center bg-white">
         <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}>
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-3 bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent">Join Our Team</h1>
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-3 bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent mt-10">Join Our Team</h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">Build your career with <span className="font-semibold text-gray-900">MarqWon</span> — work on cutting-edge technology and shape the future of AI.</p>
         </motion.div>
       </section>
 {/* BENEFITS + IMAGE */}
       <section className="py-16">
         <div className="container mx-auto px-4 max-w-6xl">
-          <motion.h2 initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-3xl md:text-4xl font-bold text-center mb-10">Why Choose MarqWon?</motion.h2>
+          <motion.h2 initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-3xl md:text-4xl font-bold text-center mb-10 ">The MarqWon Advantage </motion.h2>
 
+    {/* <motion.p 
+      initial={{ opacity: 0 }} 
+      whileInView={{ opacity: 1 }} 
+      viewport={{ once: true }}
+      transition={{ delay: 0.2 }}
+      className="text-center text-gray-600 mb-2 max-w-1xl mx-auto text-lg"
+    >
+      We don’t just offer a job; we provide an environment where your potential meets purpose.
+    </motion.p> */}
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
             {/* Left image - UPDATED: aspect-[4/3] (taller than 16:9) on mobile, aspect-square on large screens */}
             <div className="lg:col-span-2 relative aspect-[4/5] lg:aspect-square rounded-2xl overflow-hidden shadow-lg">
@@ -794,6 +999,7 @@ export default function CareersPage() {
           </div>
         )}
       </section>
+<FAQ/>
     </div>
   );
 }

@@ -22,7 +22,8 @@ export default function Hero() {
     }, []); // Empty dependency array [] ensures it runs only on mount
 
     return (
-        <section className="relative w-full min-h-[80vh] bg-white text-black flex flex-col items-center justify-center pt-28 pb-40 px-6">
+        <>
+        <section className="relative w-full min-h-[80vh] bg-white text-black flex flex-col items-center justify-center pt-28 pb-10 px-6">
             
             <div className="max-w-4xl text-center">
 
@@ -44,7 +45,7 @@ export default function Hero() {
                     {/* Primary Button: Link to /services */}
                     <Link
                         to="/services"
-                        className="px-8 py-4 rounded-full bg-black text-white text-lg font-medium hover:bg-gray-800 transition shadow-lg"
+                        className="px-8 py-4 rounded-full bg-black text-white text-lg font-extralight hover:bg-gray-800 transition shadow-lg"
                     >
                         Explore Services
                     </Link>
@@ -60,6 +61,7 @@ export default function Hero() {
                     </Link>
                 </div>
             </div>
+            
 
             <TrustedBy />
             
@@ -67,5 +69,7 @@ export default function Hero() {
             <Homecontent />
             
         </section>
+
+        </>
     );
 }

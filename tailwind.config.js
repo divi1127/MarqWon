@@ -9,8 +9,9 @@ module.exports = {
         inter: ["Inter", "sans-serif"],
       },
 
-      /* --- FLOATING BLOB ANIMATIONS --- */
+      /* --- KEYFRAMES --- */
       keyframes: {
+        /* Floating blobs */
         float: {
           "0%": { transform: "translate(0, 0) scale(1)" },
           "50%": { transform: "translate(20px, -20px) scale(1.05)" },
@@ -21,10 +22,21 @@ module.exports = {
           "50%": { transform: "translate(-20px, 20px) scale(1.08)" },
           "100%": { transform: "translate(0, 0) scale(1)" },
         },
+
+        /* Horizontal marquee (logos scroll) */
+        marquee: {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
       },
+
+      /* --- ANIMATIONS --- */
       animation: {
         float: "float 6s ease-in-out infinite",
         float2: "float2 7s ease-in-out infinite",
+
+        /* Logo scroll animation */
+        marquee: "marquee 30s linear infinite",
       },
     },
   },

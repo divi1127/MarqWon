@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Network, Code, Workflow, Cpu, ShoppingBag, ShieldCheck } from "lucide-react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 
 export default function ServicesSection() {
@@ -241,6 +243,74 @@ export default function ServicesSection() {
   </div>
 </section>
 
+
+
+<section className="w-full bg-white py-24 px-6 mt-5 fade-item">
+  <div className="max-w-7xl mx-auto">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+      className="flex flex-col items-start text-left " // Fixed: Left alignment
+    >
+      {/* THIN FONT HEADER */}
+      <motion.h2 
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        className="text-5xl md:text-7xl font-light tracking-tight text-black mb-8 leading-[1.1]"
+      >
+        Let’s Connect and Build Your <br />
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-black via-gray-600 to-gray-400 font-extralight ">
+        Digital Future
+        </span>
+      </motion.h2>
+      
+      {/* THIN FONT DESCRIPTION */}
+      <motion.p 
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.2 }}
+        className="text-lg md:text-xl text-gray-500 font-light max-w-3xl leading-relaxed mb-12"
+      >
+        Looking to transform your business through technology? Share your details 
+        and our team will get in touch to explore how we can partner for success 
+        through <span className="text-black font-normal">custom software development</span>, 
+        <span className="text-black font-normal"> AI integration</span>, 
+        and <span className="text-black font-normal"> strategic digital transformation</span>.
+      </motion.p>
+
+      {/* LEFT ALIGNED BUTTON */}
+      <div className="flex flex-col sm:flex-row gap-6 mb-20">
+        <Link to="/enquiries">
+          <button className="px-12 py-4 bg-black text-white rounded-full text-sm font-light tracking-widest uppercase hover:bg-gray-800 transition-all shadow-lg hover:shadow-black/20">
+            Start Your Project
+          </button>
+        </Link>
+      </div>
+      
+      {/* STATS GRID - LEFT ALIGNED */}
+      <div className="w-full pt-12 border-t border-gray-100 grid grid-cols-2 md:grid-cols-4 gap-12">
+        <div className="space-y-1">
+          <p className="text-4xl font-extralight text-black">99%</p>
+          <p className="text-xs text-gray-400 uppercase tracking-[0.2em] font-medium">Client Satisfaction</p>
+        </div>
+        <div className="space-y-1">
+          <p className="text-4xl font-extralight text-black">24/7</p>
+          <p className="text-xs text-gray-400 uppercase tracking-[0.2em] font-medium">Expert Support</p>
+        </div>
+        <div className="space-y-1">
+          <p className="text-4xl font-extralight text-black">150+</p>
+          <p className="text-xs text-gray-400 uppercase tracking-[0.2em] font-medium">Projects Scaled</p>
+        </div>
+        <div className="space-y-1">
+          <p className="text-4xl font-extralight text-black">Top Tier</p>
+          <p className="text-xs text-gray-400 uppercase tracking-[0.2em] font-medium">Security Standards</p>
+        </div>
+      </div>
+    </motion.div>
+  </div>
+</section>
     </section>
   );
 }

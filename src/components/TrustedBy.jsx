@@ -20,20 +20,18 @@ export default function TrustedBy() {
         Trusted by Industry Leaders Worldwide
       </h3>
 
-      {/* The container needs relative and overflow-hidden for both the scroll and the fade effect */}
-      <div className="relative overflow-hidden trusted-logos-container">
-        <div className="marquee-track">
-          {/* Duplicate the array to create the seamless loop */}
-          {[...trustedLogos, ...trustedLogos].map((brand, i) => (
+      {/* Marquee Wrapper */}
+      <div className="relative overflow-hidden">
+        <div className="flex w-max animate-marquee gap-20">
+          {[...trustedLogos, ...trustedLogos, ...trustedLogos].map((brand, i) => (
             <div
               key={i}
-              // Add a specific class for Fourmax sizing
-              className={`logo-box ${brand.name === "Fourmax" ? "fourmax-logo-box" : ""}`}
+              className="flex items-center justify-center min-w-[180px]"
             >
               <img
                 src={brand.logo}
                 alt={brand.name}
-                className="logo-img"
+                className="h-25 object-contain grayscale brightness-0 opacity-80 hover:opacity-100 transition"
               />
             </div>
           ))}
