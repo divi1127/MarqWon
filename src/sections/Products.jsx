@@ -1,8 +1,8 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ExternalLink } from "lucide-react";
-import { Link } from "react-router-dom";
+
 import deeplearnerLogo from "../assets/deep.png";
-import TrustedBy from "../components/TrustedBy";
+
 import marq from "../assets/logomain.png";
 
 const fadeInUp = {
@@ -113,13 +113,7 @@ const Products = () => {
             solutions to maximize efficiency and results.
           </motion.p>
 
-          {/* <motion.button
-            custom={3}
-            variants={fadeInUp}
-            className="px-8 py-3 bg-black text-white text-lg font-semibold rounded-lg hover:bg-gray-800 transition-colors duration-300 shadow-lg hover:shadow-xl"
-          >
-            Request a demo
-          </motion.button> */}
+        
         </motion.div>
       </section>
 
@@ -150,12 +144,6 @@ const Products = () => {
 
       {/* --- */}
 
-      {/* BRAND TRUST SECTION */}
-      {/* <div>
-        <TrustedBy />
-      </div> */}
-
-      {/* --- */}
 
       {/* PRODUCT GRID */}
       <section className="py-20 relative z-10 bg-white">

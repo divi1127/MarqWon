@@ -15,7 +15,7 @@ import Services from "./sections/Services.jsx";
 import Products from "./sections/Products.jsx";
 import Careers from "./sections/Careers.jsx";
 import Enquiries from "./sections/Enquiries.jsx";
-import Admin from "./sections/Admin.jsx";
+
 import ServiceDetailPage from "./sections/ServiceDetailPage.jsx";
 import PrivacyPolicyPage from "./sections/PrivacyPolicyPage.jsx";
 import TermsAndConditionsPage from "./sections/TermsAndConditionsPage.jsx";
@@ -46,7 +46,7 @@ export default function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/enquiries" element={<Enquiries />} />
-            <Route path="/admin" element={<Admin />} />
+            
 
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
             <Route path="/terms-conditions" element={<TermsAndConditionsPage/>} />

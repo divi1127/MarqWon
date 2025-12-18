@@ -206,29 +206,33 @@ export default function ServicesSection() {
         </div>
       </section>
 
-     {/* INDUSTRIES SCROLLER */}
-<section className="w-[95%] mx-auto my-32 font-['Helvetica Neue']">
-  <h2 className="text-4xl md:text-5xl font-bold text-black mb-14 text-center mt-10 fade-item opacity-0 translate-y-6">
+    {/* INDUSTRIES SCROLLER */}
+<section className="relative w-[95%] mx-auto my-32 font-['Helvetica Neue']">
+  
+  {/* Heading */}
+  <h2 className="text-4xl md:text-5xl font-bold text-black mb-20 text-center mt-10 fade-item opacity-0 translate-y-6">
     Industries We Support
   </h2>
 
   {/* Navigation Arrows */}
-      <div className="flex gap-3 mt-6 md:mt-0 ml-auto mb-4 justify-end">
-        <button 
-          onClick={() => scroll("left")}
-          className="p-3 rounded-full border border-gray-200 bg-white hover:bg-gray-50 transition shadow-sm active:scale-95"
-          aria-label="Scroll left"
-        >
-          <ChevronLeft className="w-6 h-6 text-black" />
-        </button>
-        <button 
-          onClick={() => scroll("right")}
-          className="p-3 rounded-full border border-gray-200 bg-white hover:bg-gray-50 transition shadow-sm active:scale-95"
-          aria-label="Scroll right"
-        >
-          <ChevronRight className="w-6 h-6 text-black" />
-        </button>
-      </div>
+  <div className="absolute top-[150px] right-0 flex gap-3 z-10">
+    <button
+      onClick={() => scroll("left")}
+      className="p-3 rounded-full border border-gray-200 bg-white hover:bg-gray-50 transition shadow-sm active:scale-95"
+      aria-label="Scroll left"
+    >
+      <ChevronLeft className="w-6 h-6 text-black" />
+    </button>
+
+    <button
+      onClick={() => scroll("right")}
+      className="p-3 rounded-full border border-gray-200 bg-white hover:bg-gray-50 transition shadow-sm active:scale-95"
+      aria-label="Scroll right"
+    >
+      <ChevronRight className="w-6 h-6 text-black" />
+    </button>
+  </div>
+
   <div
     ref={scrollRef}
     className="flex gap-8 overflow-x-auto scrollbar-hide py-4 px-2 fade-item opacity-0 translate-y-6"
