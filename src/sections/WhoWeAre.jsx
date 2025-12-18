@@ -406,12 +406,12 @@ export default function WhoWeAre() {
 
 
       {/* ================= INDUSTRIES SCROLLER ================= */}
-<section className="w-[95%] mx-auto my-32 font-['Helvetica Neue']">
+<section className="relative w-[95%] mx-auto my-32 font-['Helvetica Neue']">
   <h2 className="text-4xl md:text-5xl font-bold text-black mb-14 text-center mt-10">
     Industries We Support
   </h2>
   {/* Navigation Arrows */}
-        <div className="flex gap-3 mt-6 md:mt-0 ml-auto mb-4 justify-end">
+        <div className="absolute top-[130px] right-0 flex gap-3 z-10">
           <button 
             onClick={() => scroll("left")}
             className="p-3 rounded-full border border-gray-200 bg-white hover:bg-gray-50 transition shadow-sm active:scale-95"
