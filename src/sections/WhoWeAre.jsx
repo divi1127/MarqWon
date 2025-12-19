@@ -6,6 +6,11 @@ import { Link } from "react-router-dom";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
+import { Target, Eye, Gem } from "lucide-react";
+import hand from "../assets/hand.jpeg";
+import hands from "../assets/hands.mp4";
+
+
 /* ---------- ANIMATION VARIANTS ---------- */
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -65,7 +70,8 @@ function ScrollParallax({ bg, height = "100vh", overlayOpacity = 0.6, children, 
 }
 
 /* ---------- GLASS MORPHISM MVV CARD ---------- */
-function MVVCard({ title, text }) {
+/* ---------- GLASS MORPHISM MVV CARD ---------- */
+function MVVCard({ title, text, icon: Icon }) {
   return (
     <motion.div
       variants={itemVariants}
@@ -76,35 +82,46 @@ function MVVCard({ title, text }) {
       }}
       className="
         relative p-8 
-        bg-white/10 
-        backdrop-blur-xl 
-        rounded-3xl 
-        border border-white/20 
+        bg-white/10 backdrop-blur-xl
+        rounded-3xl border border-white/20
         shadow-[0_8px_32px_rgba(0,0,0,0.1)]
-        group text-left flex flex-col h-full
+        group flex flex-col h-full
         transition-all duration-300
       "
     >
       <div className="relative z-10 flex flex-col h-full">
-        <h4 className="text-2xl font-bold tracking-tight mb-4 text-black drop-shadow-lg">
-          {title}
-        </h4>
+        
+        {/* TITLE + ICON (HORIZONTAL) */}
+        <div className="flex items-center gap-3 mb-4">
+          <div className="
+            w-10 h-10 rounded-xl
+            flex items-center justify-center
+          ">
+            <Icon className="w-10 h-6 text-black" />
+          </div>
+
+          <h4 className="text-2xl font-bold tracking-tight text-black drop-shadow-lg">
+            {title}
+          </h4>
+        </div>
 
         <p className="text-base text-black/90 leading-relaxed font-light flex-grow">
           {text}
         </p>
       </div>
 
+      {/* HOVER GLASS OVERLAY */}
       <div
         className="
-        absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100
-        transition-opacity duration-300
-        bg-gradient-to-br from-white/10 to-white/5
-      "
-      ></div>
+          absolute inset-0 rounded-3xl opacity-0
+          group-hover:opacity-100 transition-opacity duration-300
+          bg-gradient-to-br from-white/10 to-white/5
+        "
+      />
     </motion.div>
   );
 }
+
 
 /* ---------- MAIN PAGE ---------- */
 export default function WhoWeAre() {
@@ -115,6 +132,12 @@ export default function WhoWeAre() {
   const scrollRef = useRef(null);
   const [progress, setProgress] = useState(0);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (scrollRef.current) {
+      scrollRef.current.scrollLeft = 0;
+    }
+  }, []);
   
   const industries = [
   {
@@ -277,20 +300,26 @@ export default function WhoWeAre() {
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto px-6"
         >
-          <MVVCard
-            title="MISSION"
-            text="Redefining innovation through scalable, future-ready tech solutions. We help businesses thrive with custom software, AI automation, cloud, and security services."
-          />
+        <MVVCard
+  title="MISSION"
+  icon={Target}
+  text="Redefining innovation through scalable, future-ready technology solutions. We partner with businesses to design, build, and deliver custom software, AI-driven automation, cloud infrastructure, and secure digital platforms that create real-world impact."
+/>
 
-          <MVVCard
-            title="VISION"
-            text="Empowering organizations to achieve more with intelligent technology that drives efficiency, transformation, and growth."
-          />
 
-          <MVVCard
-            title="VALUES"
-            text="Innovation, integrity, and agility. We think boldly, move fast, and solve real-world challenges with precision."
-          />
+<MVVCard
+  title="VISION"
+  icon={Eye}
+  text="To empower organizations of all sizes to achieve more through intelligent, reliable, and adaptable technology. We envision a future where digital transformation drives efficiency, accelerates growth, and unlocks new possibilities."
+/>
+
+<MVVCard
+  title="VALUES"
+  icon={Gem}
+  text="Innovation, integrity, and agility are at the core of everything we do. We think boldly, act responsibly, move fast, and continuously evolve to solve complex challenges with precision, transparency, and purpose."
+/>
+
+
         </motion.div>
       </section>
 
@@ -536,24 +565,9 @@ export default function WhoWeAre() {
 
 
 
-      {/* ================= GLOBAL SECTION ================= */}
-      {/* <section className="w-full py-20 flex items-center justify-center bg-white relative z-20">
-        <div className="w-full max-w-4xl px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-8">Global Vision, Local Roots</h2>
-          <div className="text-lg text-gray-700 leading-relaxed space-y-6 font-light max-w-2xl mx-auto">
-            <p>
-              MarqWon began in Madurai—a city rich in heritage—and expanded nationwide,
-              serving clients from startups to large enterprises across Bengaluru, Hyderabad, Mumbai, and Delhi.
-            </p>
-            <p>
-              We are a young, agile team focused on building the future of digital innovation.
-            </p>
-          </div>
-        </div>
-      </section> */}
-
+ 
       {/* ================= CTA PARALLAX ================= */}
-      <ScrollParallax bg={ctaImage} height="100vh" overlayOpacity={0.4}>
+      <ScrollParallax bg={hand} height="100vh" overlayOpacity={0.4}>
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -574,6 +588,9 @@ export default function WhoWeAre() {
 
         </motion.div>
       </ScrollParallax>
+
+      
+
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { getCalApi } from "@calcom/embed-react";
 
 // 🚨 FIX: IMPORT ALL COMPONENTS USED BELOW 
 // (Checking against your original file, these look like the necessary imports)
@@ -19,11 +21,14 @@ import Enquiries from "./sections/Enquiries.jsx";
 import ServiceDetailPage from "./sections/ServiceDetailPage.jsx";
 import PrivacyPolicyPage from "./sections/PrivacyPolicyPage.jsx";
 import TermsAndConditionsPage from "./sections/TermsAndConditionsPage.jsx";
+import CalFloatingButton from "./components/CalFloatingButton.jsx";
 
 // You can safely remove the unused 'other imports' comment now.
 
 export default function App() {
   const [overlap, setOverlap] = useState(false);
+
+  
 
   return (
     <Router>
@@ -63,6 +68,9 @@ export default function App() {
                 </div>
               }
             />
+
+
+            <Route path="/cal-floating-button" element={<CalFloatingButton/>} />
           </Routes>
         </main>
 

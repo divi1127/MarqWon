@@ -120,27 +120,15 @@ const Products = () => {
       {/* --- */}
 
       {/* PARALLAX */}
-      <section className="h-[60vh] overflow-hidden relative z-10">
-        <motion.div
-          style={{ y: yImage }}
-          className="w-full h-[120%] absolute top-[-10%] left-0"
-        >
-          <img
-            src={AI_BANNER_URL}
-            alt="Products showcase banner"
-            className="w-full h-full object-cover"
-          />
+ <section className="h-[60vh] relative z-10 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-700 overflow-hidden">
+  {/* Text over gradient */}
+  <div className="absolute inset-0 flex items-center justify-center z-30">
+    <h2 className="text-5xl md:text-6xl font-extrabold text-white text-center drop-shadow-lg">
+      Building the Next Generation of AI Technology
+    </h2>
+  </div>
+</section>
 
-          <div className="absolute inset-0 bg-black opacity-30"></div>
-        </motion.div>
-
-        {/* Text over image */}
-        <div className="absolute inset-0 flex items-center justify-center z-30">
-          <h2 className="text-5xl md:text-6xl font-extrabold text-white text-center drop-shadow-lg">
-            Building the Next Generation of AI Technology
-          </h2>
-        </div>
-      </section>
 
       {/* --- */}
 
