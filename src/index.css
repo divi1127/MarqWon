@@ -104,30 +104,33 @@ html {
 
 
 
-/* 1. Target the Cal.com Modal Wrapper */
-div[class*="cal-modal"], 
-div[class*="CalModal"],
-.cal-embed-container {
-    max-height: 580px !important; /* Forces the window to be shorter */
-    overflow: hidden !important;   /* Clips off the bottom branding */
-    border-bottom: 1px solid #222; /* Optional: adds a clean bottom edge */
+/* 1. Increase Modal Size */
+.cal-modal-content, 
+[data-testid="modal-content"] {
+    width: 95vw !important;    /* Uses 95% of screen width */
+    max-width: 1200px !important; /* Maximum width for desktop */
+    height: 85vh !important;   /* Uses 85% of screen height */
+    max-height: 800px !important;
+    overflow: hidden !important; /* Required to hide the branding */
+    border-radius: 12px !important;
 }
 
-/* 2. Target the iframe specifically to ensure it doesn't shrink with the container */
-.cal-embed-container iframe {
-    height: 850px !important;     /* Keeps the iframe full size */
-    margin-bottom: -50px !important; /* Pulls the content up to hide the bottom */
+/* 2. Hide Branding Footer (The "Crop" Method) */
+/* We make the iframe taller than the container to push the logo out of view */
+[data-testid="modal-content"] iframe {
+    height: calc(100% + 60px) !important; 
+    margin-bottom: -60px !important; 
+    transform: translateY(-10px); /* Fine-tunes positioning */
 }
 
-/* 3. Global override for any branding elements that leak out */
+/* 3. Hide Branding Elements if they leak out */
 [data-testid="branding"],
 .cal-embed-branding,
-a[href*="cal.com"] {
+a[href*="cal.com?utm_source=embed"] {
     display: none !important;
     visibility: hidden !important;
-    height: 0 !important;
+    opacity: 0 !important;
 }
-
 
 
 

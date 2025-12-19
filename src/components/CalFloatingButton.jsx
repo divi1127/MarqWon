@@ -14,30 +14,42 @@ export default function CalFloatingButton() {
     (async () => {
       const cal = await getCalApi({ namespace: "discovery-call" });
       calRef.current = cal;
-      cal("ui", { theme: "dark" });
+      cal("ui", { 
+        theme: "dark",
+        styles: {
+          branding: { brandColor: "#000000ff" },
+          enabled: true
+        }
+      });
     })();
   }, []);
 
   const openCal = () => {
-  if (!calRef.current) return;
-  calRef.current("modal", {
-    calLink: "marqwon/discovery-call",
-    config: { 
-      layout: "month_view",
-      theme: "dark" // Ensure this is here
-    },
-  });
-};
+    if (!calRef.current) return;
+    calRef.current("modal", {
+      calLink: "marqwon/discovery-call",
+      config: { 
+        layout: "month_view",
+        theme: "dark",
+        hideBranding: true
+      },
+    });
+  };
 
   if (!isVisible) return null;
 
   return (
+    
     <button
       onClick={openCal}
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-black text-white px-5 py-3 rounded-full shadow-lg hover:scale-105 transition cursor-pointer"
+      className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-black text-white px-6 py-4 rounded-full shadow-2xl hover:scale-110 transition-all cursor-pointer active:scale-95"
     >
-      <Calendar className="w-5 h-5" />
-      <span className="hidden md:inline">Book my Cal</span>
+      {/* Icon size increased from w-5 to w-6 */}
+      <Calendar className="w-6 h-6" />
+      <span className="hidden md:inline font-medium text-lg">Book my Cal</span>
     </button>
+
+
+
   );
 }

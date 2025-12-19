@@ -1,5 +1,4 @@
 import React, { useEffect } from "react"; // <-- 1. Import useEffect Hook
-import Home from "../sections/Home";
 import TrustedBy from "./TrustedBy";
 import Homecontent from "../components/Homecontent.jsx";
 import { Link } from "react-router-dom";
@@ -65,7 +64,7 @@ export default function Hero() {
 
             <TrustedBy />
             
-            <Home />
+            {/* <Home /> */}
             <Homecontent />
             
         </section>

@@ -92,7 +92,7 @@ function MVVCard({ title, text, icon: Icon }) {
       <div className="relative z-10 flex flex-col h-full">
         
         {/* TITLE + ICON (HORIZONTAL) */}
-        <div className="flex items-center gap-30 mb-4">
+        <div className="flex items-center gap-6 mb-4">
 
           <h4 className="text-2xl font-bold tracking-tight text-black drop-shadow-lg">
             {title}
@@ -579,12 +579,16 @@ export default function WhoWeAre() {
 <h3 className="text-4xl md:text-6xl font-bold mb-8 text-white">
   Build What’s Next
 </h3>
-
-<Link to="/enquiries" reloadDocument>
+<a
+  href="https://mail.google.com/mail/?view=cm&fs=1&to=info@marqwon.com&su=Partnership%20Request&body=Hi%20MarqWon%2C%0A%0AI%20am%20interested%20in%20partnering%20with%20you.%0A%0APlease%20let%20me%20know%20the%20next%20steps.%0A%0AThanks%2C%0A"
+  target="_blank"
+  rel="noopener noreferrer"
+>
   <button className="px-10 py-4 bg-black text-white text-lg font-bold rounded-full hover:scale-105 hover:bg-gray-900 transition-all duration-300 shadow-2xl">
     Partner With Us
   </button>
-</Link>
+</a>
+
 
         </motion.div>
       </ScrollParallax>

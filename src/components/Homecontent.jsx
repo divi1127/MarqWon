@@ -3,6 +3,8 @@ import { Network, Code, Workflow, Cpu, ShoppingBag, ShieldCheck } from "lucide-r
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Home from "../sections/Home";
+
 
 export default function ServicesSection() {
   // Scroll fade animation
@@ -143,7 +145,7 @@ export default function ServicesSection() {
     <section className="w-[95%] mx-auto my-24 font-['Helvetica Neue']">
 
       {/* MAIN TITLE */}
-      <h2 className="text-4xl md:text-5xl font-bold text-center text-black mb-12 fade-item opacity-0 translate-y-6">
+      <h2 className="text-4xl md:text-5xl font-bold text-center text-black mb-12 fade-item opacity-0 translate-y-6 ">
         Transforming Ideas into Digital Reality
       </h2>
 
@@ -168,6 +170,10 @@ export default function ServicesSection() {
             <p className="text-gray-700 text-lg leading-relaxed">{item.desc}</p>
           </div>
         ))}
+      </div>
+
+      <div className="mt-32">
+        <Home />
       </div>
 
       {/* ENTERPRISE SECTION */}

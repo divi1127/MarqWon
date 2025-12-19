@@ -17,7 +17,7 @@ export default function TrustedBy() {
   return (
     <section className="w-full py-16 bg-white overflow-hidden">
       <h3 className="text-center text-gray-900 text-xl md:text-2xl font-semibold mb-12">
-        Trusted by Industry Leaders Worldwide
+        Trusted by Forward-Thinking Businesses Worldwide
       </h3>
 
       {/* Marquee Wrapper */}

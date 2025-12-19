@@ -19,39 +19,8 @@
   rel="stylesheet"
 />
 
-
-
-
     <title>MarqWon.com</title>
     <link rel="icon" href="/marqwon.png" />
-
-    <style>
-  /* This targets the specific container Cal.com creates dynamically */
-  #cal-modal-content, 
-  .cal-modal-content,
-  [data-testid="modal-content"] {
-    padding-bottom: 0 !important;
-    overflow: hidden !important;
-    height: 600px !important; /* Forces a height that cuts off the bottom */
-  }
-
-  /* This finds the branding link inside the modal and kills it */
-  div[style*="margin-top: 16px"] > a[href*="cal.com"],
-  .cal-embed-branding,
-  [data-testid="branding"] {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    height: 0 !important;
-  }
-
-  /* Adjustment for the iframe to ensure it's not squashed */
-  div[data-testid="modal-content"] iframe {
-    margin-bottom: -50px !important; /* Pulls the footer out of view */
-  }
-</style>
-
 
     <!-- Prevent theme "flash" -->
     <script>
