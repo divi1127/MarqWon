@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import { Target, Eye, Gem } from "lucide-react";
+import { Rocket, Sparkles, ShieldCheck } from "lucide-react";
 import hand from "../assets/hand.jpeg";
 import hands from "../assets/hands.mp4";
 
@@ -92,17 +92,19 @@ function MVVCard({ title, text, icon: Icon }) {
       <div className="relative z-10 flex flex-col h-full">
         
         {/* TITLE + ICON (HORIZONTAL) */}
-        <div className="flex items-center gap-3 mb-4">
-          <div className="
-            w-10 h-10 rounded-xl
-            flex items-center justify-center
-          ">
-            <Icon className="w-10 h-6 text-black" />
-          </div>
+        <div className="flex items-center gap-30 mb-4">
 
           <h4 className="text-2xl font-bold tracking-tight text-black drop-shadow-lg">
             {title}
           </h4>
+
+           <div className="
+            w-10 h-10 rounded-xl
+            flex items-center justify-end
+          ">
+            <Icon className="w-10 h-6 text-black" />
+          </div>
+
         </div>
 
         <p className="text-base text-black/90 leading-relaxed font-light flex-grow">
@@ -126,7 +128,7 @@ function MVVCard({ title, text, icon: Icon }) {
 /* ---------- MAIN PAGE ---------- */
 export default function WhoWeAre() {
   const heroMainImage = "https://i.pinimg.com/736x/4e/cc/1f/4ecc1f16e661104ae4432b4e60695b48.jpg";
-  const ctaImage = "https://i.pinimg.com/1200x/ef/c8/78/efc87887230039968639d32aead40c17.jpg";
+  const ctaImage = "https://i.pinimg.com/736x/75/98/ca/7598ca122374bb1fd8df8477ee17e877.jpg";
 
   /* ---------- FIXED: HOOKS MUST BE INSIDE COMPONENT ---------- */
   const scrollRef = useRef(null);
@@ -300,25 +302,23 @@ export default function WhoWeAre() {
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto px-6"
         >
-        <MVVCard
+       <MVVCard
   title="MISSION"
-  icon={Target}
+  icon={Rocket}
   text="Redefining innovation through scalable, future-ready technology solutions. We partner with businesses to design, build, and deliver custom software, AI-driven automation, cloud infrastructure, and secure digital platforms that create real-world impact."
 />
 
-
 <MVVCard
   title="VISION"
-  icon={Eye}
+  icon={Sparkles}
   text="To empower organizations of all sizes to achieve more through intelligent, reliable, and adaptable technology. We envision a future where digital transformation drives efficiency, accelerates growth, and unlocks new possibilities."
 />
 
 <MVVCard
   title="VALUES"
-  icon={Gem}
+  icon={ShieldCheck}
   text="Innovation, integrity, and agility are at the core of everything we do. We think boldly, act responsibly, move fast, and continuously evolve to solve complex challenges with precision, transparency, and purpose."
 />
-
 
         </motion.div>
       </section>
