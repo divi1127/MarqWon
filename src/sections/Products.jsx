@@ -120,7 +120,7 @@ const Products = () => {
       {/* --- */}
 
       {/* PARALLAX */}
- <section className="h-[60vh] relative z-10 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-700 overflow-hidden">
+<section className="h-[60vh] relative z-10 bg-gradient-to-b from-black via-gray-900 to-gray-800 overflow-hidden">
   {/* Text over gradient */}
   <div className="absolute inset-0 flex items-center justify-center z-30">
     <h2 className="text-5xl md:text-6xl font-extrabold text-white text-center drop-shadow-lg">
@@ -128,6 +128,7 @@ const Products = () => {
     </h2>
   </div>
 </section>
+
 
 
       {/* --- */}
