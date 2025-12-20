@@ -3,11 +3,14 @@ import React, { useRef, useState, useEffect } from "react";
 import { Title, Meta } from "react-head";
 import { motion, useScroll, useTransform } from "framer-motion";
 
-
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Rocket, Sparkles, ShieldCheck } from "lucide-react";
 import hand from "../assets/hand.jpeg";
+
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+
 
 
 
@@ -31,24 +34,9 @@ const itemVariants = {
     transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1.0] },
   },
 };
-const handlePartnerClick = () => {
-  const mailto =
-    "mailto:info@marqwon.com?subject=Partnership%20Request&body=Hi%20MarqWon%2C%0A%0AI%20would%20like%20to%20explore%20a%20partnership.%0A%0APlease%20share%20the%20next%20steps.%0A%0AThanks%2C";
 
-  // Detect mobile
-  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-  if (isMobile) {
-    // Opens Gmail app / Mail app
-    window.location.href = mailto;
-  } else {
-    // Opens Gmail web on desktop
-    window.open(
-      "https://mail.google.com/mail/?view=cm&fs=1&to=info@marqwon.com&su=Partnership%20Request&body=Hi%20MarqWon%2C%0A%0AI%20would%20like%20to%20explore%20a%20partnership.%0A%0APlease%20share%20the%20next%20steps.%0A%0AThanks%2C",
-      "_blank"
-    );
-  }
-};
+
 
 /* ---------- PARALLAX SECTION ---------- */
 function ScrollParallax({ bg, height = "100vh", overlayOpacity = 0.6, children, textColor = "text-white" }) {
@@ -145,6 +133,21 @@ function MVVCard({ title, text, icon: Icon }) {
 
 /* ---------- MAIN PAGE ---------- */
 export default function WhoWeAre() {
+
+
+
+
+  const [showPartnerModal, setShowPartnerModal] = useState(false);
+
+  const [partnerForm, setPartnerForm] = useState({
+    company: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
+
+
   const heroMainImage = "https://i.pinimg.com/736x/4e/cc/1f/4ecc1f16e661104ae4432b4e60695b48.jpg";
   const ctaImage = "https://i.pinimg.com/736x/75/98/ca/7598ca122374bb1fd8df8477ee17e877.jpg";
 
@@ -208,18 +211,19 @@ export default function WhoWeAre() {
     img: "https://i.pinimg.com/1200x/6f/b6/7c/6fb67c0a7fb9181b245b5c2c44c3725c.jpg",
   },
 ];
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
+ useEffect(() => {
+  const el = scrollRef.current;
+  if (!el) return;
 
-    const updateProgress = () => {
-      const maxScroll = el.scrollWidth - el.clientWidth;
-      setProgress((el.scrollLeft / maxScroll) * 100);
-    };
+  const updateProgress = () => {
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    setProgress(maxScroll > 0 ? (el.scrollLeft / maxScroll) * 100 : 0);
+  };
 
-    el.addEventListener("scroll", updateProgress);
-    return () => el.removeEventListener("scroll", updateProgress);
-  }, []);
+  el.addEventListener("scroll", updateProgress);
+  return () => el.removeEventListener("scroll", updateProgress);
+}, []);
+
 
   const scroll = (direction) => {
   if (scrollRef.current) {
@@ -581,30 +585,128 @@ export default function WhoWeAre() {
   </div>
 </section>
 
-      {/* ================= CTA PARALLAX ================= */}
-      <ScrollParallax bg={hand} height="100vh" overlayOpacity={0.4}>
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center"
+{/* ================= PARALLAX CTA ================= */}
+<ScrollParallax bg={hand} height="100vh" overlayOpacity={0.45}>
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.8 }}
+    viewport={{ once: true }}
+    className="text-center flex flex-col items-center gap-8"
+  >
+    <h3 className="text-4xl md:text-6xl font-bold text-white">
+      Build What’s Next
+    </h3>
+
+    <button
+      onClick={() => setShowPartnerModal(true)}
+      className="px-12 py-4 bg-black text-white text-lg font-bold rounded-full hover:scale-105 transition shadow-xl"
+    >
+      Partner With Us
+    </button>
+  </motion.div>
+</ScrollParallax>
+
+
+    {showPartnerModal && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+    <motion.div
+      initial={{ scale: 0.9, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      className="bg-white rounded-3xl w-[95%] max-w-lg p-8 shadow-2xl relative"
+    >
+      <button
+        onClick={() => setShowPartnerModal(false)}
+        className="absolute top-4 right-4 text-gray-500 hover:text-black"
+      >
+        ✕
+      </button>
+
+      <h3 className="text-3xl font-bold mb-6 text-black">
+        Partner With Us
+      </h3>
+
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+
+          const body = `
+Company Name: ${partnerForm.company}
+Email: ${partnerForm.email}
+Phone: ${partnerForm.phone}
+
+Message:
+${partnerForm.message}
+          `;
+
+          const mailto = `mailto:info@marqwon.com?subject=Partnership Request&body=${encodeURIComponent(body)}`;
+
+          const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+          if (isMobile) {
+            window.location.href = mailto;
+          } else {
+            window.open(
+              `https://mail.google.com/mail/?view=cm&fs=1&to=info@marqwon.com&su=Partnership%20Request&body=${encodeURIComponent(body)}`,
+              "_blank"
+            );
+          }
+
+          setShowPartnerModal(false);
+        }}
+        className="space-y-4"
+      >
+        <input
+          required
+          type="text"
+          placeholder="Company Name"
+          className="w-full border rounded-xl px-4 py-3"
+          onChange={(e) =>
+            setPartnerForm({ ...partnerForm, company: e.target.value })
+          }
+        />
+
+        <input
+          required
+          type="email"
+          placeholder="Email Address"
+          className="w-full border rounded-xl px-4 py-3"
+          onChange={(e) =>
+            setPartnerForm({ ...partnerForm, email: e.target.value })
+          }
+        />
+
+        <PhoneInput
+  country="in"           // 🇮🇳 +91 default
+  enableSearch
+  value={partnerForm.phone}
+  onChange={(phone) =>
+    setPartnerForm({ ...partnerForm, phone })
+  }
+  inputClass="!w-full !border !rounded-xl !px-4 !py-3"
+  containerClass="!w-full"
+/>
+
+
+        <textarea
+          rows="4"
+          placeholder="Message / Partnership Notes"
+          className="w-full border rounded-xl px-4 py-3"
+          onChange={(e) =>
+            setPartnerForm({ ...partnerForm, message: e.target.value })
+          }
+        />
+
+        <button
+          type="submit"
+          className="w-full bg-black text-white py-3 rounded-full font-semibold hover:scale-105 transition"
         >
-
-<h3 className="text-4xl md:text-6xl font-bold mb-8 text-white">
-  Build What’s Next
-</h3>
-<button
-  onClick={handlePartnerClick}
-  className="px-10 py-4 bg-black text-white text-lg font-bold rounded-full hover:scale-105 hover:bg-gray-900 transition-all duration-300 shadow-2xl"
->
-  Partner With Us
-</button>
-
-
-
-        </motion.div>
-      </ScrollParallax>
+          Continue to Gmail →
+        </button>
+      </form>
+    </motion.div>
+  </div>
+)}
 
       
 

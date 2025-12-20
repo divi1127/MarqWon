@@ -2,11 +2,15 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import CalFloatingButton from '../components/CalFloatingButton.jsx';
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+
 
 
 const Enquiries = () => {
   const [formData, setFormData] = useState({
     name: '',
+    company: '',
     email: '',
     phone: '',
     message: '',
@@ -17,6 +21,7 @@ const [successMessage, setSuccessMessage] = useState("");
 // ✅ Form validation
 const isFormValid =
   formData.name &&
+  formData.company &&
   formData.email &&
   formData.phone &&
   formData.message;
@@ -28,6 +33,7 @@ const handleWhatsAppClick = () => {
   setTimeout(() => {
     setFormData({
       name: "",
+      company: "",
       email: "",
       phone: "",
       message: "",
@@ -40,7 +46,7 @@ const handleWhatsAppClick = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     alert('Thank you! We will get back to you soon.');
-    setFormData({ name: '', email: '', phone: '', message: '' });
+    setFormData({ name: '', company: '', email: '', phone: '', message: '' });
   };
 
   // 1. New function to format the data for the WhatsApp message
@@ -48,15 +54,16 @@ const handleWhatsAppClick = () => {
     // The WhatsApp API requires URL encoding for the message text,
     // and '%0A' is the URL-encoded equivalent of a newline character.
     const message = `
-*New Enquiry from MarqWon Website*
+New Enquiry from MarqWon Website
 
 ---
 
-*Name:* ${formData.name}
-*Email:* ${formData.email}
-*Phone:* ${formData.phone}
+Name: ${formData.name}
+Company: ${formData.company}
+Email: ${formData.email}
+Phone: ${formData.phone}
 
-*Message:*
+Message:
 ${formData.message}
 
 ---
@@ -80,10 +87,21 @@ ${formData.message}
       details: ['+91 94867 27259', 'Mon-Sat: 9AM - 9PM'],
     },
     {
-      icon: Mail,
-      title: 'Email Us',
-      details: ['info@marqwon.com'],
-    },
+  icon: Mail,
+  title: 'Email Us',
+  details: [
+    <a
+      key="email"
+      href="https://mail.google.com/mail/?view=cm&fs=1&to=info@marqwon.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-blue-600 hover:underline"
+    >
+      info@marqwon.com
+    </a>,
+  ],
+},
+
   ];
 
   return (
@@ -158,7 +176,22 @@ ${formData.message}
                     type="text"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="John Doe"
+                    placeholder="enter your name"
+                    required
+                    className="w-full p-3 border border-gray-300 rounded-lg mt-1 text-black bg-white"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="company" className="block font-medium mb-1 text-black">
+                    Company Name *
+                  </label>
+                  <input
+                    id="company"
+                    type="text"
+                    value={formData.company}
+                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                    placeholder="enter your company name"
                     required
                     className="w-full p-3 border border-gray-300 rounded-lg mt-1 text-black bg-white"
                   />
@@ -179,20 +212,37 @@ ${formData.message}
                   />
                 </div>
 
-                <div>
-                  <label htmlFor="phone" className="block font-medium mb-1 text-black">
-                    Phone Number *
-                  </label>
-                  <input
-                    id="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder="+91 XXXXX XXXXX"
-                    required
-                    className="w-full p-3 border border-gray-300 rounded-lg mt-1 text-black bg-white"
-                  />
-                </div>
+               <div>
+  <label className="block font-medium mb-1 text-black">
+    Phone Number *
+  </label>
+
+  <div className="relative">
+    <PhoneInput
+      country={"in"}
+      value={formData.phone}
+      onChange={(phone) =>
+        setFormData({ ...formData, phone })
+      }
+      enableSearch
+      inputStyle={{
+        width: "100%",
+        height: "48px",
+        fontSize: "16px",
+        color: "#000",
+      }}
+      buttonStyle={{
+        borderRadius: "8px 0 0 8px",
+      }}
+      containerStyle={{
+        width: "100%",
+      }}
+    />
+
+    {/* Black search icon */}
+    {/* <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-black w-4 h-4" /> */}
+  </div>
+</div>
 
                 <div>
                   <label htmlFor="message" className="block font-medium mb-1 text-black">
@@ -233,6 +283,45 @@ ${formData.message}
 >
   Message on WhatsApp
 </a>
+
+
+<a
+  href={
+    isFormValid
+      ? (() => {
+          const body = `
+Name: ${formData.name}
+company: ${formData.company}
+Email: ${formData.email}
+Phone: ${formData.phone}
+
+Message:
+${formData.message}
+          `;
+
+          const isMobile = /Android|iPhone|iPad|iPod/i.test(
+            navigator.userAgent
+          );
+
+          return isMobile
+            ? `mailto:info@marqwon.com?subject=New Enquiry&body=${encodeURIComponent(body)}`
+            : `https://mail.google.com/mail/?view=cm&fs=1&to=info@marqwon.com&su=New%20Enquiry&body=${encodeURIComponent(body)}`;
+        })()
+      : undefined
+  }
+  target="_blank"
+  rel="noopener noreferrer"
+  onClick={!isFormValid ? (e) => e.preventDefault() : undefined}
+  className={`w-full py-3 px-6 rounded-lg flex items-center justify-center transition font-semibold mt-4
+    ${
+      isFormValid
+        ? "bg-black hover:bg-gray-900 text-white cursor-pointer"
+        : "bg-gray-300 text-gray-500 cursor-not-allowed"
+    }`}
+>
+  Continue to Gmail →
+</a>
+
 
               </form>
             </div>

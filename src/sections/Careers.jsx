@@ -754,6 +754,61 @@ const ApplicationForm = ({ isJob, role, onSubmitted }) => {
         </motion.button>
 
         <p className="text-xs text-center text-gray-500">*You will need to attach your resume manually in WhatsApp if it did not auto-send.*</p>
+
+
+<a
+  href={(() => {
+    if (!form.name || !form.email || !form.phone || !form.role) return undefined;
+
+    const body = `
+APPLICATION DETAILS
+
+Role: ${form.role}
+
+Name: ${form.name}
+Email: ${form.email}
+Phone: ${form.phone}
+
+${isJob ? `
+Experience: ${form.experience}
+Current CTC: ${form.currentCTC}
+Expected CTC: ${form.expectedCTC}
+` : `
+College: ${form.college}
+Department: ${form.department}
+Passout Year: ${form.passoutYear}
+Address: ${form.address}
+`}
+
+Resume: ${resume ? resume.name : "Will share manually"}
+
+Sent from MarqWon Careers Portal
+    `;
+
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    return isMobile
+      ? `mailto:info@marqwon.com?subject=Job Application – ${encodeURIComponent(form.role)}&body=${encodeURIComponent(body)}`
+      : `https://mail.google.com/mail/?view=cm&fs=1&to=info@marqwon.com&su=Job%20Application%20-%20${encodeURIComponent(form.role)}&body=${encodeURIComponent(body)}`;
+  })()}
+  target="_blank"
+  rel="noopener noreferrer"
+  onClick={(e) => {
+    if (!form.name || !form.email || !form.phone || !form.role) {
+      e.preventDefault();
+      alert("Please complete all required fields before continuing with Gmail.");
+    }
+  }}
+  className={`w-full mt-4 py-3 px-6 rounded-xl flex items-center justify-center font-semibold transition
+    ${
+      form.name && form.email && form.phone && form.role
+        ? "bg-black hover:bg-gray-900 text-white"
+        : "bg-gray-300 text-gray-500 cursor-not-allowed"
+    }`}
+>
+  Continue with Gmail →
+</a>
+
       </form>
     </>
   );
