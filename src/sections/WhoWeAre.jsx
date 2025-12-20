@@ -8,8 +8,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Rocket, Sparkles, ShieldCheck } from "lucide-react";
 import hand from "../assets/hand.jpeg";
 
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
+import { PhoneInput } from 'react-international-phone';
+import 'react-international-phone/style.css';
 
 
 
@@ -585,133 +585,69 @@ export default function WhoWeAre() {
   </div>
 </section>
 
-{/* ================= PARALLAX CTA ================= */}
-<ScrollParallax bg={hand} height="100vh" overlayOpacity={0.45}>
-  <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.8 }}
-    viewport={{ once: true }}
-    className="text-center flex flex-col items-center gap-8"
-  >
-    <h3 className="text-4xl md:text-6xl font-bold text-white">
-      Build What’s Next
-    </h3>
+ {/* PARALLAX CTA */}
+      <ScrollParallax bg={hand} height="100vh" overlayOpacity={0.45}>
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }} className="text-center flex flex-col items-center gap-8">
+          <h3 className="text-4xl md:text-6xl font-bold text-white">Build What’s Next</h3>
+          <button onClick={() => setShowPartnerModal(true)} className="px-12 py-4 bg-black text-white text-lg font-bold rounded-full hover:scale-105 transition shadow-xl">Partner With Us</button>
+        </motion.div>
+      </ScrollParallax>
 
-    <button
-      onClick={() => setShowPartnerModal(true)}
-      className="px-12 py-4 bg-black text-white text-lg font-bold rounded-full hover:scale-105 transition shadow-xl"
-    >
-      Partner With Us
-    </button>
-  </motion.div>
-</ScrollParallax>
+      {/* PARTNER MODAL */}
+      {showPartnerModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-white rounded-3xl w-[95%] max-w-lg p-8 shadow-2xl relative">
+            <button onClick={() => setShowPartnerModal(false)} className="absolute top-4 right-4 text-gray-500 hover:text-black">✕</button>
+            <h3 className="text-3xl font-bold mb-6 text-black">Partner With Us</h3>
+            
+            {/* Added custom CSS for international phone UI consistency */}
+            <style>{`
+              .react-international-phone-input-container { width: 100% !important; }
+              .react-international-phone-input { 
+                width: 100% !important; 
+                border-radius: 0 12px 12px 0 !important; 
+                padding: 12px 16px !important; 
+                border: 1px solid #e5e7eb !important; 
+                height: 50px !important;
+              }
+              .react-international-phone-country-selector-button {
+                border-radius: 12px 0 0 12px !important;
+                height: 50px !important;
+                border: 1px solid #e5e7eb !important;
+                background: #f9fafb !important;
+              }
+            `}</style>
 
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const body = `Company Name: ${partnerForm.company}\nEmail: ${partnerForm.email}\nPhone: ${partnerForm.phone}\n\nMessage:\n${partnerForm.message}`;
+                const mailto = `mailto:info@marqwon.com?subject=Partnership Request&body=${encodeURIComponent(body)}`;
+                const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+                if (isMobile) { window.location.href = mailto; } 
+                else { window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=info@marqwon.com&su=Partnership%20Request&body=${encodeURIComponent(body)}`, "_blank"); }
+                setShowPartnerModal(false);
+              }}
+              className="space-y-4"
+            >
+              <input required type="text" placeholder="Company Name" className="w-full border rounded-xl px-4 py-3" onChange={(e) => setPartnerForm({ ...partnerForm, company: e.target.value })} />
+              <input required type="email" placeholder="Email Address" className="w-full border rounded-xl px-4 py-3" onChange={(e) => setPartnerForm({ ...partnerForm, email: e.target.value })} />
 
-    {showPartnerModal && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-    <motion.div
-      initial={{ scale: 0.9, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      className="bg-white rounded-3xl w-[95%] max-w-lg p-8 shadow-2xl relative"
-    >
-      <button
-        onClick={() => setShowPartnerModal(false)}
-        className="absolute top-4 right-4 text-gray-500 hover:text-black"
-      >
-        ✕
-      </button>
+              {/* UPDATED PHONE INPUT */}
+              <PhoneInput
+                defaultCountry="in"
+                value={partnerForm.phone}
+                onChange={(phone) => setPartnerForm({ ...partnerForm, phone })}
+              />
 
-      <h3 className="text-3xl font-bold mb-6 text-black">
-        Partner With Us
-      </h3>
-
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-
-          const body = `
-Company Name: ${partnerForm.company}
-Email: ${partnerForm.email}
-Phone: ${partnerForm.phone}
-
-Message:
-${partnerForm.message}
-          `;
-
-          const mailto = `mailto:info@marqwon.com?subject=Partnership Request&body=${encodeURIComponent(body)}`;
-
-          const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-          if (isMobile) {
-            window.location.href = mailto;
-          } else {
-            window.open(
-              `https://mail.google.com/mail/?view=cm&fs=1&to=info@marqwon.com&su=Partnership%20Request&body=${encodeURIComponent(body)}`,
-              "_blank"
-            );
-          }
-
-          setShowPartnerModal(false);
-        }}
-        className="space-y-4"
-      >
-        <input
-          required
-          type="text"
-          placeholder="Company Name"
-          className="w-full border rounded-xl px-4 py-3"
-          onChange={(e) =>
-            setPartnerForm({ ...partnerForm, company: e.target.value })
-          }
-        />
-
-        <input
-          required
-          type="email"
-          placeholder="Email Address"
-          className="w-full border rounded-xl px-4 py-3"
-          onChange={(e) =>
-            setPartnerForm({ ...partnerForm, email: e.target.value })
-          }
-        />
-
-        <PhoneInput
-  country="in"           // 🇮🇳 +91 default
-  enableSearch
-  value={partnerForm.phone}
-  onChange={(phone) =>
-    setPartnerForm({ ...partnerForm, phone })
-  }
-  inputClass="!w-full !border !rounded-xl !px-4 !py-3"
-  containerClass="!w-full"
-/>
-
-
-        <textarea
-          rows="4"
-          placeholder="Message / Partnership Notes"
-          className="w-full border rounded-xl px-4 py-3"
-          onChange={(e) =>
-            setPartnerForm({ ...partnerForm, message: e.target.value })
-          }
-        />
-
-        <button
-          type="submit"
-          className="w-full bg-black text-white py-3 rounded-full font-semibold hover:scale-105 transition"
-        >
-          Continue to Gmail →
-        </button>
-      </form>
-    </motion.div>
-  </div>
-)}
-
-      
-
+              <textarea rows="4" placeholder="Message / Partnership Notes" className="w-full border rounded-xl px-4 py-3" onChange={(e) => setPartnerForm({ ...partnerForm, message: e.target.value })} />
+              <button type="submit" className="w-full bg-black text-white py-3 rounded-full font-semibold hover:scale-105 transition">Continue to Gmail →</button>
+            </form>
+          </motion.div>
+        </div>
+      )}
     </div>
-  );
+   );
 }
 
 
