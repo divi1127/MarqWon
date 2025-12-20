@@ -2,13 +2,13 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Title, Meta } from "react-head";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Link } from "react-router-dom";
+
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Rocket, Sparkles, ShieldCheck } from "lucide-react";
 import hand from "../assets/hand.jpeg";
-import hands from "../assets/hands.mp4";
+
 
 
 /* ---------- ANIMATION VARIANTS ---------- */
@@ -30,6 +30,24 @@ const itemVariants = {
     y: 0,
     transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1.0] },
   },
+};
+const handlePartnerClick = () => {
+  const mailto =
+    "mailto:info@marqwon.com?subject=Partnership%20Request&body=Hi%20MarqWon%2C%0A%0AI%20would%20like%20to%20explore%20a%20partnership.%0A%0APlease%20share%20the%20next%20steps.%0A%0AThanks%2C";
+
+  // Detect mobile
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if (isMobile) {
+    // Opens Gmail app / Mail app
+    window.location.href = mailto;
+  } else {
+    // Opens Gmail web on desktop
+    window.open(
+      "https://mail.google.com/mail/?view=cm&fs=1&to=info@marqwon.com&su=Partnership%20Request&body=Hi%20MarqWon%2C%0A%0AI%20would%20like%20to%20explore%20a%20partnership.%0A%0APlease%20share%20the%20next%20steps.%0A%0AThanks%2C",
+      "_blank"
+    );
+  }
 };
 
 /* ---------- PARALLAX SECTION ---------- */
@@ -563,9 +581,6 @@ export default function WhoWeAre() {
   </div>
 </section>
 
-
-
- 
       {/* ================= CTA PARALLAX ================= */}
       <ScrollParallax bg={hand} height="100vh" overlayOpacity={0.4}>
         <motion.div 
@@ -579,15 +594,13 @@ export default function WhoWeAre() {
 <h3 className="text-4xl md:text-6xl font-bold mb-8 text-white">
   Build What’s Next
 </h3>
-<a
-  href="https://mail.google.com/mail/?view=cm&fs=1&to=info@marqwon.com&su=Partnership%20Request&body=Hi%20MarqWon%2C%0A%0AI%20am%20interested%20in%20partnering%20with%20you.%0A%0APlease%20let%20me%20know%20the%20next%20steps.%0A%0AThanks%2C%0A"
-  target="_blank"
-  rel="noopener noreferrer"
+<button
+  onClick={handlePartnerClick}
+  className="px-10 py-4 bg-black text-white text-lg font-bold rounded-full hover:scale-105 hover:bg-gray-900 transition-all duration-300 shadow-2xl"
 >
-  <button className="px-10 py-4 bg-black text-white text-lg font-bold rounded-full hover:scale-105 hover:bg-gray-900 transition-all duration-300 shadow-2xl">
-    Partner With Us
-  </button>
-</a>
+  Partner With Us
+</button>
+
 
 
         </motion.div>
